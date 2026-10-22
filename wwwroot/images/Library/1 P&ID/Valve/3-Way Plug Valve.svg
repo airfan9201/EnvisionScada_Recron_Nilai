@@ -1,0 +1,31 @@
+<svg
+   viewBox="0 0 7.2100015 5.4514256"
+   version="1.1"
+   id="svg18637"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+ 
+  <g
+     id="layer1"
+     transform="translate(-93.848124,-123.58202)">
+    <g
+       id="g18688">
+      <g
+         id="g7883"
+         transform="matrix(0.35277777,0,0,0.35277777,-21.089907,-299.51161)">
+        <path
+           d="m 336.027,1208.598 c 2.235,0 4.043,-1.809 4.043,-4.043 0,-2.231 -1.808,-4.039 -4.043,-4.039 0,0 0,0 0,0 -2.23,0 -4.043,1.808 -4.043,4.039 0,2.234 1.813,4.043 4.043,4.043 0,0 0,0 0,0 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7885" />
+      </g>
+      <g
+         id="g7887"
+         transform="matrix(0.35277777,0,0,0.35277777,-21.089907,-299.51161)">
+        <path
+           d="m 325.922,1209.609 v -10.105 l 10.105,5.051 10.106,-5.051 v 10.105 l -10.106,-5.054 5.051,10.105 h -10.101 l 5.05,-10.105 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7889" />
+      </g>
+    </g>
+  </g>
+</svg>

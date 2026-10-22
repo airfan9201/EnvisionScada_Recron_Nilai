@@ -1,0 +1,33 @@
+<svg
+   viewBox="0 0 9.8378429 9.8364325"
+   version="1.1"
+   id="svg46932"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-92.855831,-96.164708)">
+    <g
+       id="g46974">
+      <g
+         id="g6725"
+         transform="matrix(0.35277777,0,0,0.35277777,30.456993,-143.06681)">
+        <path
+           d="m 190.824,705.906 c 7.637,0 13.828,-6.191 13.828,-13.828 0,-7.637 -6.191,-13.828 -13.828,-13.828 0,0 0,0 0,0 -7.64,0 -13.832,6.191 -13.832,13.828 0,7.637 6.192,13.828 13.832,13.828 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6727" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text6731"
+         x="96.215599"
+         y="100.63786"><tspan
+           x="96.215599 98.213844"
+           y="100.63786"
+           id="tspan6729"
+           style="stroke-width:0.352778">PI</tspan></text>
+    </g>
+  </g>
+</svg>

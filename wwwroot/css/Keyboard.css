@@ -1,0 +1,135 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+.numpad {
+    width: 210px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2px;
+    padding: 3px;
+    position: absolute;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 99998;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.NumpadKey {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 calc(33.333% - 2px);
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 150%;
+    min-height: 50px;
+    background-color: rgba(255,255,255,0.20);
+    transition: background-color 0.08s;
+}
+
+.NumpadKeyIcon {
+}
+
+#NumpadKeyboardheader:hover {
+    cursor: grab;
+}
+
+.NumpadKey:hover {
+    background-color: rgba(255,255,255,0.45);
+}
+
+.NumpadKeySpecial {
+    background-color: rgba(0,0,0,0.10);
+}
+
+.NumpadKeySpecial:hover {
+    background-color: rgba(0,0,0,0.20);
+}
+
+/* ===== ON-SCREEN KEYBOARD ===== */
+
+.osk {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding: 5px;
+    position: absolute;
+    z-index: 99998;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-width: 740px;
+    border-radius: 8px;
+}
+
+.OskHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+}
+
+.OskRow {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    width: 100%;
+    margin-top:2px
+}
+
+.OskKey {
+    flex: 1;
+    min-width: 0;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.12);
+    cursor: pointer;
+    font-size: 14px;
+    background-color: rgba(255,255,255,0.20);
+    transition: background-color 0.08s;
+}
+
+.OskKey:hover {
+    background-color: rgba(255,255,255,0.45);
+}
+
+.OskKeySpecial {
+    background-color: rgba(0,0,0,0.10);
+}
+
+.OskKeySpecial:hover {
+    background-color: rgba(0,0,0,0.20);
+}
+
+.OskKeyActive {
+    background-color: rgba(0,0,0,0.25) !important;
+}
+
+.OskKeyWide {
+    flex: 2;
+}
+
+.OskKeyEsc {
+    flex: none;
+    width: 80px;
+}
+
+.OskKeySpace {
+    flex: 9;
+    min-width: 0;
+}
+
+.OskDragHandle {
+    flex: 1;
+}
+
+#OskKeyboardheader:hover {
+    cursor: grab;
+}

@@ -1,0 +1,470 @@
+/*!
+*
+* Envision ColorPick
+* Modern, theme-aware, offline color picker styling.
+* Uses the shared Theme CSS variables (see Themes.js) so it adapts to every
+* theme. No external fonts or assets: everything works offline.
+*
+*/
+
+.colorPickPopover {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 2147483000;
+    width: 516px;
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border: 0.5px solid var(--ThemeBorderColor);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 16px 48px;
+    font-family: inherit;
+    font-size: 13px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "header  header"
+        "main    palette"
+        "library library";
+    column-gap: 16px;
+    row-gap: 12px;
+    align-items: start;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+    user-select: none;
+}
+
+.colorPickPopover.cpNoLibrary {
+    grid-template-areas:
+        "header  header"
+        "main    palette";
+}
+
+.colorPickPopover.cpOpen {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.colorPickPopover * {
+    box-sizing: border-box;
+}
+
+.cpHeader {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.65;
+    cursor: move;
+    padding-bottom: 2px;
+}
+
+.cpHeader::before {
+    content: "";
+    width: 22px;
+    height: 4px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0.4;
+    flex-shrink: 0;
+}
+
+.cpMain {
+    grid-area: main;
+    min-width: 0;
+}
+
+.cpPaletteSection {
+    grid-area: palette;
+    min-width: 0;
+}
+
+.cpLibrarySection {
+    grid-area: library;
+    min-width: 0;
+}
+
+.cpSpectrum {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    cursor: crosshair;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.25);
+}
+
+.cpSpectrumKnob {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.cpControls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.cpPreview {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.35);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.cpHue, .cpAlpha {
+    flex: 1;
+    height: 12px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.cpAlphaRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cpAlphaValue {
+    width: 32px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+.cpIconBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+    border: 0.5px solid var(--ThemeBorderColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: border-color 0.15s ease;
+}
+
+.cpIconBtn:hover {
+    border-color: var(--ThemeBorderColorHover);
+}
+
+.cpSvg {
+    fill: currentColor;
+    display: block;
+}
+
+.cpHexRow {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.cpHexField {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 7px;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    border: 0.5px solid var(--ThemeBorderColor);
+}
+
+.cpHexHash {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    opacity: 0.5;
+}
+
+.cpHexInput {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--ThemeSettingsInputFontColor);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    padding: 0 4px;
+    text-transform: uppercase;
+}
+
+.cpHexInput.cpError {
+    color: #ff424c;
+}
+
+.cpTransparent {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 0.5px solid var(--ThemeBorderColor);
+    background-color: #fff;
+    background-image:
+        linear-gradient(45deg, #bdbdbd 25%, transparent 25%),
+        linear-gradient(-45deg, #bdbdbd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #bdbdbd 75%),
+        linear-gradient(-45deg, transparent 75%, #bdbdbd 75%);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.cpTransparent:hover {
+    border-color: var(--ThemeBorderColorHover);
+}
+
+.cpApply {
+    width: 100%;
+    height: 32px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background-color: var(--ThemeIconColor);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+.cpApply:hover {
+    filter: brightness(1.08);
+}
+
+.cpSection {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 0.5px solid var(--ThemeBorderColor);
+}
+
+.cpLibrarySection.cpSection {
+    margin-top: 0;
+    padding-top: 12px;
+}
+
+.cpSectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.cpSectionHeader > span {
+    opacity: 0.65;
+}
+
+.cpCount {
+    margin-left: auto;
+}
+
+.cpIconBtnSm {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: var(--ThemeFontColor);
+    opacity: 0.6;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.cpIconBtnSm:hover {
+    opacity: 1;
+    background-color: var(--ThemeFormLineColorHover);
+}
+
+.cpIconBtnSm .cpSvg {
+    fill: currentColor;
+    display: block;
+}
+
+.cpAddForm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 6px;
+    border-radius: 7px;
+    background-color: var(--ThemeBackground2);
+}
+
+.cpAddSwatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.3);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.cpAddName {
+    flex: 1;
+    min-width: 0;
+    height: 28px;
+    border: 0.5px solid var(--ThemeBorderColor);
+    border-radius: 6px;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+    padding: 0 8px;
+    font-size: 12px;
+    outline: none;
+}
+
+.cpAddName.cpError {
+    border-color: #ff424c;
+}
+
+.cpSearchRow {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 7px;
+    margin-bottom: 8px;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    border: 0.5px solid var(--ThemeBorderColor);
+}
+
+.cpSearchRow .cpSvg {
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+.cpLibSearch {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--ThemeSettingsInputFontColor);
+    font-size: 12px;
+    padding: 0 6px;
+}
+
+.cpLibList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 148px;
+    overflow-y: auto;
+}
+
+.cpLibRow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.12s ease;
+}
+
+.cpLibRow:hover {
+    background-color: var(--ThemeFormLineColorHover);
+}
+
+.cpLibSwatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.3);
+    /* Checkerboard layers behind the color, so a library color with an alpha byte reads as
+       transparent instead of blending into the row background. Sized/positioned like .cpPreview. */
+    background-size: 8px 8px;
+    background-position: 0 0, 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.cpLibName {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cpLibHex {
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+.cpEmpty {
+    font-size: 12px;
+    opacity: 0.5;
+    padding: 6px 7px;
+}
+
+.cpPaletteGrid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 5px;
+}
+
+.cpPaletteGrid .cpSwatch {
+    width: 100%;
+}
+
+.cpRecentGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.cpSwatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.25);
+    transition: transform 0.1s ease;
+    /* See .cpLibSwatch: palette and recent swatches carry alpha colors too. */
+    background-size: 8px 8px;
+    background-position: 0 0, 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+.cpSwatch:hover {
+    transform: scale(1.12);
+}

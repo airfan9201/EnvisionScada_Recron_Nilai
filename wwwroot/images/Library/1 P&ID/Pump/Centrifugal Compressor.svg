@@ -1,0 +1,76 @@
+<svg
+   viewBox="0 0 16.186949 9.3949261"
+   version="1.1"
+   id="svg40223"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  
+  <g
+     id="layer1"
+     transform="translate(-113.31003,-126.37216)">
+    <g
+       id="g40425">
+      <g
+         id="g263"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)">
+        <path
+           d="m 36.887,1620.688 h 8.633 v 7.628"
+           style="fill:none;stroke:#000000;stroke-width:2.12625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path265" />
+      </g>
+      <g
+         id="g267"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)">
+        <path
+           d="m 59.367,1629.117 v -8.429 h 11.844"
+           style="fill:none;stroke:#000000;stroke-width:2.12625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path269" />
+      </g>
+      <g
+         id="g271"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)">
+        <path
+           d="m 68.375,1619.27 2.836,1.418 -2.836,1.417 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.12625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path273" />
+      </g>
+      <g
+         id="g275"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)"
+         style="">
+        <path
+           d="m 35.082,1633.734 h 6.223 v 1.605 h -6.223 z"
+           style=";fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path277" />
+      </g>
+      <g
+         id="g279"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)"
+         style="">
+        <path
+           d="m 41.305,1643.77 v -17.661 l 22.883,3.614 v 10.636 z"
+           style=";fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path281" />
+      </g>
+      <g
+         id="g283"
+         transform="matrix(0.35277777,0,0,0.35277777,103.53645,-444.26346)"
+         style="">
+        <path
+           d="m 28.059,1632.531 9.031,-1.605 v 6.824 l -9.031,-1.203 z"
+           style=";fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path285" />
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="114.7816"
+       y="132.82645"
+       id="text49550"><tspan
+         id="tspan49548"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="114.7816"
+         y="132.82645">T</tspan></text>
+  </g>
+</svg>

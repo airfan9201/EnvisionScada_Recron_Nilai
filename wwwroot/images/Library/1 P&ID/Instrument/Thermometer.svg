@@ -1,0 +1,41 @@
+<svg
+   viewBox="0 0 13.305014 4.6503167"
+   version="1.1"
+   id="svg26454"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <rect
+     style="stroke-width:0.264583"
+     id="rect112"
+     width="13.305014"
+     height="4.6333756"
+     x="0"
+     y="0.010627007" />
+  <g
+     id="layer1"
+     transform="translate(-71.64081,-127.79608)"
+     style="fill:#000000">
+    <g
+       id="g26505"
+       style="fill:#000000">
+      <g
+         id="g6629"
+         transform="matrix(0.35277777,0,0,0.35277777,60.838402,-96.710613)"
+         style="fill:#000000">
+        <path
+           d="M 30.621,647.234 H 68.336 30.621 49.477 m 3.773,0 7.543,-10.632 z"
+           style="fill:#000000;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6631" />
+      </g>
+      <g
+         id="g6633"
+         transform="matrix(0.35277777,0,0,0.35277777,60.838402,-96.710613)"
+         style="fill:#000000">
+        <path
+           d="m 41.918,645.344 7.559,1.89 -7.559,1.891 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6635" />
+      </g>
+    </g>
+  </g>
+</svg>

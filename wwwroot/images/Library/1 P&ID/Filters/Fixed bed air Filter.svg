@@ -1,0 +1,63 @@
+<svg
+   viewBox="0 0 7.9114752 15.091392"
+   version="1.1"
+   id="svg37912"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-86.467529,-107.50501)">
+    <g
+       id="g38039">
+      <g
+         id="g1823"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="m 325.371,2237.816 h 21.309 v 42.07 h -21.309 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1825" />
+      </g>
+      <g
+         id="g1827"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="M 325.371,2246.23 H 346.68"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:1.77188, 1.77188;stroke-dashoffset:0;stroke-opacity:1"
+           id="path1829" />
+      </g>
+      <g
+         id="g1831"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="m 325.371,2267.266 10.656,12.621 10.653,-12.621 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:1.77188, 1.77188;stroke-dashoffset:0;stroke-opacity:1"
+           id="path1833" />
+      </g>
+      <g
+         id="g1835"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="M 325.371,2250.438 H 346.68"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:1.77188, 1.77188;stroke-dashoffset:0;stroke-opacity:1"
+           id="path1837" />
+      </g>
+      <g
+         id="g1839"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="m 325.371,2250.438 21.309,16.828"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1841" />
+      </g>
+      <g
+         id="g1843"
+         transform="matrix(0.35277777,0,0,0.35277777,-28.191111,-681.82171)">
+        <path
+           d="m 346.68,2250.438 -21.309,16.828"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1845" />
+      </g>
+    </g>
+  </g>
+</svg>

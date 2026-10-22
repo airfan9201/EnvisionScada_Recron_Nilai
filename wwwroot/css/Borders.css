@@ -1,0 +1,43 @@
+﻿.borderbuttontopleft, .borderbuttontopright, .borderbuttonbottomleft, .borderbuttonbottomright, .borderbuttontop, .borderbuttonbottom, .borderbuttonleft, .borderbuttonright {
+    z-index: 999;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1);
+    /*color: rgba(255, 255, 255, 0.8);*/
+    text-align: right;
+    width: 8px;
+    height: 8px;
+    border: 1.2px solid deepskyblue;
+    border-radius: 2px;
+}
+
+.borderbuttonleft:hover, .borderbuttonright:hover {
+    cursor: e-resize;
+}
+
+    .borderbuttontop:hover, .borderbuttonbottom:hover {
+        cursor: n-resize;
+    }
+
+    .borderbuttonbottomleft:hover, .borderbuttontopright:hover {
+        cursor: sw-resize;
+    }
+
+    .borderbuttonbottomright:hover, .borderbuttontopleft:hover {
+        cursor: se-resize;
+    }
+
+.borderbuttontopleft, .borderbuttontopright, .borderbuttontop {
+    margin-top:-2px;
+}
+
+.borderbuttonbottomleft, .borderbuttonbottomright, .borderbuttonbottom {
+    margin-top: 2px;
+}
+
+.borderbuttontopleft, .borderbuttonleft, .borderbuttonbottomleft {
+    margin-left: -2px;
+}
+
+.borderbuttonright, .borderbuttonbottomright, .borderbuttontopright {
+    margin-left: 2px;
+}

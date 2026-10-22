@@ -1,0 +1,82 @@
+﻿
+:root {
+    --ThemeBackground: white;
+    --ThemeElements: transparant;
+    --ThemeFontColor: #545454;
+    --ThemeFontColor2: #545454;
+    --ThemeFontColorHover: lightgrey;
+    --ThemeBorderColor: #545454;
+    --ThemeBorderColorHover: lightgrey;
+    --ThemePlaceholderFontColor: lightgrey;
+    --ThemeFormLineColor: lightgrey;
+    --ThemeButtonBackgroundColor: lightgrey;
+    --ThemeButtonColor: white;
+    --ThemeButtonColorHover: black;
+    --ThemeIconColor: goldenrod;
+    --ThemeIconColorHover: lightgrey;
+}
+
+.theme-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-picker-modal {
+    background-color: var(--ThemeBackground);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 12px;
+    padding: 24px 28px;
+    min-width: 280px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.theme-picker-title {
+    color: var(--ThemeFontColor);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.theme-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.theme-picker-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--ThemeFontColor);
+    font-size: 13px;
+    transition: background 0.15s;
+}
+
+.theme-picker-option:hover {
+    background-color: var(--ThemeFormLineColorHover);
+}
+
+.theme-picker-option.active {
+    outline: 2px solid var(--ThemeIconColor);
+    outline-offset: -2px;
+}
+
+.theme-picker-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}

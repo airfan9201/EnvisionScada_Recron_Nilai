@@ -1,0 +1,392 @@
+﻿
+#ColorLibraryBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999998;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    opacity: 0;
+}
+
+#ColorLibrary {
+    width: 60%;
+    height: 90vh;
+    position: fixed;
+    display: none;
+    left: 20%;
+    top: 5vh;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border: 0px solid darkgrey;
+    z-index: 999999;
+    opacity: 0;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 32px;
+}
+
+@keyframes fadeoutcolor {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes fadeincolor {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        
+    }
+}
+
+.ColorLibraryContainer {
+    /*    width: 60%;
+    height: 80vh;
+    top: 6vh;*/
+    width: 100%;
+    height: 100%;
+/*    top: 6vh;*/
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    /*/* top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);*/
+    background-color: var(--ThemeBackground2);
+    color: var(--ThemeFontColor);
+    border: 0px solid darkgrey;
+    z-index: 999999;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.ColorLibraryMenu {
+    height: 50px;
+    width: 98%;
+    border: 0px solid red;
+    float: right;
+}
+
+.ColorLibraryMenuButton {
+    height: 32px;
+    width: 20px;
+    border: 0px solid red;
+    fill: var(--ThemeFontColor);
+    float: left;
+    margin-right: 16px;
+    margin-top: 9px;
+    padding-top: 4px;
+    border-radius: 5px;
+    color: var(--ThemeFontColor);
+    text-align: center;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.ColorLibraryMenuButton svg {
+    width: 16px;
+    height: 16px;
+}
+
+    .ColorLibraryMenuButton:hover {
+        cursor: pointer;
+        opacity: 1;
+    }
+
+/* Theme picker row inside the Color Library menu bar. Sits between the add-color button on the
+   left and the save/import/export buttons floated right, so it is centred on its own line. */
+.ColorLibraryThemeBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    float: left;
+    height: 50px;
+    margin-left: 24px;
+}
+
+.ColorLibraryThemeLabel {
+    color: var(--ThemeFontColor);
+    opacity: 0.7;
+    font-size: 13px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ColorLibraryThemeSelect {
+    height: 30px;
+    min-width: 140px;
+    max-width: 220px;
+    border-radius: 5px;
+    border: 1px solid var(--ThemeBorderColor, #cccccc);
+    background-color: var(--ThemeInputBackgroundColor, #ffffff);
+    color: var(--ThemeFontColor);
+    padding: 0 6px;
+}
+
+/* The theme buttons sit inline in the flex row, so the float and top margin the menu buttons
+   use elsewhere would push them out of line. */
+.ColorLibraryThemeBar .ColorLibraryMenuButton {
+    float: none;
+    margin-right: 0;
+    margin-top: 0;
+}
+
+.ColorLibraryCard {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    width: calc(100% - 20px);
+    margin: 3px 10px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    background-color: var(--ThemeBackground);
+    cursor: pointer;
+    box-sizing: border-box;
+    gap: 12px;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.ColorLibraryCard:hover {
+    background-color: rgba(128, 128, 128, 0.08);
+}
+
+    .ColorLibraryCard.ActiveColorLibraryCard {
+        border-color: #7eb3ff;
+        background-color: rgba(126, 179, 255, 0.08);
+    }
+
+.ColorLibraryCardColor {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border: none;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 4px;
+    display: block;
+    /* Checkerboard layers behind the color (painted by ColorPickSwatchBackground), so a library
+       color with an alpha byte reads as transparent instead of blending into the card background
+       and looking like a different, solid color. Sized/positioned like .cpPreview in colorPick.css. */
+    background-size: 8px 8px;
+    background-position: 0 0, 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+input[type=color]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type=color]::-webkit-color-swatch {
+    border: none;
+    border-radius: 5px;
+}
+
+input[type=color] {
+    background-color: transparent;
+}
+
+.ColorLibraryCardText {
+    flex: 1;
+    max-width: 600px;
+    min-width: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--ThemeFontColor);
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.ColorLibraryCardText:focus {
+    cursor: text;
+    outline: none;
+}
+
+.ColorLibraryCardText.ColorLibraryCardTextDuplicate {
+    color: #ff4d4d;
+    text-decoration: underline wavy #ff4d4d;
+}
+
+.ColorLibraryDragHandle {
+    opacity: 0.2;
+    cursor: grab;
+    user-select: none;
+    padding: 4px 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.15s ease;
+}
+
+/* Let clicks pass through the dot icon to the handle itself, so the whole
+   handle area (including the gaps between the dots) starts a drag. */
+.ColorLibraryDragHandle svg {
+    pointer-events: none;
+}
+
+.ColorLibraryCard:hover .ColorLibraryDragHandle {
+    opacity: 0.5;
+}
+
+.ColorLibraryRowHex {
+    font-size: 0.75rem;
+    font-family: 'Courier New', monospace;
+    opacity: 0.45;
+    /* Wide enough for a 9-character #RRGGBBAA value, so an alpha color is not clipped. */
+    min-width: 76px;
+    text-align: right;
+    user-select: none;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.ColorLibraryCardDeleteBtn {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: var(--ThemeFontColor);
+    opacity: 0.45;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    margin-left: 8px;
+}
+
+.ColorLibraryCardDeleteBtn:hover {
+    opacity: 1;
+}
+
+#ColorLibraryChangeNameModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000001;
+    width: 280px;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 16px 48px;
+    border: 1px solid var(--ThemeBorderColor);
+    padding: 20px;
+}
+
+.ColorLibraryModalTitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    opacity: 0.6;
+    margin-bottom: 10px;
+}
+
+#ColorLibraryChangeNameText {
+    width: 100%;
+    height: 38px;
+    border-radius: 7px;
+    border: 1.5px solid var(--ThemeBorderColor);
+    padding: 0 10px;
+    font-size: 0.9rem;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+    outline: none;
+}
+
+#ColorLibraryChangeNameText:focus {
+    border-color: #7eb3ff;
+    outline: none;
+}
+
+.ColorLibraryModalActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+#ColorLibraryChangeNameCancelBtn {
+    flex: 1;
+    height: 36px;
+    border-radius: 7px;
+    border: 1.5px solid var(--ThemeBorderColor);
+    background-color: transparent;
+    color: var(--ThemeFontColor);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+#ColorLibraryChangeNameCancelBtn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+#ColorLibraryChangeNameButton {
+    flex: 1;
+    height: 36px;
+    border-radius: 7px;
+    border: none;
+    background-color: #7eb3ff;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#ColorLibraryChangeNameButton:hover {
+    background-color: #5a9ef5;
+    box-shadow: rgba(126, 179, 255, 0.4) 0px 4px 12px;
+}
+
+
+/*Draggable*/
+
+.drag {
+    cursor: grab;
+}
+
+.chosen {
+    background-color: #c8ebfb;
+}
+
+.flex-group {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: hidden auto;
+    padding: 8px 0;
+    box-sizing: border-box;
+}
+
+    .flex-group > div {
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+        list-style: none;
+    }

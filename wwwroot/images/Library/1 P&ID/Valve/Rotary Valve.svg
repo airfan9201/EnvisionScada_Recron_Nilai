@@ -1,0 +1,28 @@
+<svg
+   viewBox="0 0 14.85653 7.6788254"
+   version="1.1"
+   id="svg15016"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+ 
+  <g
+     id="layer1"
+     transform="translate(-64.085249,-123.86329)">
+    <g
+       id="g15062">
+      <path
+         d="m 38.949,4919.426 c 0,5.816 4.715,10.531 10.528,10.531 5.816,0 10.531,-4.715 10.531,-10.531 0,-5.813 -4.715,-10.528 -10.531,-10.528 -5.813,0 -10.528,4.715 -10.528,10.528 z"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7595"
+         transform="matrix(0.35277777,0,0,-0.35277777,54.058599,1863.1674)" />
+      <g
+         id="g7597"
+         transform="matrix(0.35277777,0,0,0.35277777,54.058599,-226.22371)">
+        <path
+           d="m 38.949,1003.258 c 0,-5.817 4.715,-10.531 10.528,-10.531 5.816,0 10.531,4.714 10.531,10.531 0,5.812 -4.715,10.527 -10.531,10.527 -5.813,0 -10.528,-4.715 -10.528,-10.527 z m 0,-10.531 v 21.058 m 21.059,-21.058 v 21.058 m -31.586,-10.527 h 10.527 m 31.586,0 H 60.008"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7599" />
+      </g>
+    </g>
+  </g>
+</svg>

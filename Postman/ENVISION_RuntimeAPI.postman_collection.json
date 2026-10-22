@@ -1,0 +1,270 @@
+﻿{
+  "info": {
+    "name": "ENVISION Runtime API",
+    "_postman_id": "envision-runtime-api-v2",
+    "description": "ENVISION Runtime API collection aligned with Controllers/API.cs.\n\nAll requests authenticate via HTTP Basic auth (Authorization header).\nSet the collection variables 'base_url', 'username' and 'password' before use.\n\nVariable names are free-form since schema v68. Use the full canonical name as returned by GetVariableList or GetVariableDictionary (e.g. 'PLC.Temperature', 'IP1_Speed', or 'Counter').\nHistoric alarm/event endpoints use a simplified request body: startDatetime, endDatetime and optional search. They always return at most 10000 rows ordered by OnTime DESC.\nAdmin-only runtime endpoints are included for parameter reads and updates.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{username}}", "type": "string" },
+      { "key": "password", "value": "{{password}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1" },
+    { "key": "username", "value": "Admin" },
+    { "key": "password", "value": "Admin" },
+    { "key": "script_endpoint", "value": "ProcessSensorData" }
+  ],
+  "item": [
+    {
+      "name": "Get Variable List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/API/GetVariableList",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetVariableList"]
+        },
+        "description": "Returns all variables in the system as a JSON array.\nEach item contains: Name, Min, Max and Units. Name is the full canonical name (free-form since schema v68).\nExample items: { \"name\": \"PLC.Temperature\", \"min\": 0, \"max\": 100, \"units\": \"°C\" } or { \"name\": \"IP1_Speed\", \"min\": 0, \"max\": 1500, \"units\": \"rpm\" }"
+      }
+    },
+    {
+      "name": "Get Data",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/GetData",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetData"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  \"PLC.Temperature\",\n  \"PLC.Pressure\",\n  \"PLC.FlowRate\"\n]"
+        },
+        "description": "Subscribe to a list of variables and get their current values.\nBody: JSON array of full canonical variable names as returned by GetVariableList or GetVariableDictionary.\nReturns a JSON array where each item contains: Name, Value, TimeStamp, Units and Status."
+      }
+    },
+    {
+      "name": "Read Variable",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/ReadVariable",
+          "host": ["{{base_url}}"],
+          "path": ["API", "ReadVariable"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"variable\": \"PLC.Temperature\"\n}"
+        },
+        "description": "Read a single variable by its full canonical name.\nUse the exact name returned by GetVariableList or GetVariableDictionary.\nReturns a response object with Variable, Value, TimeStamp, Status and Units."
+      }
+    },
+    {
+      "name": "Get Historic Data",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/GetHistoricData",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetHistoricData"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"variable\": \"PLC.Temperature\",\n  \"startDatetime\": \"2024-01-01T00:00:00.000Z\",\n  \"endDatetime\": \"2024-01-02T00:00:00.000Z\"\n}"
+        },
+        "description": "Retrieve historic trend data for a variable.\nSince schema v68 variable names are full canonical names (free-form), so the historian is queried by the variable name alone; there is no separate device field.\nDatetime format: ISO 8601 round-trip (yyyy-MM-ddTHH:mm:ss.fffZ).\nReturns a JSON array where each item contains: Value and TimeStamp."
+      }
+    },
+    {
+      "name": "Get Active Alarms",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/API/GetActiveAlarms",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetActiveAlarms"]
+        },
+        "description": "Returns the current active/returned-unacknowledged alarm list, aligned with AlarmViewer.\nEach item includes state flags, timestamps and both configured and resolved alarm messages.\nNo request body is required."
+      }
+    },
+    {
+      "name": "Get Historic Alarms",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/GetHistoricAlarms",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetHistoricAlarms"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDatetime\": \"2024-01-01T00:00:00.000Z\",\n  \"endDatetime\": \"2024-01-02T00:00:00.000Z\",\n  \"search\": \"Boiler\"\n}"
+        },
+        "description": "Returns historic alarms between two dates.\nRequest body fields: startDatetime, endDatetime and optional search.\nThe API always applies ORDER BY OnTime DESC with a maximum of 10000 rows.\nDatetime format: ISO 8601 round-trip (yyyy-MM-ddTHH:mm:ss.fffZ)."
+      }
+    },
+    {
+      "name": "Get Historic Events",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/GetHistoricEvents",
+          "host": ["{{base_url}}"],
+          "path": ["API", "GetHistoricEvents"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"startDatetime\": \"2024-01-01T00:00:00.000Z\",\n  \"endDatetime\": \"2024-01-02T00:00:00.000Z\",\n  \"search\": \"System\"\n}"
+        },
+        "description": "Returns historic events between two dates.\nRequest body fields: startDatetime, endDatetime and optional search.\nThe API always applies ORDER BY OnTime DESC with a maximum of 10000 rows.\nDatetime format: ISO 8601 round-trip (yyyy-MM-ddTHH:mm:ss.fffZ)."
+      }
+    },
+    {
+      "name": "Sign Action (Signature Verify)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/Signature/Verify",
+          "host": ["{{base_url}}"],
+          "path": ["API", "Signature", "Verify"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"UserName\": \"{{username}}\",\n  \"Password\": \"{{password}}\",\n  \"Meaning\": \"Approval\",\n  \"Comment\": \"Acknowledged from the API\",\n  \"ActionKey\": \"Alarm.Ack\"\n}"
+        },
+        "description": "Records an electronic signature and returns a single-use token, for actions that require a signature in Part 11 compliance mode.\nThe signature must belong to the authenticated caller: Basic auth callers sign for their own user name.\nRepeat the protected request with the returned token in the X-Signature-Token header. The token is bound to the action key and user and expires after 2 minutes.\nAction keys currently used by the runtime alarm endpoints: Alarm.Ack.\nMCP clients run the same flow with the SignAction tool and pass the token as the signatureToken argument of the protected tool."
+      }
+    },
+    {
+      "name": "Acknowledge Active Alarms",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/AcknowledgeActiveAlarms",
+          "host": ["{{base_url}}"],
+          "path": ["API", "AcknowledgeActiveAlarms"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"AlarmIds\": [ 3 ],\n  \"Comment\": \"Checked on site\"\n}"
+        },
+        "description": "Acknowledges one or more active alarms, the same action as the Acknowledge button on the Alarm Viewer.\nAlarmIds are the Id values returned by Get Active Alarms. Comment is optional.\nRequires the Alarm Acknowledge right on one of the calling user's user groups.\nAcknowledging more than one alarm in a single call also requires the Alarm Acknowledge All right.\nWhen compliance mode requires an electronic signature for Alarm.Ack, the call answers with signatureRequired.\nRun Sign Action (Signature Verify) first and repeat this request with the returned token in the X-Signature-Token header."
+      }
+    },
+    {
+      "name": "Acknowledge Historic Alarm",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/AcknowledgeHistoricAlarm",
+          "host": ["{{base_url}}"],
+          "path": ["API", "AcknowledgeHistoricAlarm"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"AlarmId\": 1234,\n  \"Comment\": \"Reviewed\"\n}"
+        },
+        "description": "Acknowledges one historic alarm.\nAlarmId is the Id value returned by Get Historic Alarms. Comment is optional.\nRequires the Alarm Acknowledge right on one of the calling user's user groups.\nWhen compliance mode requires an electronic signature for Alarm.Ack, the call answers with signatureRequired.\nRun Sign Action (Signature Verify) first and repeat this request with the returned token in the X-Signature-Token header."
+      }
+    },
+    {
+      "name": "Remove Active Alarms",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/RemoveActiveAlarms",
+          "host": ["{{base_url}}"],
+          "path": ["API", "RemoveActiveAlarms"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"AlarmIds\": [ 3 ]\n}"
+        },
+        "description": "Removes one or more active alarms from the active alarm list without acknowledging them, the same action as Remove on the Alarm Viewer.\nAlarmIds are the Id values returned by Get Active Alarms.\nRequires the Alarm Remove Active right on one of the calling user's user groups.\nRemoving more than one alarm in a single call also requires the Alarm Remove All Active right.\nEach removal is recorded in the audit trail. The historic alarm record is kept."
+      }
+    },
+    {
+      "name": "Write Variable",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/WriteVariable",
+          "host": ["{{base_url}}"],
+          "path": ["API", "WriteVariable"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"variable\": \"PLC.Temperature\",\n  \"value\": \"75.5\"\n}"
+        },
+        "description": "Write a value to a variable by its full canonical name.\nUse the exact name returned by GetVariableList or GetVariableDictionary.\nThe authenticated user must have write rights for the target variable.\nReturns 'OK' on success."
+      }
+    },
+    {
+      "name": "Restart Device",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/Device/Restart",
+          "host": ["{{base_url}}"],
+          "path": ["API", "Device", "Restart"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"deviceName\": \"PLC1\"\n}"
+        },
+        "description": "Restart one running device by name.\nThe driver connection is closed, the device configuration is re-read from Configuration.db and a new driver thread is started, so a restart also applies any pending configuration changes for that device.\nThe restart is queued and takes a few seconds to complete; follow the '<DeviceName>.ChannelState' variable for progress.\nRestarting an MQTT device name restarts its parent MQTT client and every device that belongs to it.\nRequires the caller's user group to carry DeviceConnectionControlRight; members of the Administrators group always pass. A caller without the right is refused with 'User does not have the rights to restart devices.' and the refusal is recorded in the audit trail as DeviceRestartDenied.\nRejected on a standby server and for an unknown device name.\nSignature-gated under action key 'Device.Restart' when compliance mode is enabled: sign with POST API/Signature/Verify and retry with the X-Signature-Token header.\nReturns 'OK' on success."
+      }
+    },
+    {
+      "name": "Database Query",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/DatabaseQuery",
+          "host": ["{{base_url}}"],
+          "path": ["API", "DatabaseQuery"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"database\": \"SQLite\",\n  \"connString\": \"\",\n  \"sqlQuery\": \"SELECT * FROM HistoricData LIMIT 10\"\n}"
+        },
+        "description": "Execute a read-only SQL query against a configured database.\nSupported databases depend on the ENVISION installation."
+      }
+    },
+    {
+      "name": "Execute Python Script Endpoint",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {
+          "raw": "{{base_url}}/API/{{script_endpoint}}",
+          "host": ["{{base_url}}"],
+          "path": ["API", "{{script_endpoint}}"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"temperature\": 23.5,\n  \"source\": \"external-system\"\n}"
+        },
+        "description": "Executes the Python script whose EndPoint field matches the last URL segment (dynamic endpoint feature).\nSet the collection variable 'script_endpoint' to the script's EndPoint value.\nThe script must be enabled and must not be a module.\nAccess follows the script's User Groups; when the script has no user groups, only Administrators may execute it.\nThe entire request body is passed to the script and is readable inside the script with GetParam('body').\nReturns the script's printed output."
+      }
+    }
+  ]
+}

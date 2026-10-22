@@ -1,0 +1,38 @@
+<svg
+   viewBox="0 0 5.8017125 8.9721546"
+   version="1.1"
+   id="svg15711"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+ 
+  <g
+     id="layer1"
+     transform="translate(-113.25261,-88.87775)">
+    <g
+       id="g15767">
+      <path
+         d="m 327.918,5027.555 v -8.11 l 16.219,8.11 v -8.11 z m 1.621,4.054 h 12.977 v 12.973 h -12.977 v -12.973"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7821"
+         transform="matrix(0.35277777,0,0,-0.35277777,-2.3895668,1868.534)" />
+      <g
+         id="g7823"
+         transform="matrix(0.35277777,0,0,0.35277777,-2.3895668,-220.85711)">
+        <path
+           d="m 327.918,895.129 v 8.109 l 16.219,-8.109 v 8.109 z m 8.109,4.055 v -8.11 m -6.488,0 h 12.977 v -12.972 h -12.977 v 12.972"
+           style="stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7825" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text7829"
+         x="115.1254"
+         y="92.606606"><tspan
+           x="115.1254"
+           y="92.606606"
+           id="tspan7827"
+           style="stroke-width:0.352778">H</tspan></text>
+    </g>
+  </g>
+</svg>

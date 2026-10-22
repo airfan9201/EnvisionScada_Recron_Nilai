@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "ENVISION MCP OAuth",
+    "_postman_id": "envision-mcp-oauth-v1",
+    "description": "OAuth 2.0 endpoints for the ENVISION MCP server (Controllers/McpOAuthController.cs). These are inert unless the EnableMcpOAuth parameter is True; while off they return 404 and the MCP endpoint keeps its HTTP Basic + session-cookie behaviour. The discovery, authorize, token and register endpoints are intentionally not behind the /mcp bearer guard so a client can obtain a token. ENVISION is both the authorization server and the resource server, so no external identity provider is required. Set collection variables base_url, username and password before use; use http://127.0.0.1 for base_url. The password grant is for machine-to-machine callers and maps directly onto ENVISION credentials via LoginHelper. Interactive clients use the authorization-code + PKCE flow via /mcp/oauth/authorize, which is a browser sign-in page and is not scripted here.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Authorization Server Metadata",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/.well-known/oauth-authorization-server",
+          "host": ["{{base_url}}"],
+          "path": [".well-known", "oauth-authorization-server"]
+        },
+        "description": "RFC 8414 authorization-server metadata: issuer, authorize/token/registration endpoints, supported grant types and PKCE methods. Returns 404 when EnableMcpOAuth is False."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Protected Resource Metadata",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/.well-known/oauth-protected-resource",
+          "host": ["{{base_url}}"],
+          "path": [".well-known", "oauth-protected-resource"]
+        },
+        "description": "RFC 9728 protected-resource metadata: points the client at the authorization server. Returns 404 when EnableMcpOAuth is False."
+      },
+      "response": []
+    },
+    {
+      "name": "Register Client (dynamic registration)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"redirect_uris\": [\"http://127.0.0.1/callback\"],\n  \"client_name\": \"Example MCP Client\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/mcp/oauth/register",
+          "host": ["{{base_url}}"],
+          "path": ["mcp", "oauth", "register"]
+        },
+        "description": "RFC 7591 dynamic client registration. Returns a generated client_id for a public (PKCE) client."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Token (password grant)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var json = pm.response.json();",
+              "if (json && json.access_token) {",
+              "  pm.collectionVariables.set('mcp_access_token', json.access_token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "grant_type", "value": "password" },
+            { "key": "username", "value": "{{username}}" },
+            { "key": "password", "value": "{{password}}" }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/mcp/oauth/token",
+          "host": ["{{base_url}}"],
+          "path": ["mcp", "oauth", "token"]
+        },
+        "description": "Resource-owner password grant for machine-to-machine callers. On success the test script stores access_token in the mcp_access_token collection variable."
+      },
+      "response": []
+    },
+    {
+      "name": "Call MCP with Bearer token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{mcp_access_token}}" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json, text/event-stream" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"tools/list\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/mcp",
+          "host": ["{{base_url}}"],
+          "path": ["mcp"]
+        },
+        "description": "Calls the MCP endpoint with the bearer token obtained above, proving OAuth authentication works end to end."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1" },
+    { "key": "username", "value": "Admin" },
+    { "key": "password", "value": "Admin" },
+    { "key": "mcp_access_token", "value": "" }
+  ]
+}

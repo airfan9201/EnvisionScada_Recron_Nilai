@@ -1,0 +1,31 @@
+<svg
+   viewBox="0 0 11.398515 11.399572"
+   version="1.1"
+   id="svg37299"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-85.459158,-102.73463)">
+    <g
+       id="g37350">
+      <g
+         id="g1333"
+         transform="matrix(0.35277777,0,0,0.35277777,-78.715017,-446.76001)">
+        <path
+           d="m 465.73,1557.977 h 31.602 v 31.605 H 465.73 Z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1335" />
+      </g>
+      <g
+         id="g1337"
+         transform="matrix(0.35277777,0,0,0.35277777,-78.715017,-446.76001)">
+        <path
+           d="m 478.355,1562.668 6.317,22.246 c 0,0 1.012,1.438 -0.848,2.453 0,0 -2.39,1.442 -4.676,0 0,0 -1.859,-0.91 -0.851,-2.504 l 6.324,-22.148 c 0,0 1.219,-1.277 -0.48,-2.485 0,0 -2.391,-1.531 -5.258,0 0,0 -1.531,0.961 -0.528,2.438 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1339" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<svg
+   viewBox="0 0 9.8368835 9.8362055"
+   version="1.1"
+   id="svg29245"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+ 
+  <g
+     id="layer1"
+     transform="translate(-74.477598,-109.02993)">
+    <g
+       id="g29306">
+      <path
+         d="m 345.781,5310.191 v 0 c 5.403,5.403 5.403,14.157 0,19.559 -5.398,5.398 -14.156,5.398 -19.554,0 0,0 0,0 0,0 -5.403,-5.402 -5.403,-14.156 0,-19.559 5.398,-5.398 14.156,-5.398 19.554,0 z"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path6873"
+         transform="matrix(0.35277777,0,0,-0.35277777,-39.138657,1990.7154)" />
+      <g
+         id="g6875"
+         transform="matrix(0.35277777,-0.35277777,0.35277777,0.35277777,-39.138657,-98.675713)">
+        <path
+           d="m -133.356,479.137 c 5.403,0 9.78,-4.377 9.78,-9.78 0,-5.398 -4.379,-9.777 -9.778,-9.777 0,0 0,0 0,0 -5.402,0 -9.779,4.377 -9.779,9.779 0,5.399 4.379,9.778 9.777,9.778 z m -9.777,-9.778 19.557,-0.002"
+           style="stroke:#000000;stroke-width:0.160372;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6877" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text6883"
+         x="79.875801"
+         y="117.02579"><tspan
+           x="79.875801"
+           y="117.02579"
+           id="tspan6879"
+           style="stroke-width:0.352778">P</tspan><tspan
+           x="76.875816"
+           y="114.02581"
+           id="tspan6881"
+           style="stroke-width:0.352778">1</tspan></text>
+    </g>
+  </g>
+</svg>

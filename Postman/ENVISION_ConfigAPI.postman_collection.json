@@ -1,0 +1,4237 @@
+﻿{
+ "info": {
+  "name": "ENVISION Config API",
+  "_postman_id": "envision-config-api-v2",
+  "description": "ENVISION Config API collection aligned with Controllers/ConfigController.cs. All requests use collection-level HTTP Basic auth. Set collection variables base_url, username, password, and the relevant *_id values before use. Config calls live in ConfigController.cs under /API/Config and require a user in the Administrators group. Runtime calls live in API.cs under /API. Config reads use GET. Creates use POST with JSON array bodies. All config GET endpoints except Parameters include ids, and all inserts except Parameters return created ids. A successful insert answers in ONE shape whatever the item count: { success, created: <count>, failed: <count>, results: [ { key, success, id, warnings? } ] } - the new id is in results[i].id, including when the array held a single item. A single item that is REJECTED still answers with the top-level failure shape ({ success: false, error, validationErrors }), which is what the create dialogs render. A validation message now also quotes the rejected value, except on password, secret, token and key fields. Schedule names follow the same rule as report names (letters, digits, space, underscore, dash, dot, parentheses; no comma). Updates use PUT with JSON array bodies whose items include id. Deletes use POST /Delete endpoints with JSON array bodies of ids. Live config delete handlers in ConfigController are routed through the shared DB helper so delete operations enqueue config changes for standby sync, including variable handlers (ModbusTcp, OpcUa, EthernetIP, Dnp3, MQTT), device deletes, and remaining single-row config deletes. Create payload normalization now applies centralized server-side defaults for config entities so omitted JsonRequired properties are completed consistently with the Razor Pages create flows, including entities such as Pages, Alarms, Events, Schedules, Converters, UserGroups, DataForwarders, LocalVariables, ICMPDevices, ModbusTcpDevices, ModbusTcpVariables, OpcUaDevices, OpcUaVariables, EthernetIPDevices, EthernetIPVariables, Dnp3Devices, Dnp3Variables, BacnetDevices, BacnetVariables, Iec104Devices, Iec104Variables, MelsecDevices, MelsecVariables, S7Devices, S7Variables, MqttClients, MqttDevices, MqttVariables, KafkaDevices and PythonScripts. DataForwarders use DataQuery for new HistoricData rows, AlarmQuery and EventQuery for new HistoricAlarms and HistoricEvents rows, and optional AlarmUpdateQuery and EventUpdateQuery for later historian-driven updates on already-forwarded alarm and event rows, plus AuditQuery for new AuditTrail rows and SignatureQuery for new Signatures rows. Audit and signature records are immutable, so neither has an update query. ForwardSignatures requires ForwardAudit and is rejected without it (errorKey SignatureForwardingRequiresAudit): a signature is only meaningful together with the audit record it authorized. Signatures are always forwarded ahead of the audit rows that reference them, and an audit row whose signature has not been forwarded yet is held back rather than sent with an unresolvable SignatureId. Parameters use POST with a JSON array body to update existing Parameters page settings; GET /Parameters returns the page-managed subset by default, and ?pageOnly=false returns all parameters. Parameter updates use the same centralized validation and runtime propagation path as the Razor Pages settings screen. Variable reads support optional ?deviceId=. Variable creates use ?deviceId=. MQTT device creates use ?mqttClientId=. MQTT parent-name fields are read-only context values, so MQTT update payloads do not need mqttClientName and MQTT variable updates may omit deviceName when the current item already identifies it. Page lookup uses /Pages/{id}. Failure responses always carry success:false (insert, update and delete failures alike) and render error and validationErrors as English strings; additive companion fields errorKey and validationErrorKeys carry an optional stable message key plus args ({ key, args } or null per entry) that clients such as the ENVISION GUI use to translate messages locally - duplicate UdtInstance names report errorKey UdtInstanceAlreadyExists. API consumers can ignore these companion fields. Template fan-out applies to all driver variable endpoints (ModbusTcp, OpcUa, EthernetIP, Bacnet, Iec104, Melsec, S7, Dnp3, Mqtt): when the target device is a master (empty Template), variable POST also inserts into every instance device whose Template equals the master's Name, variable PUT also updates the same-named variable on every instance while preserving each instance's own modbusAddress (fan-out is skipped when the update moves the variable to another device), and variable Delete cascades to instances. The returned id on POST is the variable id on the target device. Pages write contract accepts an optional refreshTime (omitted keeps the current or default 250 ms value); page POST and PUT renames reject reserved page names; Pages delete refuses the Admin page and self-heals the first page. PythonScripts POST and PUT enforce reserved and duplicate EndPoint names, and PUT with script omitted or null preserves the stored script body. Reports support GET by id via /Reports/{id} (the list omits templateJson), omitted templateJson preserves the stored layout on PUT and seeds the default layout on POST, and a client may echo updatedUtc from a previous GET for opt-in optimistic concurrency (a stale echo is rejected; omitting updatedUtc keeps last-writer-wins). Users endpoints accept, besides Administrators, callers holding UserEditRight (GET, POST, PUT) or UserDeleteRight (GET, Delete); Administrators-group membership changes and Admin-account changes remain restricted. UserGroups PUT and Delete refuse the built-in Administrators group.",
+  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+ },
+ "auth": {
+  "type": "basic",
+  "basic": [
+   {
+    "key": "username",
+    "value": "{{username}}",
+    "type": "string"
+   },
+   {
+    "key": "password",
+    "value": "{{password}}",
+    "type": "string"
+   }
+  ]
+ },
+ "variable": [
+  {
+   "key": "base_url",
+   "value": "http://127.0.0.1"
+  },
+  {
+   "key": "username",
+   "value": "Admin"
+  },
+  {
+   "key": "password",
+   "value": "Admin"
+  },
+  {
+   "key": "page_id",
+   "value": "1"
+  },
+  {
+   "key": "modbus_device_id",
+   "value": "1"
+  },
+  {
+   "key": "opcua_device_id",
+   "value": "1"
+  },
+  {
+   "key": "ethernetip_device_id",
+   "value": "1"
+  },
+  {
+   "key": "dnp3_device_id",
+   "value": "1"
+  },
+  {
+   "key": "bacnet_device_id",
+   "value": "1"
+  },
+  {
+   "key": "iec104_device_id",
+   "value": "1"
+  },
+  {
+   "key": "melsec_device_id",
+   "value": "1"
+  },
+  {
+   "key": "mqtt_client_id",
+   "value": "1"
+  },
+  {
+   "key": "mqtt_device_id",
+   "value": "1"
+  },
+  {
+   "key": "udt_definition_id",
+   "value": "1"
+  }
+ ],
+ "item": [
+  {
+   "name": "Variable Dictionary",
+   "item": [
+    {
+     "name": "GET Variables (consolidated dictionary)",
+     "request": {
+      "method": "GET",
+      "description": "Consolidated, read-only variable dictionary across every variable table plus Local variables. Reads from config, so variables on disabled or not-yet-loaded devices are included. The response is an envelope: { totalCount, offset, limit, rows }, where totalCount counts the whole FILTERED result and rows holds the requested page. Each row reports resolvedName (the full runtime key - use verbatim for reads, writes, conditions, expressions and Python calls; never device-prefix it), storedName (raw config value, may contain the {Device} token), device (owning device name, empty for Local), table, deviceId, id, isLive, units, description, asset, managed (locked by a UDT instance) and udtInstance. Administrators only. This is the canonical way to map a variable back to its origin device now that names are free-form. The project can hold thousands of variables, so narrow the result with the optional query filters: device, table, search, liveOnly, managedOnly. Paging: limit defaults to 500 and offset to 0; limit=0 returns the whole filtered result in one response.",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Variables"
+     }
+    },
+    {
+     "name": "GET Variables (filtered)",
+     "request": {
+      "method": "GET",
+      "description": "Filtered and paged variable dictionary. device = exact owning device name; table = one variable table (e.g. ModbusTcpVariables); search = substring over resolvedName/storedName/device/description/asset; liveOnly = only variables loaded in the runtime; managedOnly = only UDT-locked variables; offset/limit page the filtered result (limit defaults to 500, limit=0 means no limit). Compare rows.length with totalCount to see whether more pages remain. Combine as needed.",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/API/Config/Variables?device=PowerMeter_MB&table=ModbusTcpVariables&search=&liveOnly=true&managedOnly=false&offset=0&limit=500",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "API",
+        "Config",
+        "Variables"
+       ],
+       "query": [
+        {
+         "key": "device",
+         "value": "PowerMeter_MB"
+        },
+        {
+         "key": "table",
+         "value": "ModbusTcpVariables"
+        },
+        {
+         "key": "search",
+         "value": ""
+        },
+        {
+         "key": "liveOnly",
+         "value": "true"
+        },
+        {
+         "key": "managedOnly",
+         "value": "false"
+        },
+        {
+         "key": "offset",
+         "value": "0"
+        },
+        {
+         "key": "limit",
+         "value": "500"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Device Inventory",
+   "item": [
+    {
+     "name": "GET Devices (consolidated inventory)",
+     "request": {
+      "method": "GET",
+      "description": "Consolidated, read-only device inventory across every protocol. Reads from config, so disabled and not-yet-loaded devices are included, and devices that own no variables are listed too. Each entry reports name, protocol (short key; the config entity type is protocol + 'Devices'), id, enabled (config on/off state), live (loaded in the runtime; disabled devices are still loaded, so use enabled for on/off) and description. Administrators only. Optional query filters: protocol, search, enabledOnly, liveOnly.",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Devices"
+     }
+    },
+    {
+     "name": "GET Devices (filtered)",
+     "request": {
+      "method": "GET",
+      "description": "Filtered device inventory. protocol = short protocol key (e.g. ModbusTcp, OpcUa, S7, ICMP, Kafka); search = substring over name/description; enabledOnly = only devices enabled in config; liveOnly = only devices running in the runtime.",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/API/Config/Devices?protocol=ModbusTcp&search=&enabledOnly=true&liveOnly=false",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "API",
+        "Config",
+        "Devices"
+       ],
+       "query": [
+        {
+         "key": "protocol",
+         "value": "ModbusTcp"
+        },
+        {
+         "key": "search",
+         "value": ""
+        },
+        {
+         "key": "enabledOnly",
+         "value": "true"
+        },
+        {
+         "key": "liveOnly",
+         "value": "false"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Parameters",
+   "item": [
+    {
+     "name": "GET Parameters (page-managed default)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Parameters"
+     }
+    },
+    {
+     "name": "GET Parameters (all via ?pageOnly=false)",
+     "request": {
+      "method": "GET",
+      "description": "Returns all parameters. Secret values (RedundancySharedSecret, AiChatApiKeyEncrypted) are masked as ???????? and are never returned in clear text.",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Parameters?pageOnly=false"
+     }
+    },
+    {
+     "name": "UPDATE Parameters (POST - array)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Parameters",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"CSVDelimiter\",\n    \"value\": \";\"\n  },\n  {\n    \"name\": \"TrainingSimulator\",\n    \"value\": \"False\"\n  },\n  {\n    \"name\": \"EnableMqttBroker\",\n    \"value\": \"False\"\n  },\n  {\n    \"name\": \"MqttBrokerPort\",\n    \"value\": \"1883\"\n  },\n  {\n    \"name\": \"MqttBrokerTlsEnabled\",\n    \"value\": \"False\"\n  },\n  {\n    \"name\": \"MqttBrokerTlsPort\",\n    \"value\": \"8883\"\n  },\n  {\n    \"name\": \"MqttBrokerCertificateName\",\n    \"value\": \"\"\n  },\n  {\n    \"name\": \"MqttBrokerAllowAnonymous\",\n    \"value\": \"False\"\n  },\n  {\n    \"name\": \"MqttBrokerEnforceTopicAcl\",\n    \"value\": \"True\"\n  },\n  {\n    \"name\": \"MqttBrokerLogEntries\",\n    \"value\": \"2000\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Color Library",
+   "item": [
+    {
+     "name": "GET ColorLibrary",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ColorLibrary"
+     }
+    },
+    {
+     "name": "INSERT ColorLibrary (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump_Running\",\n    \"color\": \"#4CAF50\"\n  },\n  {\n    \"name\": \"Pump_Fault\",\n    \"color\": \"#F44336\"\n  },\n  {\n    \"name\": \"Glass_Overlay\",\n    \"color\": \"#FFFFFF80\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE ColorLibrary (PUT, array body keyed by name)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump_Running\",\n    \"color\": \"#2E7D32\"\n  },\n  {\n    \"name\": \"Glass_Overlay\",\n    \"color\": \"#FFFFFF40\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "RENAME ColorLibrary color (PUT, newName)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump_Fault\",\n    \"newName\": \"Pump_Alarm\",\n    \"color\": \"#F44336\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE ColorLibrary (POST /Delete, array body of names)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  \"Pump_Running\",\n  \"Glass_Overlay\"\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET ColorLibrary for one theme",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ColorLibrary?theme=Night"
+     }
+    },
+    {
+     "name": "UPDATE ColorLibrary color in one theme (PUT ?theme=)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary?theme=Night",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump_Running\",\n    \"color\": \"#1B5E20\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "REORDER ColorLibrary (PUT /Order, array body of names)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Order",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  \"Glass_Overlay\",\n  \"Pump_Running\"\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET ColorLibrary Themes",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Themes"
+     }
+    },
+    {
+     "name": "INSERT ColorLibrary Theme (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Themes",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Night\",\n    \"copyFrom\": \"Default\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE ColorLibrary Theme (PUT, rename and/or set default)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Themes",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Night\",\n    \"newName\": \"Night Shift\",\n    \"isDefault\": false\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE ColorLibrary Theme (POST /Themes/Delete, array body of names)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ColorLibrary/Themes/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  \"Night Shift\"\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Users",
+   "item": [
+    {
+     "name": "GET Users",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Users"
+     }
+    },
+    {
+     "name": "INSERT Users (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Users",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"userName\": \"ApiUserA\",\n    \"password\": \"P@ssword1\",\n    \"userGroups\": \"OperatorsA\",\n    \"homePage\": \"OverviewA\",\n    \"defaultLanguage\": \"English\",\n    \"fullName\": \"\",\n    \"email\": \"\",\n    \"mustChangePassword\": true\n  },\n  {\n    \"userName\": \"ApiUserB\",\n    \"password\": \"P@ssword2\",\n    \"userGroups\": \"OperatorsB\",\n    \"homePage\": \"OverviewB\",\n    \"defaultLanguage\": \"English\",\n    \"fullName\": \"\",\n    \"email\": \"\",\n    \"mustChangePassword\": true\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Users (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Users",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"userName\": \"john\",\n    \"password\": \"????????\",\n    \"userGroups\": \"Operators\",\n    \"homePage\": \"Overview\",\n    \"defaultLanguage\": \"English\",\n    \"fullName\": \"\",\n    \"email\": \"\",\n    \"mustChangePassword\": false\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Users (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Users/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Alarms",
+   "item": [
+    {
+     "name": "GET Alarms",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Alarms"
+     }
+    },
+    {
+     "name": "INSERT Alarms (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Alarms",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.TemperatureA > 100\",\n    \"message\": \"Temperature too high A\",\n    \"severity\": 1,\n    \"alarmGroups\": \"\",\n    \"actions\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.TemperatureB > 100\",\n    \"message\": \"Temperature too high B\",\n    \"severity\": 2,\n    \"alarmGroups\": \"\",\n    \"actions\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Alarms (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Alarms",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.Temperature > 100\",\n    \"message\": \"Temperature too high\",\n    \"severity\": 1,\n    \"alarmGroups\": \"\",\n    \"actions\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Alarms (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Alarms/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Events",
+   "item": [
+    {
+     "name": "GET Events",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Events"
+     }
+    },
+    {
+     "name": "INSERT Events (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Events",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.RunningA == 1\",\n    \"message\": \"Device started A\",\n    \"actions\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.RunningB == 1\",\n    \"message\": \"Device started B\",\n    \"actions\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Events (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Events",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"condition\": \"PLC_Test.Running == 1\",\n    \"message\": \"Device started\",\n    \"actions\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Events (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Events/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Pages",
+   "item": [
+    {
+     "name": "GET Pages",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Pages"
+     }
+    },
+    {
+     "name": "GET Page by id",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Pages/{{page_id}}"
+     }
+    },
+    {
+     "name": "INSERT Pages (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Pages",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"OverviewA\",\n    \"style\": \"\",\n    \"userGroups\": \"\",\n    \"libraryPath\": \"\",\n    \"disableZoom\": false,\n    \"disablePan\": false,\n    \"pageScript\": \"\",\n    \"refreshTime\": 0,\n    \"baseScale\": \"\",\n    \"replacers\": \"\"\n  },\n  {\n    \"name\": \"OverviewB\",\n    \"style\": \"\",\n    \"userGroups\": \"\",\n    \"libraryPath\": \"\",\n    \"disableZoom\": false,\n    \"disablePan\": false,\n    \"pageScript\": \"\",\n    \"refreshTime\": 0,\n    \"baseScale\": \"\",\n    \"replacers\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Pages (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Pages",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Overview\",\n    \"style\": \"\",\n    \"userGroups\": \"\",\n    \"libraryPath\": \"\",\n    \"disableZoom\": false,\n    \"disablePan\": false,\n    \"pageScript\": \"\",\n    \"refreshTime\": 0,\n    \"baseScale\": \"\",\n    \"replacers\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Pages (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Pages/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Schedules",
+   "item": [
+    {
+     "name": "GET Schedules",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Schedules"
+     }
+    },
+    {
+     "name": "INSERT Schedules (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Schedules",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"DailyResetA\",\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"fromTime\": \"2000-01-01T06:00:00\",\n    \"toTime\": \"2000-01-01T18:00:00\",\n    \"repeat\": \"Daily\",\n    \"description\": \"Daily operating window A\",\n    \"exceptions\": \"\",\n    \"actions\": \"\",\n    \"actionsOff\": \"\"\n  },\n  {\n    \"name\": \"DailyResetB\",\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"fromTime\": \"2000-01-01T07:00:00\",\n    \"toTime\": \"2000-01-01T19:00:00\",\n    \"repeat\": \"Daily\",\n    \"description\": \"Daily operating window B\",\n    \"exceptions\": \"\",\n    \"actions\": \"\",\n    \"actionsOff\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Schedules (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Schedules",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"DailyReset\",\n    \"enable\": true,\n    \"asset\": \"Plant\",\n    \"fromTime\": \"2000-01-01T06:00:00\",\n    \"toTime\": \"2000-01-01T18:00:00\",\n    \"repeat\": \"Daily\",\n    \"description\": \"Daily operating window\",\n    \"exceptions\": \"\",\n    \"actions\": \"\",\n    \"actionsOff\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Schedules (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Schedules/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Converters",
+   "item": [
+    {
+     "name": "GET Converters",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Converters"
+     }
+    },
+    {
+     "name": "INSERT Converters (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Converters",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"TempConverterA\",\n    \"readConversion\": \"value * 1.8 + 32\",\n    \"writeConversion\": \"(value - 32) / 1.8\",\n    \"description\": \"Celsius to Fahrenheit A\"\n  },\n  {\n    \"name\": \"TempConverterB\",\n    \"readConversion\": \"value * 2\",\n    \"writeConversion\": \"value / 2\",\n    \"description\": \"Scale by two B\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Converters (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Converters",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"TempConverter\",\n    \"readConversion\": \"value * 1.8 + 32\",\n    \"writeConversion\": \"(value - 32) / 1.8\",\n    \"description\": \"Celsius to Fahrenheit\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Converters (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Converters/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Local Variables",
+   "item": [
+    {
+     "name": "GET LocalVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/LocalVariables"
+     }
+    },
+    {
+     "name": "INSERT LocalVariables (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/LocalVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"Local.SetpointA\",\n    \"asset\": \"Plant\",\n    \"type\": \"REAL\",\n    \"value\": \"0\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"persistent\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"Local.SetpointB\",\n    \"asset\": \"Plant\",\n    \"type\": \"REAL\",\n    \"value\": \"0\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"persistent\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE LocalVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/LocalVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"Local.Setpoint\",\n    \"asset\": \"Plant\",\n    \"type\": \"REAL\",\n    \"value\": \"0\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"persistent\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE LocalVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/LocalVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Data Forwarders",
+   "item": [
+    {
+     "name": "GET DataForwarders",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/DataForwarders"
+     }
+    },
+    {
+     "name": "INSERT DataForwarders (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/DataForwarders",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"SqlForwarderA\",\n    \"description\": \"Forward historian data, alarms, and events to SQL A\",\n    \"databaseType\": \"SqlServer\",\n    \"connectionString\": \"Server=localhost;Database=SCADA;Trusted_Connection=True;\",\n    \"forwardData\": true,\n    \"forwardAlarms\": true,\n    \"forwardEvents\": true,\n    \"mode\": \"Insert\",\n    \"dataQuery\": \"INSERT INTO HistoricData (TimeStamp, Variable, Value, Raw, Status) VALUES (@@TimeStamp, @@Variable, @@Value, @@Raw, @@Status)\",\n    \"alarmQuery\": \"INSERT INTO HistoricAlarms (AlarmId, OnTime, OffTime, Severity, Asset, Message, Args, AckTime, AckUser, AckComment) VALUES (@@AlarmId, @@OnTime, @@OffTime, @@Severity, @@Asset, @@Message, @@Args, @@AckTime, @@AckUser, @@AckComment)\",\n    \"alarmUpdateQuery\": \"UPDATE HistoricAlarms SET OffTime = @@OffTime, Severity = @@Severity, Asset = @@Asset, Message = @@Message, Args = @@Args, AckTime = @@AckTime, AckUser = @@AckUser, AckComment = @@AckComment WHERE AlarmId = @@AlarmId AND OnTime = @@OnTime\",\n    \"eventQuery\": \"INSERT INTO HistoricEvents (OnTime, Asset, Identity, Message, Args, AckTime, AckUser, AckComment) VALUES (@@OnTime, @@Asset, @@Identity, @@Message, @@Args, @@AckTime, @@AckUser, @@AckComment)\",\n    \"eventUpdateQuery\": \"UPDATE HistoricEvents SET AckTime = @@AckTime, AckUser = @@AckUser, AckComment = @@AckComment WHERE OnTime = @@OnTime\",\n    \"forwardAudit\": true,\n    \"auditQuery\": \"INSERT INTO AuditTrail (Id, TimestampUtc, UserName, Origin, SourceIp, Category, EntityType, EntityId, EntityName, Action, OldValue, NewValue, Reason, SignatureId, NodeId, PrevHash, RecordHash) VALUES (@@Id, @@TimestampUtc, @@UserName, @@Origin, @@SourceIp, @@Category, @@EntityType, @@EntityId, @@EntityName, @@Action, @@OldValue, @@NewValue, @@Reason, @@SignatureId, @@NodeId, @@PrevHash, @@RecordHash)\",\n    \"forwardSignatures\": true,\n    \"signatureQuery\": \"INSERT INTO Signatures (Id, SignedUtc, UserId, UserName, FullName, Meaning, ActionKey, Comment, ComponentsUsed) VALUES (@@Id, @@SignedUtc, @@UserId, @@UserName, @@FullName, @@Meaning, @@ActionKey, @@Comment, @@ComponentsUsed)\",\n    \"interval\": 5000,\n    \"batchSize\": 500,\n    \"verbose\": 0\n  },\n  {\n    \"enable\": true,\n    \"name\": \"SqlForwarderB\",\n    \"description\": \"Forward historian data and alarm updates to SQL B\",\n    \"databaseType\": \"SqlServer\",\n    \"connectionString\": \"Server=localhost;Database=SCADA;Trusted_Connection=True;\",\n    \"forwardData\": true,\n    \"forwardAlarms\": true,\n    \"forwardEvents\": false,\n    \"mode\": \"Insert\",\n    \"dataQuery\": \"INSERT INTO HistoricData (TimeStamp, Variable, Value, Raw, Status) VALUES (@@TimeStamp, @@Variable, @@Value, @@Raw, @@Status)\",\n    \"alarmQuery\": \"INSERT INTO HistoricAlarms (AlarmId, OnTime, OffTime, Severity, Asset, Message, Args, AckTime, AckUser, AckComment) VALUES (@@AlarmId, @@OnTime, @@OffTime, @@Severity, @@Asset, @@Message, @@Args, @@AckTime, @@AckUser, @@AckComment)\",\n    \"alarmUpdateQuery\": \"UPDATE HistoricAlarms SET OffTime = @@OffTime, Severity = @@Severity, Asset = @@Asset, Message = @@Message, Args = @@Args, AckTime = @@AckTime, AckUser = @@AckUser, AckComment = @@AckComment WHERE AlarmId = @@AlarmId AND OnTime = @@OnTime\",\n    \"eventQuery\": \"\",\n    \"eventUpdateQuery\": \"\",\n    \"forwardAudit\": false,\n    \"auditQuery\": \"\",\n    \"forwardSignatures\": false,\n    \"signatureQuery\": \"\",\n    \"interval\": 6000,\n    \"batchSize\": 250,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE DataForwarders (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/DataForwarders",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"SqlForwarder\",\n    \"description\": \"Forward historian data, alarms, and events to SQL\",\n    \"databaseType\": \"SqlServer\",\n    \"connectionString\": \"Server=localhost;Database=SCADA;Trusted_Connection=True;\",\n    \"forwardData\": true,\n    \"forwardAlarms\": true,\n    \"forwardEvents\": true,\n    \"mode\": \"Insert\",\n    \"dataQuery\": \"INSERT INTO HistoricData (TimeStamp, Variable, Value, Raw, Status) VALUES (@@TimeStamp, @@Variable, @@Value, @@Raw, @@Status)\",\n    \"alarmQuery\": \"INSERT INTO HistoricAlarms (AlarmId, OnTime, OffTime, Severity, Asset, Message, Args, AckTime, AckUser, AckComment) VALUES (@@AlarmId, @@OnTime, @@OffTime, @@Severity, @@Asset, @@Message, @@Args, @@AckTime, @@AckUser, @@AckComment)\",\n    \"alarmUpdateQuery\": \"UPDATE HistoricAlarms SET OffTime = @@OffTime, Severity = @@Severity, Asset = @@Asset, Message = @@Message, Args = @@Args, AckTime = @@AckTime, AckUser = @@AckUser, AckComment = @@AckComment WHERE AlarmId = @@AlarmId AND OnTime = @@OnTime\",\n    \"eventQuery\": \"INSERT INTO HistoricEvents (OnTime, Asset, Identity, Message, Args, AckTime, AckUser, AckComment) VALUES (@@OnTime, @@Asset, @@Identity, @@Message, @@Args, @@AckTime, @@AckUser, @@AckComment)\",\n    \"eventUpdateQuery\": \"UPDATE HistoricEvents SET AckTime = @@AckTime, AckUser = @@AckUser, AckComment = @@AckComment WHERE OnTime = @@OnTime\",\n    \"forwardAudit\": true,\n    \"auditQuery\": \"INSERT INTO AuditTrail (Id, TimestampUtc, UserName, Origin, SourceIp, Category, EntityType, EntityId, EntityName, Action, OldValue, NewValue, Reason, SignatureId, NodeId, PrevHash, RecordHash) VALUES (@@Id, @@TimestampUtc, @@UserName, @@Origin, @@SourceIp, @@Category, @@EntityType, @@EntityId, @@EntityName, @@Action, @@OldValue, @@NewValue, @@Reason, @@SignatureId, @@NodeId, @@PrevHash, @@RecordHash)\",\n    \"forwardSignatures\": true,\n    \"signatureQuery\": \"INSERT INTO Signatures (Id, SignedUtc, UserId, UserName, FullName, Meaning, ActionKey, Comment, ComponentsUsed) VALUES (@@Id, @@SignedUtc, @@UserId, @@UserName, @@FullName, @@Meaning, @@ActionKey, @@Comment, @@ComponentsUsed)\",\n    \"interval\": 5000,\n    \"batchSize\": 500,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE DataForwarders (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/DataForwarders/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "User Groups",
+   "item": [
+    {
+     "name": "GET UserGroups",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UserGroups"
+     }
+    },
+    {
+     "name": "INSERT UserGroups (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UserGroups",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"groupName\": \"OperatorsA\",\n    \"description\": \"Plant operators A\",\n    \"alarmAcknowledgeRight\": true,\n    \"alarmAcknowledgeAllRight\": false,\n    \"alarmDeleteRight\": false,\n    \"alarmRemoveActiveRight\": false,\n    \"alarmRemoveAllActiveRight\": false,\n    \"eventDeleteRight\": false,\n    \"userEditRight\": false,\n    \"userDeleteRight\": false,\n    \"auditViewRight\": false,\n    \"deviceConnectionControlRight\": false,\n    \"sessionTimeout\": 30,\n    \"adGroup\": \"\",\n    \"adHomePage\": \"\",\n    \"adDefaultLanguage\": \"\"\n  },\n  {\n    \"groupName\": \"OperatorsB\",\n    \"description\": \"Plant operators B\",\n    \"alarmAcknowledgeRight\": true,\n    \"alarmAcknowledgeAllRight\": false,\n    \"alarmDeleteRight\": false,\n    \"alarmRemoveActiveRight\": false,\n    \"alarmRemoveAllActiveRight\": false,\n    \"eventDeleteRight\": false,\n    \"userEditRight\": false,\n    \"userDeleteRight\": false,\n    \"auditViewRight\": false,\n    \"deviceConnectionControlRight\": false,\n    \"sessionTimeout\": 30,\n    \"adGroup\": \"\",\n    \"adHomePage\": \"\",\n    \"adDefaultLanguage\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE UserGroups (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UserGroups",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"groupName\": \"Operators\",\n    \"description\": \"Plant operators\",\n    \"alarmAcknowledgeRight\": true,\n    \"alarmAcknowledgeAllRight\": false,\n    \"alarmDeleteRight\": false,\n    \"alarmRemoveActiveRight\": false,\n    \"alarmRemoveAllActiveRight\": false,\n    \"eventDeleteRight\": false,\n    \"userEditRight\": false,\n    \"userDeleteRight\": false,\n    \"auditViewRight\": false,\n    \"deviceConnectionControlRight\": false,\n    \"sessionTimeout\": 30,\n    \"adGroup\": \"\",\n    \"adHomePage\": \"\",\n    \"adDefaultLanguage\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE UserGroups (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UserGroups/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Python Scripts",
+   "item": [
+    {
+     "name": "GET PythonScripts",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/PythonScripts"
+     }
+    },
+    {
+     "name": "INSERT PythonScripts (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/PythonScripts",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"MyScriptA\",\n    \"asset\": \"\",\n    \"userGroups\": \"\",\n    \"description\": \"My Python script A\",\n    \"endPoint\": \"/myscripta\",\n    \"script\": \"print('hello a')\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"MyScriptB\",\n    \"asset\": \"\",\n    \"userGroups\": \"\",\n    \"description\": \"My Python script B\",\n    \"endPoint\": \"/myscriptb\",\n    \"script\": \"print('hello b')\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE PythonScripts (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/PythonScripts",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"MyScript\",\n    \"asset\": \"\",\n    \"userGroups\": \"\",\n    \"description\": \"My Python script\",\n    \"endPoint\": \"/myscript\",\n    \"script\": \"print('hello')\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE PythonScripts (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/PythonScripts/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Reports",
+   "item": [
+    {
+     "name": "GET Reports (list, omits TemplateJson)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Reports",
+      "description": "Returns id, name, enable, description, userGroups, outputPath, fileNamePattern, updatedUtc and lastExecutedUtc for every report; templateJson is omitted (it can be large), fetch one report by id for the template. outputPath is the report's own destination folder (empty = the project folder's Reports subfolder). updatedUtc is stamped by the server on every write; lastExecutedUtc is GET-only runtime state (when the report last executed, empty until the first run) and is never writable."
+     }
+    },
+    {
+     "name": "GET Report by id (includes TemplateJson)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Reports/1",
+      "description": "Returns one report including templateJson and outputPath, plus updatedUtc (echo it on PUT for optimistic concurrency) and lastExecutedUtc (GET-only runtime state, never writable)."
+     }
+    },
+    {
+     "name": "INSERT Reports (POST, array body; empty templateJson = default template)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Reports",
+      "description": "An omitted or empty templateJson seeds the default layout, so a create can be a name-only call followed by template edits. Templates are stored normalized to camelCase (a PascalCase template is accepted and converted). Validation is draft-friendly - empty chart series and unconfigured tables are allowed and render placeholders - but accentColor must be #RRGGBB, at most one footer is allowed per page, templateJson is capped at 512 KB, maxRows on a table/alarmList/eventList must be 1..10000, an image path must be a .png/.jpg/.jpeg under wwwroot, and the report name must not start or end with a space. outputPath is the report's own destination folder for the rendered PDF/XLSX and is not part of templateJson: empty writes into the project folder's Reports subfolder, and any other value must be a FULL path (for example D:\\Reports or \\\\Server\\Share\\Reports), used as given. A relative path is rejected and '..' is not allowed. Any text field, KPI tile binding, computed column and summary aggregate may hold an inline expression written as {= python expression }, for example {= Hist(\"PLC1.Flow\",\"sum\") / Report.Hours }; expressions are parsed when the template is saved, so a syntax error comes back as a validation error. A sqlite query cannot contain one, use the {Report.*}/{Param.*} placeholders there which are bound as query parameters. Call the MCP GetReportTemplateSchema tool for the full expression reference. fileNamePattern names the rendered files without extension (empty = {Report.Name}_{Report.Day}); it must start with \"{Report.Name}_\" so the Files list keeps recognising the report's own output, and it accepts the same placeholders as a text component plus a strftime spec on the typed period, for example {Report.Name}_{Report.Start:%Y%m%d_%H%M}_{Param.Line}. Omit it on update to keep the stored pattern.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Daily Production Report\",\n    \"enable\": true,\n    \"description\": \"Daily line 1 report\",\n    \"userGroups\": \"Operators\",\n    \"outputPath\": \"\",\n    \"fileNamePattern\": \"\",\n    \"templateJson\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Reports (PUT, array body with ids; full templateJson, optional updatedUtc echo)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Reports",
+      "description": "Updates reports by id. templateJson is validated structurally and stored normalized to camelCase (a PascalCase template is accepted and converted); see the insert request for the validation rules. Optimistic concurrency is opt-in: a client may echo the updatedUtc it read from a previous GET, and when present and different from the stored value the update is rejected with a clear error, so two concurrent editors cannot silently overwrite each other. Omitting updatedUtc keeps last-writer-wins. lastExecutedUtc is GET-only runtime state and is never writable. outputPath is the report's own destination folder and follows the same preservation rule as templateJson: omit it to keep the stored destination, send an empty string to reset it to the project folder's Reports subfolder. Any text field, KPI tile binding, computed column and summary aggregate may hold an inline expression written as {= python expression }, for example {= Hist(\"PLC1.Flow\",\"sum\") / Report.Hours }; expressions are parsed when the template is saved, so a syntax error comes back as a validation error. A sqlite query cannot contain one, use the {Report.*}/{Param.*} placeholders there which are bound as query parameters. Call the MCP GetReportTemplateSchema tool for the full expression reference. fileNamePattern names the rendered files without extension (empty = {Report.Name}_{Report.Day}); it must start with \"{Report.Name}_\" so the Files list keeps recognising the report's own output, and it accepts the same placeholders as a text component plus a strftime spec on the typed period, for example {Report.Name}_{Report.Start:%Y%m%d_%H%M}_{Param.Line}. Omit it on update to keep the stored pattern.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Daily Production Report\",\n    \"enable\": true,\n    \"description\": \"Daily line 1 report\",\n    \"userGroups\": \"Operators\",\n    \"outputPath\": \"D:\\\\PlantReports\",\n    \"fileNamePattern\": \"{Report.Name}_{Report.Start:%Y%m%d_%H%M}\",\n    \"templateJson\": \"{\\\"schemaVersion\\\":1,\\\"title\\\":\\\"DailyProductionReport\\\",\\\"pageSize\\\":\\\"A4\\\",\\\"orientation\\\":\\\"portrait\\\",\\\"excelCompatible\\\":false,\\\"accentColor\\\":\\\"#2596BE\\\",\\\"hookScript\\\":\\\"\\\",\\\"period\\\":{\\\"source\\\":\\\"preset\\\",\\\"preset\\\":\\\"yesterday\\\"},\\\"pages\\\":[{\\\"layout\\\":\\\"banded\\\",\\\"components\\\":[{\\\"type\\\":\\\"header\\\",\\\"id\\\":\\\"h1\\\",\\\"text\\\":\\\"DailyProductionReport\\\",\\\"subText\\\":\\\"{Report.PeriodStart} - {Report.PeriodEnd}\\\"},{\\\"type\\\":\\\"footer\\\",\\\"id\\\":\\\"f1\\\",\\\"text\\\":\\\"ENVISION\\\",\\\"subText\\\":\\\"Page {Page} / {Pages}\\\"}]}]}\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Reports (PUT, metadata-only; omitted templateJson preserves the stored template)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Reports",
+      "description": "Metadata-only edit: templateJson is omitted, so the stored template is preserved unchanged (same preservation pattern as the PythonScripts script body). Use this shape to rename, enable/disable or re-describe a report without ever sending the layout. outputPath, fileNamePattern and userGroups behave the same way: omitted keeps the stored value, so send a field (a FULL path such as D:\\Reports for outputPath) only when it must change; an explicit empty string resets it.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Daily Production Report\",\n    \"enable\": true,\n    \"description\": \"Metadata-only edit\",\n    \"userGroups\": \"Operators, Supervisors\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Reports (POST /Delete, array body of ids; also removes the run-status variables)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Reports/Delete",
+      "description": "Deleting a report also removes its run-status variables System.ReportStatus_<Report>, System.ReportMsg_<Report> and System.ReportFile_<Report>, so a deleted report cannot keep feeding a frozen value into alarm or event expressions or a Document Viewer.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET PreviewFile (?token=, ?file=; serves a designer/PythonEdit preview file)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{base_url}}/API/Config/PreviewFile?token=0123456789abcdef0123456789abcdef&file=Report_2026-07-28.pdf",
+       "host": [
+        "{{base_url}}"
+       ],
+       "path": [
+        "API",
+        "Config",
+        "PreviewFile"
+       ],
+       "query": [
+        {
+         "key": "token",
+         "value": "0123456789abcdef0123456789abcdef"
+        },
+        {
+         "key": "file",
+         "value": "Report_2026-07-28.pdf"
+        }
+       ]
+      },
+      "description": "Serves a preview file captured by a manual run from the Report Designer or the Python script editor; the execute handlers return these URLs in their files array. token is the 32-hex run token and file the plain file name from that response. Requires admin auth (session, Basic or MCP) and, being a GET, also works on the standby. An unknown token or file returns 404."
+     }
+    }
+   ]
+  },
+  {
+   "name": "ICMP Devices",
+   "item": [
+    {
+     "name": "GET ICMPDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ICMPDevices"
+     }
+    },
+    {
+     "name": "INSERT ICMPDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ICMPDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"GatewayA\",\n    \"ipAddress\": \"192.168.1.1\",\n    \"interval\": 5000,\n    \"description\": \"Network gateway A\",\n    \"verbose\": 0,\n    \"retryCount\": 3,\n    \"historizeOnline\": 0\n  },\n  {\n    \"enable\": true,\n    \"name\": \"GatewayB\",\n    \"ipAddress\": \"192.168.1.2\",\n    \"interval\": 3000,\n    \"description\": \"Network gateway B\",\n    \"verbose\": 0,\n    \"retryCount\": 3,\n    \"historizeOnline\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE ICMPDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ICMPDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"Gateway1\",\n    \"ipAddress\": \"192.168.1.2\",\n    \"interval\": 3000,\n    \"description\": \"Network gateway - updated\",\n    \"verbose\": 0,\n    \"retryCount\": 3,\n    \"historizeOnline\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE ICMPDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ICMPDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "ModbusTcp Devices",
+   "item": [
+    {
+     "name": "GET ModbusTcpDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ModbusTcpDevices"
+     }
+    },
+    {
+     "name": "INSERT ModbusTcpDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"simulation\": false,\n    \"name\": \"PLC_Test\",\n    \"ipAddress\": \"192.168.1.10\",\n    \"secondaryIp\": \"\",\n    \"port\": 502,\n    \"unitId\": 1,\n    \"scanRate\": 2000,\n    \"template\": \"\",\n    \"description\": \"Test PLC\",\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 120,\n    \"allowJumpingRegisters\": true,\n    \"timeout\": 3000,\n    \"byteSwap\": false,\n    \"wordSwap\": false,\n    \"doubleSwap\": false,\n    \"verbose\": 0\n  },\n  {\n    \"enable\": true,\n    \"simulation\": false,\n    \"name\": \"PLC_Test_2\",\n    \"ipAddress\": \"192.168.1.11\",\n    \"secondaryIp\": \"\",\n    \"port\": 502,\n    \"unitId\": 1,\n    \"scanRate\": 2000,\n    \"template\": \"\",\n    \"description\": \"Second test PLC\",\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 120,\n    \"allowJumpingRegisters\": true,\n    \"timeout\": 3000,\n    \"byteSwap\": false,\n    \"wordSwap\": false,\n    \"doubleSwap\": false,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE ModbusTcpDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"simulation\": false,\n    \"name\": \"PLC_Test\",\n    \"ipAddress\": \"192.168.1.20\",\n    \"secondaryIp\": \"\",\n    \"port\": 502,\n    \"unitId\": 1,\n    \"scanRate\": 1000,\n    \"template\": \"\",\n    \"description\": \"Test PLC - updated\",\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 120,\n    \"allowJumpingRegisters\": true,\n    \"timeout\": 3000,\n    \"byteSwap\": false,\n    \"wordSwap\": false,\n    \"doubleSwap\": false,\n    \"verbose\": 0\n  },\n  {\n    \"id\": 2,\n    \"enable\": true,\n    \"simulation\": false,\n    \"name\": \"PLC_Test_2\",\n    \"ipAddress\": \"192.168.1.21\",\n    \"secondaryIp\": \"\",\n    \"port\": 502,\n    \"unitId\": 1,\n    \"scanRate\": 1000,\n    \"template\": \"\",\n    \"description\": \"Second PLC - updated\",\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 120,\n    \"allowJumpingRegisters\": true,\n    \"timeout\": 3000,\n    \"byteSwap\": false,\n    \"wordSwap\": false,\n    \"doubleSwap\": false,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE ModbusTcpDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "ModbusTcp Variables",
+   "item": [
+    {
+     "name": "GET ModbusTcpVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ModbusTcpVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT ModbusTcpVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "description": "arrayCount 0 = ordinary variable; 2-512 makes the row an array parent (name must end in its first index, e.g. Temps[0]) that expands into locked element rows with addresses advancing by the type width. Inserts variables into the device identified by ?deviceId=. Template fan-out: when the target device is a master (empty Template), each variable is also inserted into every device whose Template equals the master's Name, mirroring the delete cascade. The returned id is the variable id on the target device.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpVariables?deviceId={{modbus_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"arrayCount\": 0,\n    \"name\": \"{Device}.TemperatureA\",\n    \"asset\": \"\",\n    \"type\": \"INT\",\n    \"address\": \"40001\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"degC\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.PressureB\",\n    \"asset\": \"\",\n    \"type\": \"INT\",\n    \"address\": \"40002\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"bar\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE ModbusTcpVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "description": "Updates variables by id. Template fan-out: when the variable's device is a master (empty Template) and the variable is not being moved to another device, the same-named variable on every instance device (Template equals the master's Name) is updated too, preserving each instance's own ModbusAddress. Mirrors the insert fan-out and delete cascade.\n\nUDT-managed rows (UdtInstanceId > 0): the update is refused only when it changes a field the definition owns, and the error (errorKey UdtManagedRowFields) names those fields. Fields the definition leaves per-row stay writable here - Recipes (RecipeTargets), ModbusAddress, the Kafka remap fields, an untemplated protocol extra, and a Local variable's Value - and survive a later push. Send the row's CURRENT values for every managed field: an omitted field deserializes to its default and reads as a change. Insert and delete on a managed row are still refused outright (errorKey UdtManagedRow). GET UdtInstances/ManagedFields?instanceId=&memberId=&rowId=&memberKind= returns the owned set for one row plus what that row has overridden. POST UdtInstances/ReleaseFields overrides fields for one member of one instance (or hands them back, which re-materializes them). Row-file import is a GUI gesture (an Envision page handler), not a config endpoint. The variable GETs also accept ?udtInstanceId= and return UdtMemberId, so a caller can fetch just one instance's rows.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"PLC1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Temperature\",\n    \"asset\": \"\",\n    \"type\": \"Int16\",\n    \"address\": \"40002\",\n    \"description\": \"Updated register\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"°C\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"id\": 2,\n    \"deviceName\": \"PLC1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Pressure\",\n    \"asset\": \"\",\n    \"type\": \"Int16\",\n    \"address\": \"40003\",\n    \"description\": \"Updated register 2\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"bar\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE ModbusTcpVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/ModbusTcpVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "OpcUa Devices",
+   "item": [
+    {
+     "name": "GET OpcUaDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/OpcUaDevices"
+     }
+    },
+    {
+     "name": "INSERT OpcUaDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"OpcServer1\",\n    \"serverUrl\": \"opc.tcp://192.168.1.50:4840\",\n    \"template\": \"\",\n    \"description\": \"OPC UA Server\",\n    \"userName\": \"\",\n    \"password\": \"\",\n    \"enableSecureChannel\": false,\n    \"clientCertificateName\": \"\",\n    \"validateServerCertificate\": false,\n    \"keepAliveInterval\": 5000,\n    \"reconnectPeriod\": 10000,\n    \"sessionLifeTime\": 60000,\n    \"enableSubscription1\": true,\n    \"enableSubscription2\": false,\n    \"enableSubscription3\": false,\n    \"enableSubscription4\": false,\n    \"enableSubscription5\": false,\n    \"publishingInterval1\": 1000,\n    \"publishingInterval2\": 1000,\n    \"publishingInterval3\": 1000,\n    \"publishingInterval4\": 1000,\n    \"publishingInterval5\": 1000,\n    \"lifetimeCount1\": 100,\n    \"lifetimeCount2\": 100,\n    \"lifetimeCount3\": 100,\n    \"lifetimeCount4\": 100,\n    \"lifetimeCount5\": 100,\n    \"minLifetimeInterval1\": 0,\n    \"minLifetimeInterval2\": 0,\n    \"minLifetimeInterval3\": 0,\n    \"minLifetimeInterval4\": 0,\n    \"minLifetimeInterval5\": 0,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE OpcUaDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"OpcServer1\",\n    \"serverUrl\": \"opc.tcp://192.168.1.51:4840\",\n    \"template\": \"\",\n    \"description\": \"OPC UA Server - updated\",\n    \"userName\": \"\",\n    \"password\": \"\",\n    \"enableSecureChannel\": false,\n    \"clientCertificateName\": \"\",\n    \"validateServerCertificate\": false,\n    \"keepAliveInterval\": 5000,\n    \"reconnectPeriod\": 10000,\n    \"sessionLifeTime\": 60000,\n    \"enableSubscription1\": true,\n    \"enableSubscription2\": false,\n    \"enableSubscription3\": false,\n    \"enableSubscription4\": false,\n    \"enableSubscription5\": false,\n    \"publishingInterval1\": 500,\n    \"publishingInterval2\": 1000,\n    \"publishingInterval3\": 1000,\n    \"publishingInterval4\": 1000,\n    \"publishingInterval5\": 1000,\n    \"lifetimeCount1\": 100,\n    \"lifetimeCount2\": 100,\n    \"lifetimeCount3\": 100,\n    \"lifetimeCount4\": 100,\n    \"lifetimeCount5\": 100,\n    \"minLifetimeInterval1\": 0,\n    \"minLifetimeInterval2\": 0,\n    \"minLifetimeInterval3\": 0,\n    \"minLifetimeInterval4\": 0,\n    \"minLifetimeInterval5\": 0,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE OpcUaDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "OpcUa Variables",
+   "item": [
+    {
+     "name": "GET OpcUaVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/OpcUaVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT OpcUaVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaVariables?deviceId={{opcua_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.TemperatureA\",\n    \"asset\": \"\",\n    \"dataType\": \"Double\",\n    \"nodeId\": \"ns=2;s=TemperatureA\",\n    \"samplingInterval\": 1000,\n    \"subscription\": \"Subscription 1\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"degC\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"queueSize\": 0,\n    \"discardOldest\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.TemperatureB\",\n    \"asset\": \"\",\n    \"dataType\": \"Double\",\n    \"nodeId\": \"ns=2;s=TemperatureB\",\n    \"samplingInterval\": 1000,\n    \"subscription\": \"Subscription 1\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"degC\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"queueSize\": 0,\n    \"discardOldest\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE OpcUaVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"OpcServer1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Temperature\",\n    \"asset\": \"\",\n    \"dataType\": \"Double\",\n    \"nodeId\": \"ns=2;s=TemperatureUpdated\",\n    \"samplingInterval\": 500,\n    \"subscription\": \"Subscription 1\",\n    \"description\": \"Updated node\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"°C\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"queueSize\": 0,\n    \"discardOldest\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE OpcUaVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/OpcUaVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "EthernetIP Devices",
+   "item": [
+    {
+     "name": "GET EthernetIPDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/EthernetIPDevices"
+     }
+    },
+    {
+     "name": "INSERT EthernetIPDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"EIP_PLC1A\",\n    \"ipAddress\": \"192.168.1.30\",\n    \"port\": 44818,\n    \"plc\": \"LGX\",\n    \"path\": \"1,0\",\n    \"scanRate\": 1000,\n    \"template\": \"\",\n    \"description\": \"EtherNet/IP PLC A\",\n    \"timeout\": 3000,\n    \"verbose\": 0\n  },\n  {\n    \"enable\": true,\n    \"name\": \"EIP_PLC1B\",\n    \"ipAddress\": \"192.168.1.31\",\n    \"port\": 44818,\n    \"plc\": \"LGX\",\n    \"path\": \"1,0\",\n    \"scanRate\": 1000,\n    \"template\": \"\",\n    \"description\": \"EtherNet/IP PLC B\",\n    \"timeout\": 3000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE EthernetIPDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"EIP_PLC1\",\n    \"ipAddress\": \"192.168.1.31\",\n    \"port\": 44818,\n    \"plc\": \"LGX\",\n    \"path\": \"1,0\",\n    \"scanRate\": 500,\n    \"template\": \"\",\n    \"description\": \"EtherNet/IP PLC - updated\",\n    \"timeout\": 3000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE EthernetIPDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "EthernetIP Variables",
+   "item": [
+    {
+     "name": "GET EthernetIPVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/EthernetIPVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT EthernetIPVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPVariables?deviceId={{ethernetip_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.SpeedA\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"SpeedA\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.SpeedB\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"SpeedB\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE EthernetIPVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"CompactLogix1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Speed\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"SpeedFeedback\",\n    \"description\": \"Updated tag\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE EthernetIPVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "DNP3 Devices",
+   "item": [
+    {
+     "name": "GET Dnp3Devices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Dnp3Devices"
+     }
+    },
+    {
+     "name": "INSERT Dnp3Devices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"DNP3RTU1A\",\n    \"ipAddress\": \"192.168.1.40\",\n    \"port\": 20000,\n    \"outstationAddress\": 1,\n    \"masterAddress\": 100,\n    \"template\": \"\",\n    \"description\": \"DNP3 RTU A\",\n    \"enableUnsolicited\": true,\n    \"channelRetryMin\": 5000,\n    \"channelRetryMax\": 60000,\n    \"channelRetryReconnectDelay\": 5000,\n    \"integrityPoll\": true,\n    \"integrityPollTimespan\": 3600000,\n    \"class1Poll\": false,\n    \"class1PollTimespan\": 60000,\n    \"class2Poll\": false,\n    \"class2PollTimespan\": 60000,\n    \"class3Poll\": false,\n    \"class3PollTimespan\": 60000,\n    \"verbose\": 0\n  },\n  {\n    \"enable\": true,\n    \"name\": \"DNP3RTU1B\",\n    \"ipAddress\": \"192.168.1.41\",\n    \"port\": 20000,\n    \"outstationAddress\": 2,\n    \"masterAddress\": 100,\n    \"template\": \"\",\n    \"description\": \"DNP3 RTU B\",\n    \"enableUnsolicited\": true,\n    \"channelRetryMin\": 5000,\n    \"channelRetryMax\": 60000,\n    \"channelRetryReconnectDelay\": 5000,\n    \"integrityPoll\": true,\n    \"integrityPollTimespan\": 3600000,\n    \"class1Poll\": false,\n    \"class1PollTimespan\": 60000,\n    \"class2Poll\": false,\n    \"class2PollTimespan\": 60000,\n    \"class3Poll\": false,\n    \"class3PollTimespan\": 60000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Dnp3Devices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"DNP3_RTU1\",\n    \"ipAddress\": \"192.168.1.41\",\n    \"port\": 20000,\n    \"outstationAddress\": 1,\n    \"masterAddress\": 100,\n    \"template\": \"\",\n    \"description\": \"DNP3 RTU - updated\",\n    \"enableUnsolicited\": true,\n    \"channelRetryMin\": 5000,\n    \"channelRetryMax\": 60000,\n    \"channelRetryReconnectDelay\": 5000,\n    \"integrityPoll\": true,\n    \"integrityPollTimespan\": 3600000,\n    \"class1Poll\": false,\n    \"class1PollTimespan\": 60000,\n    \"class2Poll\": false,\n    \"class2PollTimespan\": 60000,\n    \"class3Poll\": false,\n    \"class3PollTimespan\": 60000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Dnp3Devices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Devices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "DNP3 Variables",
+   "item": [
+    {
+     "name": "GET Dnp3Variables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Dnp3Variables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT Dnp3Variables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Variables?deviceId={{dnp3_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.VoltageA\",\n    \"asset\": \"\",\n    \"objectType\": \"AnalogInput\",\n    \"indexNumber\": 0,\n    \"description\": \"\",\n    \"pulse\": false,\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"V\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.VoltageB\",\n    \"asset\": \"\",\n    \"objectType\": \"AnalogInput\",\n    \"indexNumber\": 1,\n    \"description\": \"\",\n    \"pulse\": false,\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"V\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Dnp3Variables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Variables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"Dnp3Outstation1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Voltage\",\n    \"asset\": \"\",\n    \"objectType\": \"AnalogInput\",\n    \"indexNumber\": 1,\n    \"description\": \"Updated point\",\n    \"pulse\": false,\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"V\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Dnp3Variables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Dnp3Variables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Bacnet Devices",
+   "item": [
+    {
+     "name": "GET BacnetDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/BacnetDevices"
+     }
+    },
+    {
+     "name": "INSERT BacnetDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"Bacnet_AHU1\",\n    \"ipAddress\": \"192.168.1.40\",\n    \"port\": 47808,\n    \"deviceInstance\": 1001,\n    \"scanRate\": 2000,\n    \"timeout\": 3000,\n    \"retries\": 2,\n    \"writePriority\": 8,\n    \"useReadPropertyMultiple\": true,\n    \"rpmChunkSize\": 20,\n    \"template\": \"\",\n    \"description\": \"BACnet air handling unit\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE BacnetDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"Bacnet_AHU1\",\n    \"ipAddress\": \"192.168.1.41\",\n    \"port\": 47808,\n    \"deviceInstance\": 1001,\n    \"scanRate\": 1000,\n    \"timeout\": 3000,\n    \"retries\": 2,\n    \"writePriority\": 8,\n    \"useReadPropertyMultiple\": true,\n    \"rpmChunkSize\": 20,\n    \"template\": \"\",\n    \"description\": \"BACnet air handling unit - updated\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE BacnetDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Bacnet Variables",
+   "item": [
+    {
+     "name": "GET BacnetVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/BacnetVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT BacnetVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetVariables?deviceId={{bacnet_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.SupplyTemp\",\n    \"asset\": \"\",\n    \"objectType\": \"analog-input\",\n    \"objectInstance\": 1,\n    \"property\": \"present-value\",\n    \"writePriority\": 0,\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.FanStatus\",\n    \"asset\": \"\",\n    \"objectType\": \"binary-input\",\n    \"objectInstance\": 1,\n    \"property\": \"present-value\",\n    \"writePriority\": 0,\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE BacnetVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"Bacnet_AHU1\",\n    \"enable\": true,\n    \"name\": \"{Device}.SupplyTempSetpoint\",\n    \"asset\": \"\",\n    \"objectType\": \"analog-value\",\n    \"objectInstance\": 5,\n    \"property\": \"present-value\",\n    \"writePriority\": 16,\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE BacnetVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BacnetVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Iec104 Devices",
+   "item": [
+    {
+     "name": "GET Iec104Devices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Iec104Devices"
+     }
+    },
+    {
+     "name": "INSERT Iec104Devices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"RTU1\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"port\": 2404,\n    \"commonAddress\": 1,\n    \"originatorAddress\": 0,\n    \"k\": 12,\n    \"w\": 8,\n    \"t0\": 30,\n    \"t1\": 15,\n    \"t2\": 10,\n    \"t3\": 20,\n    \"giInterval\": 0,\n    \"clockSync\": false,\n    \"template\": \"\",\n    \"description\": \"IEC 60870-5-104 remote terminal unit\",\n    \"verbose\": 0,\n    \"commandSelectTimeout\": 20\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Iec104Devices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"RTU1\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"port\": 2404,\n    \"commonAddress\": 1,\n    \"originatorAddress\": 0,\n    \"k\": 12,\n    \"w\": 8,\n    \"t0\": 30,\n    \"t1\": 15,\n    \"t2\": 10,\n    \"t3\": 20,\n    \"giInterval\": 300,\n    \"clockSync\": true,\n    \"template\": \"\",\n    \"description\": \"IEC 60870-5-104 remote terminal unit - updated\",\n    \"verbose\": 0,\n    \"commandSelectTimeout\": 30\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Iec104Devices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Devices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Iec104 Variables",
+   "item": [
+    {
+     "name": "GET Iec104Variables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Iec104Variables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT Iec104Variables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Variables?deviceId={{iec104_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"objectType\": \"Measured short float (M_ME_NC)\",\n    \"informationObjectAddress\": 1001,\n    \"pulse\": false,\n    \"commandMode\": \"Direct execute\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Start\",\n    \"asset\": \"\",\n    \"objectType\": \"Single command (C_SC)\",\n    \"informationObjectAddress\": 2001,\n    \"pulse\": true,\n    \"commandMode\": \"Select before operate (operator)\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": true,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Iec104Variables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Variables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"RTU1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"objectType\": \"Measured short float (M_ME_NC)\",\n    \"informationObjectAddress\": 1001,\n    \"pulse\": false,\n    \"commandMode\": \"Direct execute\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Iec104Variables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Iec104Variables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Melsec Devices",
+   "item": [
+    {
+     "name": "GET MelsecDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MelsecDevices"
+     }
+    },
+    {
+     "name": "INSERT MelsecDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"MelsecPLC1\",\n    \"ipAddress\": \"192.168.1.30\",\n    \"port\": 5007,\n    \"scanRate\": 1000,\n    \"timeout\": 3000,\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 900,\n    \"allowJumpingRegisters\": true,\n    \"template\": \"\",\n    \"description\": \"Mitsubishi MELSEC PLC\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MelsecDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"MelsecPLC1\",\n    \"ipAddress\": \"192.168.1.30\",\n    \"port\": 5007,\n    \"scanRate\": 1000,\n    \"timeout\": 3000,\n    \"allowScanningBlocks\": true,\n    \"maxBlockSizeAllowed\": 900,\n    \"allowJumpingRegisters\": true,\n    \"template\": \"\",\n    \"description\": \"Mitsubishi MELSEC PLC - updated\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MelsecDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Melsec Variables",
+   "item": [
+    {
+     "name": "GET MelsecVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MelsecVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT MelsecVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecVariables?deviceId={{melsec_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"type\": \"INT\",\n    \"address\": \"D100\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Start\",\n    \"asset\": \"\",\n    \"type\": \"BOOL\",\n    \"address\": \"M100\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": true,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MelsecVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"MelsecPLC1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"type\": \"INT\",\n    \"address\": \"D100\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MelsecVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MelsecVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "EtherNet/IP Generic Devices",
+   "item": [
+    {
+     "name": "GET EthernetIPGenericDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericDevices"
+     }
+    },
+    {
+     "name": "INSERT EthernetIPGenericDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"CipDrive1\",\n    \"ipAddress\": \"192.168.1.40\",\n    \"port\": 44818,\n    \"scanRate\": 1000,\n    \"timeout\": 3000,\n    \"template\": \"\",\n    \"description\": \"Generic EtherNet/IP device (CIP explicit messaging)\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE EthernetIPGenericDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"CipDrive1\",\n    \"ipAddress\": \"192.168.1.40\",\n    \"port\": 44818,\n    \"scanRate\": 1000,\n    \"timeout\": 3000,\n    \"template\": \"\",\n    \"description\": \"Generic EtherNet/IP device - updated\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE EthernetIPGenericDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "EtherNet/IP Generic Variables",
+   "item": [
+    {
+     "name": "GET EthernetIPGenericVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericVariables"
+     }
+    },
+    {
+     "name": "INSERT EthernetIPGenericVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericVariables?deviceId=1",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Speed_Actual\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"0x64/1/3\",\n    \"description\": \"Actual running speed\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 32767,\n    \"minScaled\": 0,\n    \"maxScaled\": 3000,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE EthernetIPGenericVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"{Device}.Speed_Actual\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"0x64/1/3\",\n    \"description\": \"Actual running speed - updated\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 32767,\n    \"minScaled\": 0,\n    \"maxScaled\": 3000,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE EthernetIPGenericVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/EthernetIPGenericVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Beckhoff ADS Devices",
+   "item": [
+    {
+     "name": "GET BeckhoffAdsDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsDevices"
+     }
+    },
+    {
+     "name": "INSERT BeckhoffAdsDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"Enable\": true,\n    \"Name\": \"PLC1\",\n    \"IpAddress\": \"127.0.0.1\",\n    \"AmsNetId\": \"127.0.0.1.1.1\",\n    \"AmsPort\": 851,\n    \"ScanRate\": 1000,\n    \"Timeout\": 3000,\n    \"Template\": \"\",\n    \"Description\": \"Beckhoff TwinCAT PLC\",\n    \"Verbose\": 0,\n    \"Simulation\": false\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE BeckhoffAdsDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"Id\": 1,\n    \"Enable\": true,\n    \"Name\": \"PLC1\",\n    \"IpAddress\": \"127.0.0.1\",\n    \"AmsNetId\": \"127.0.0.1.1.1\",\n    \"AmsPort\": 851,\n    \"ScanRate\": 1000,\n    \"Timeout\": 3000,\n    \"Template\": \"\",\n    \"Description\": \"Beckhoff TwinCAT PLC\",\n    \"Verbose\": 0,\n    \"Simulation\": false\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE BeckhoffAdsDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Beckhoff ADS Variables",
+   "item": [
+    {
+     "name": "GET BeckhoffAdsVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsVariables"
+     }
+    },
+    {
+     "name": "INSERT BeckhoffAdsVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsVariables?deviceId=1",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"Enable\": true,\n    \"Name\": \"Pump1_Speed\",\n    \"DeviceName\": \"PLC1\",\n    \"Asset\": \"\",\n    \"Type\": \"REAL\",\n    \"Address\": \"MAIN.fbPump1.rSpeed\",\n    \"Description\": \"Pump 1 speed, symbolic address\",\n    \"ArrayCount\": 0,\n    \"RecipeTargets\": \"\",\n    \"RecipeParameterName\": \"\",\n    \"TrendGroups\": \"\",\n    \"UserGroups\": \"\",\n    \"Units\": \"rpm\",\n    \"MinRaw\": 0,\n    \"MaxRaw\": 0,\n    \"MinScaled\": 0,\n    \"MaxScaled\": 0,\n    \"Converter\": \"\",\n    \"Deadband\": 0,\n    \"MinimumTime\": 0,\n    \"SampleGroup\": \"\",\n    \"Historian\": false,\n    \"ModbusAddress\": \"\",\n    \"OpcUa\": true,\n    \"Writeable\": true,\n    \"KafkaDevice\": \"\",\n    \"KafkaProducer\": false,\n    \"KafkaConsumer\": false,\n    \"KafkaRemapDevice\": \"\",\n    \"KafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE BeckhoffAdsVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"Id\": 1,\n    \"Enable\": true,\n    \"Name\": \"Pump1_Speed\",\n    \"DeviceName\": \"PLC1\",\n    \"Asset\": \"\",\n    \"Type\": \"REAL\",\n    \"Address\": \"MAIN.fbPump1.rSpeed\",\n    \"Description\": \"Pump 1 speed, symbolic address\",\n    \"ArrayCount\": 0,\n    \"RecipeTargets\": \"\",\n    \"RecipeParameterName\": \"\",\n    \"TrendGroups\": \"\",\n    \"UserGroups\": \"\",\n    \"Units\": \"rpm\",\n    \"MinRaw\": 0,\n    \"MaxRaw\": 0,\n    \"MinScaled\": 0,\n    \"MaxScaled\": 0,\n    \"Converter\": \"\",\n    \"Deadband\": 0,\n    \"MinimumTime\": 0,\n    \"SampleGroup\": \"\",\n    \"Historian\": false,\n    \"ModbusAddress\": \"\",\n    \"OpcUa\": true,\n    \"Writeable\": true,\n    \"KafkaDevice\": \"\",\n    \"KafkaProducer\": false,\n    \"KafkaConsumer\": false,\n    \"KafkaRemapDevice\": \"\",\n    \"KafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE BeckhoffAdsVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/BeckhoffAdsVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "S7 Devices",
+   "item": [
+    {
+     "name": "GET S7Devices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/S7Devices"
+     }
+    },
+    {
+     "name": "INSERT S7Devices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"PLC1\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"port\": 102,\n    \"cpuType\": \"S71500\",\n    \"rack\": 0,\n    \"slot\": 1,\n    \"scanRate\": 2000,\n    \"template\": \"\",\n    \"description\": \"Siemens Simatic S7 PLC\",\n    \"timeout\": 10000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE S7Devices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Devices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"PLC1\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"port\": 102,\n    \"cpuType\": \"S71500\",\n    \"rack\": 0,\n    \"slot\": 1,\n    \"scanRate\": 1000,\n    \"template\": \"\",\n    \"description\": \"Siemens Simatic S7 PLC - updated\",\n    \"timeout\": 10000,\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE S7Devices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Devices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "S7 Variables",
+   "item": [
+    {
+     "name": "GET S7Variables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/S7Variables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT S7Variables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Variables?deviceId=1",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"DB1.DBD4\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Start\",\n    \"asset\": \"\",\n    \"type\": \"BOOL\",\n    \"address\": \"DB1.DBX0.0\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": true,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE S7Variables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Variables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"deviceName\": \"PLC1\",\n    \"enable\": true,\n    \"name\": \"{Device}.Pump1_Speed\",\n    \"asset\": \"\",\n    \"type\": \"REAL\",\n    \"address\": \"DB1.DBD4\",\n    \"description\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"trendGroups\": \"\",\n    \"userGroups\": \"\",\n    \"units\": \"rpm\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": true,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE S7Variables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/S7Variables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "MQTT Clients",
+   "item": [
+    {
+     "name": "GET MqttClients",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MqttClients"
+     }
+    },
+    {
+     "name": "INSERT MqttClients (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttClients",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"Broker1A\",\n    \"url\": \"192.168.1.100\",\n    \"port\": 1883,\n    \"timeout\": 5000,\n    \"retry\": 10,\n    \"username\": \"\",\n    \"password\": \"\",\n    \"verbose\": 0,\n    \"useTls\": false,\n    \"allowUntrustedCertificates\": false,\n    \"clientCertificateName\": \"\",\n    \"maxPublishQueueSize\": 50000,\n    \"description\": \"Main MQTT Broker A\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"Broker1B\",\n    \"url\": \"192.168.1.101\",\n    \"port\": 1883,\n    \"timeout\": 5000,\n    \"retry\": 10,\n    \"username\": \"\",\n    \"password\": \"\",\n    \"verbose\": 0,\n    \"useTls\": false,\n    \"allowUntrustedCertificates\": false,\n    \"clientCertificateName\": \"\",\n    \"maxPublishQueueSize\": 50000,\n    \"description\": \"Main MQTT Broker B\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MqttClients (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttClients",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"Broker1\",\n    \"url\": \"192.168.1.101\",\n    \"port\": 1883,\n    \"timeout\": 5000,\n    \"retry\": 10,\n    \"username\": \"\",\n    \"password\": \"\",\n    \"verbose\": 0,\n    \"useTls\": false,\n    \"allowUntrustedCertificates\": false,\n    \"clientCertificateName\": \"\",\n    \"maxPublishQueueSize\": 50000,\n    \"description\": \"Main MQTT Broker - updated\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MqttClients (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttClients/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "MQTT Broker Users",
+   "item": [
+    {
+     "name": "GET MqttBrokerUsers",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MqttBrokerUsers",
+      "description": "Users of ENVISION's own embedded MQTT broker, with each user's topic access control list nested in acls. Unrelated to MQTT Clients (those are outbound connections to external brokers). The stored password hash is never returned: password is always null."
+     }
+    },
+    {
+     "name": "INSERT MqttBrokerUsers (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttBrokerUsers",
+      "description": "The broker is default-deny: a client may only use a topic matched by one of its user's acls rules. access is Subscribe, Publish or Both. topicFilter may use the MQTT wildcards + (one level) and # (last level only). password is required on create and is stored as a salted hash.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"scada_gateway\",\n    \"username\": \"gateway1\",\n    \"password\": \"GatewayPass1*\",\n    \"description\": \"Site 1 field gateway\",\n    \"acls\": [\n      {\n        \"topicFilter\": \"plant/+/temperature\",\n        \"access\": \"Subscribe\"\n      },\n      {\n        \"topicFilter\": \"devices/site1/#\",\n        \"access\": \"Both\"\n      }\n    ]\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MqttBrokerUsers (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttBrokerUsers",
+      "description": "acls replaces the whole rule set of the user: send every rule that should remain. Omit password to keep the current one. Changes apply to connected clients immediately; the edited user's own sessions are disconnected so it reconnects under the new rules.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 2,\n    \"enable\": true,\n    \"name\": \"scada_gateway\",\n    \"username\": \"gateway1\",\n    \"description\": \"Site 1 field gateway - updated\",\n    \"acls\": [\n      {\n        \"topicFilter\": \"plant/+/temperature\",\n        \"access\": \"Subscribe\"\n      }\n    ]\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Anonymous rules (PUT, reserved user)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttBrokerUsers",
+      "description": "Anonymous is a reserved user that cannot be created, renamed or deleted and carries no username or password. Its rules apply to clients that connect without credentials while the MqttBrokerAllowAnonymous parameter is enabled. It is seeded disabled with no rules, so allowing anonymous connections grants nothing until this user is enabled and given rules.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"Anonymous\",\n    \"username\": \"\",\n    \"description\": \"Reserved user for clients that connect without credentials.\",\n    \"acls\": [\n      {\n        \"topicFilter\": \"public/#\",\n        \"access\": \"Subscribe\"\n      }\n    ]\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MqttBrokerUsers (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttBrokerUsers/Delete",
+      "description": "Deleting a user also deletes its topic rules and disconnects its live sessions. The reserved Anonymous user cannot be deleted.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "MQTT Devices",
+   "item": [
+    {
+     "name": "GET MqttDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MqttDevices"
+     }
+    },
+    {
+     "name": "INSERT MqttDevices (POST, array body, ?mqttClientId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttDevices?mqttClientId={{mqtt_client_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"MqttDevice1A\",\n    \"template\": \"\",\n    \"timeout\": 5000,\n    \"description\": \"MQTT Device A\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"MqttDevice1B\",\n    \"template\": \"\",\n    \"timeout\": 5000,\n    \"description\": \"MQTT Device B\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MqttDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"MqttDevice1\",\n    \"template\": \"\",\n    \"timeout\": 3000,\n    \"description\": \"MQTT Device - updated\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MqttDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "MQTT Variables",
+   "item": [
+    {
+     "name": "GET MqttVariables",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/MqttVariables?deviceId=1"
+     }
+    },
+    {
+     "name": "INSERT MqttVariables (POST, array body, ?deviceId=)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttVariables?deviceId={{mqtt_device_id}}",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.StatusA\",\n    \"asset\": \"\",\n    \"dataType\": \"String\",\n    \"publishTopic\": \"envision/out/status/a\",\n    \"subscribeTopic\": \"envision/in/status/a\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\",\n    \"identityInMessage\": false,\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"publishFormat\": \"JSON\"\n  },\n  {\n    \"enable\": true,\n    \"name\": \"{Device}.StatusB\",\n    \"asset\": \"\",\n    \"dataType\": \"String\",\n    \"publishTopic\": \"envision/out/status/b\",\n    \"subscribeTopic\": \"envision/in/status/b\",\n    \"description\": \"\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\",\n    \"identityInMessage\": false,\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"publishFormat\": \"JSON\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE MqttVariables (PUT, array body with ids; same-name updates allowed)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttVariables",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"{Device}.Status\",\n    \"asset\": \"\",\n    \"dataType\": \"String\",\n    \"publishTopic\": \"envision/out/status/updated\",\n    \"subscribeTopic\": \"envision/in/status\",\n    \"description\": \"Updated topic\",\n    \"userGroups\": \"\",\n    \"recipeTargets\": \"\", \"recipeParameterName\": \"\",\n    \"units\": \"\",\n    \"minRaw\": 0,\n    \"maxRaw\": 0,\n    \"minScaled\": 0,\n    \"maxScaled\": 0,\n    \"converter\": \"\",\n    \"deadband\": 0,\n    \"minimumTime\": 0,\n    \"sampleGroup\": \"\",\n    \"historian\": false,\n    \"modbusAddress\": \"\",\n    \"opcUa\": false,\n    \"writeable\": false,\n    \"kafkaDevice\": \"\",\n    \"kafkaProducer\": false,\n    \"kafkaConsumer\": false,\n    \"kafkaRemapDevice\": \"\",\n    \"kafkaRemapVariable\": \"\",\n    \"identityInMessage\": false,\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"publishFormat\": \"JSON\"\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE MqttVariables (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/MqttVariables/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Kafka Devices",
+   "item": [
+    {
+     "name": "GET KafkaDevices",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/KafkaDevices"
+     }
+    },
+    {
+     "name": "INSERT KafkaDevices (POST, array body)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/KafkaDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"enable\": true,\n    \"name\": \"KafkaBroker1A\",\n    \"bootstrapServers\": \"192.168.1.110:9092\",\n    \"saslMechanism\": \"Plain\",\n    \"securityProtocol\": \"Plaintext\",\n    \"saslUsername\": \"user\",\n    \"saslPassword\": \"password\",\n    \"description\": \"Kafka Broker A\",\n    \"groupId\": \"envision\",\n    \"clientId\": \"envisiona\",\n    \"timeStampFormat\": \"yyyy-MM-ddTHH:mm:ss.fffZ\",\n    \"producerTopic\": \"envision.data.a\",\n    \"consumerTopic\": \"\",\n    \"deviceKey\": \"device\",\n    \"variableKey\": \"variable\",\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"produceFormat\": \"JSON\",\n    \"verbose\": 0\n  },\n  {\n    \"enable\": true,\n    \"name\": \"KafkaBroker1B\",\n    \"bootstrapServers\": \"192.168.1.111:9092\",\n    \"saslMechanism\": \"Plain\",\n    \"securityProtocol\": \"Plaintext\",\n    \"saslUsername\": \"user\",\n    \"saslPassword\": \"password\",\n    \"description\": \"Kafka Broker B\",\n    \"groupId\": \"envision\",\n    \"clientId\": \"envisionb\",\n    \"timeStampFormat\": \"yyyy-MM-ddTHH:mm:ss.fffZ\",\n    \"producerTopic\": \"envision.data.b\",\n    \"consumerTopic\": \"\",\n    \"deviceKey\": \"device\",\n    \"variableKey\": \"variable\",\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"produceFormat\": \"JSON\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE KafkaDevices (PUT, array body with ids)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/KafkaDevices",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 1,\n    \"enable\": true,\n    \"name\": \"KafkaBroker1\",\n    \"bootstrapServers\": \"192.168.1.111:9092\",\n    \"saslMechanism\": \"Plain\",\n    \"securityProtocol\": \"Plaintext\",\n    \"saslUsername\": \"user\",\n    \"saslPassword\": \"password\",\n    \"description\": \"Kafka Broker - updated\",\n    \"groupId\": \"envision\",\n    \"clientId\": \"envision\",\n    \"timeStampFormat\": \"yyyy-MM-ddTHH:mm:ss.fffZ\",\n    \"producerTopic\": \"envision.data\",\n    \"consumerTopic\": \"\",\n    \"deviceKey\": \"device\",\n    \"variableKey\": \"variable\",\n    \"timeStampKey\": \"timestamp\",\n    \"valueKey\": \"value\",\n    \"produceFormat\": \"JSON\",\n    \"verbose\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE KafkaDevices (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/KafkaDevices/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1,\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "UDT Definitions",
+   "item": [
+    {
+     "name": "GET UdtDefinitions",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtDefinitions",
+      "description": "Returns every definition IN FULL (parameters and members inlined), which is what the UDT/Asset Manager editors read. Add ?summary=true for the light form - name, description, version, bound symbol masters, instance/outdated counts and per-kind member COUNTS, without the member bodies - and fetch the one you want with GET /API/Config/UdtDefinitions/{id}. A library of types is megabytes in full form, so prefer summary+by-id for anything that only needs to find a type."
+     }
+    },
+    {
+     "name": "GET UdtDefinitions (summary listing)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtDefinitions?summary=true",
+      "description": "The light listing: one row per type with its name, description, version, bound group symbol masters, base definition name, slot count, instance and outdated counts and how many parameters and variable/alarm/event/script members it holds - no member bodies. Use it to find a type, then GET /API/Config/UdtDefinitions/{id} for that type in full."
+     }
+    },
+    {
+     "name": "GET UdtDefinitions by id (full definition)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtDefinitions/1",
+      "description": "Returns ONE definition including every parameter and member, plus variableMemberIds/alarmMemberIds/eventMemberIds/scriptMemberIds - one row id per member, in the SAME ORDER as the matching member list. This is the companion of ?summary=true on the listing, and the call to make before an update, because an update replaces the whole member set. Send those four lists back unchanged on the PUT: they are what lets a member RENAME stay the same member (materialized rows reference it by UdtMemberId), instead of being reconciled as delete+add - which would give every row a new id and reset its alarm runtime state and field overrides."
+     }
+    },
+    {
+     "name": "GET UdtDefinitions by name",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtDefinitions?name=Pump"
+     }
+    },
+    {
+     "name": "INSERT UdtDefinitions (POST, array body, nested members)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtDefinitions",
+      "description": "Creates a definition with its whole member set in one call. The member-id lists the GET returns (variableMemberIds and friends) belong to the UPDATE round-trip and are pointless here - a create allocates a fresh row id per member whatever is sent - so this body omits them.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump\",\n    \"description\": \"Centrifugal pump\",\n    \"baseDefinition\": \"\",\n    \"slots\": [],\n    \"symbols\": [\n      {\n        \"groupSymbol\": \"PumpSymbol\",\n        \"replacerMapping\": \"{\\\"4f0a1c2e-0000-0000-0000-000000000801\\\": \\\"{Plc}.{Instance}_Speed\\\"}\"\n      }\n    ],\n    \"parameters\": [\n      {\n        \"name\": \"BaseAddr\",\n        \"label\": \"Base address\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"100\"\n      },\n      {\n        \"name\": \"HighSpeedLimit\",\n        \"label\": \"High speed alarm limit\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"2900\"\n      },\n      {\n        \"name\": \"Plc\",\n        \"label\": \"Controller\",\n        \"type\": \"Device\",\n        \"defaultValue\": \"\"\n      }\n    ],\n    \"variableMembers\": [\n      {\n        \"enable\": true,\n        \"name\": \"{Plc}.{Instance}_Speed\",\n        \"deviceName\": \"{Plc}\",\n        \"description\": \"\",\n        \"userGroups\": \"\",\n        \"units\": \"rpm\",\n        \"minRaw\": 0,\n        \"maxRaw\": 3000,\n        \"minScaled\": 0,\n        \"maxScaled\": 3000,\n        \"historian\": true,\n        \"deadband\": 0.5,\n        \"minimumTime\": 0,\n        \"sampleGroup\": \"\",\n        \"trendGroups\": \"\",\n        \"converter\": \"\",\n        \"writeable\": false,\n        \"opcUa\": true,\n        \"includeWhen\": \"\",\n        \"arrayCount\": \"\",\n        \"arrayStart\": \"\",\n        \"modbusTcpType\": \"REAL\",\n        \"modbusTcpAddress\": \"%MW{BaseAddr}\",\n        \"ethernetIPType\": \"\",\n        \"ethernetIPAddress\": \"\",\n        \"s7Type\": \"\",\n        \"s7Address\": \"\",\n        \"melsecType\": \"\",\n        \"melsecAddress\": \"\",\n        \"opcUaType\": \"\",\n        \"opcUaNodeId\": \"\",\n        \"opcUaSamplingInterval\": \"\",\n        \"opcUaSubscription\": \"\",\n        \"dnp3ObjectType\": \"\",\n        \"dnp3IndexNumber\": \"\",\n        \"dnp3Pulse\": \"\",\n        \"bacnetObjectType\": \"\",\n        \"bacnetObjectInstance\": \"\",\n        \"bacnetWritePriority\": \"\",\n        \"iec104ObjectType\": \"\",\n        \"iec104InformationObjectAddress\": \"\",\n        \"iec104Pulse\": \"\",\n        \"iec104CommandMode\": \"\",\n        \"mqttType\": \"\",\n        \"mqttSubscribeTopic\": \"\",\n        \"mqttPublishTopic\": \"\",\n        \"localType\": \"\",\n        \"recipeParameterName\": \"\",\n        \"recipeTargets\": \"\",\n        \"modbusAddress\": \"\",\n        \"kafkaDevice\": \"\",\n        \"kafkaProducer\": \"\",\n        \"kafkaConsumer\": \"\",\n        \"kafkaRemapDevice\": \"\",\n        \"kafkaRemapVariable\": \"\",\n        \"modbusTcpStartNewBlock\": \"\",\n        \"opcUaQueueSize\": \"\",\n        \"opcUaDiscardOldest\": \"\",\n        \"ethernetIPGenericType\": \"\",\n        \"ethernetIPGenericAddress\": \"\",\n        \"beckhoffAdsType\": \"\",\n        \"beckhoffAdsAddress\": \"\",\n        \"releasedByDefault\": \"\"\n      }\n    ],\n    \"alarmMembers\": [\n      {\n        \"enable\": true,\n        \"condition\": \"{Plc}.{Instance}_Speed > {HighSpeedLimit}\",\n        \"message\": \"{Asset}: pump speed high\",\n        \"severity\": 2,\n        \"alarmGroups\": \"\",\n        \"actions\": \"\",\n        \"includeWhen\": \"\",\n        \"arrayCount\": \"\",\n        \"arrayStart\": \"\",\n        \"releasedByDefault\": \"\"\n      }\n    ],\n    \"eventMembers\": [],\n    \"scriptMembers\": []\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE UdtDefinitions (PUT, array body with ids, members replaced whole)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtDefinitions",
+      "description": "Replaces the definition's WHOLE member set, so GET /API/Config/UdtDefinitions/{id} first and send back everything that should remain. The four member-id lists (variableMemberIds/alarmMemberIds/eventMemberIds/scriptMemberIds) are optional and positional: they are used only when a list holds exactly one entry per member of its list, and any other length is ignored rather than realigned, because a mis-aligned id would hand one member's materialized rows to another. Echo what the GET returned and a member RENAME stays an update of that member; omit them and members are matched by natural key (variable Name, alarm/event Condition, script Name) exactly as before, which turns a rename into delete+add on the next push. Saving never touches materialized rows - the instances go Outdated and a push delivers the change.",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump\",\n    \"description\": \"Centrifugal pump\",\n    \"baseDefinition\": \"\",\n    \"slots\": [],\n    \"symbols\": [\n      {\n        \"groupSymbol\": \"PumpSymbol\",\n        \"replacerMapping\": \"{\\\"4f0a1c2e-0000-0000-0000-000000000801\\\": \\\"{Plc}.{Instance}_Speed\\\"}\"\n      }\n    ],\n    \"parameters\": [\n      {\n        \"name\": \"BaseAddr\",\n        \"label\": \"Base address\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"100\"\n      },\n      {\n        \"name\": \"HighSpeedLimit\",\n        \"label\": \"High speed alarm limit\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"2900\"\n      },\n      {\n        \"name\": \"Plc\",\n        \"label\": \"Controller\",\n        \"type\": \"Device\",\n        \"defaultValue\": \"\"\n      }\n    ],\n    \"variableMembers\": [\n      {\n        \"enable\": true,\n        \"name\": \"{Plc}.{Instance}_Speed\",\n        \"deviceName\": \"{Plc}\",\n        \"description\": \"\",\n        \"userGroups\": \"\",\n        \"units\": \"rpm\",\n        \"minRaw\": 0,\n        \"maxRaw\": 3000,\n        \"minScaled\": 0,\n        \"maxScaled\": 3000,\n        \"historian\": true,\n        \"deadband\": 0.5,\n        \"minimumTime\": 0,\n        \"sampleGroup\": \"\",\n        \"trendGroups\": \"\",\n        \"converter\": \"\",\n        \"writeable\": false,\n        \"opcUa\": true,\n        \"includeWhen\": \"\",\n        \"arrayCount\": \"\",\n        \"arrayStart\": \"\",\n        \"modbusTcpType\": \"REAL\",\n        \"modbusTcpAddress\": \"%MW{BaseAddr}\",\n        \"ethernetIPType\": \"\",\n        \"ethernetIPAddress\": \"\",\n        \"s7Type\": \"\",\n        \"s7Address\": \"\",\n        \"melsecType\": \"\",\n        \"melsecAddress\": \"\",\n        \"opcUaType\": \"\",\n        \"opcUaNodeId\": \"\",\n        \"opcUaSamplingInterval\": \"\",\n        \"opcUaSubscription\": \"\",\n        \"dnp3ObjectType\": \"\",\n        \"dnp3IndexNumber\": \"\",\n        \"dnp3Pulse\": \"\",\n        \"bacnetObjectType\": \"\",\n        \"bacnetObjectInstance\": \"\",\n        \"bacnetWritePriority\": \"\",\n        \"iec104ObjectType\": \"\",\n        \"iec104InformationObjectAddress\": \"\",\n        \"iec104Pulse\": \"\",\n        \"iec104CommandMode\": \"\",\n        \"mqttType\": \"\",\n        \"mqttSubscribeTopic\": \"\",\n        \"mqttPublishTopic\": \"\",\n        \"localType\": \"\",\n        \"recipeParameterName\": \"\",\n        \"recipeTargets\": \"\",\n        \"modbusAddress\": \"\",\n        \"kafkaDevice\": \"\",\n        \"kafkaProducer\": \"\",\n        \"kafkaConsumer\": \"\",\n        \"kafkaRemapDevice\": \"\",\n        \"kafkaRemapVariable\": \"\",\n        \"modbusTcpStartNewBlock\": \"\",\n        \"opcUaQueueSize\": \"\",\n        \"opcUaDiscardOldest\": \"\",\n        \"ethernetIPGenericType\": \"\",\n        \"ethernetIPGenericAddress\": \"\",\n        \"beckhoffAdsType\": \"\",\n        \"beckhoffAdsAddress\": \"\",\n        \"releasedByDefault\": \"\"\n      }\n    ],\n    \"alarmMembers\": [\n      {\n        \"enable\": true,\n        \"condition\": \"{Plc}.{Instance}_Speed > {HighSpeedLimit}\",\n        \"message\": \"{Asset}: pump speed high\",\n        \"severity\": 2,\n        \"alarmGroups\": \"\",\n        \"actions\": \"\",\n        \"includeWhen\": \"\",\n        \"arrayCount\": \"\",\n        \"arrayStart\": \"\",\n        \"releasedByDefault\": \"\"\n      }\n    ],\n    \"eventMembers\": [],\n    \"scriptMembers\": [],\n    \"variableMemberIds\": [\n      1\n    ],\n    \"alarmMemberIds\": [\n      1\n    ],\n    \"eventMemberIds\": [],\n    \"scriptMemberIds\": [],\n    \"id\": 1\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "INSERT UdtDefinitions (POST, composition: derived type + skid with two motor slots)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtDefinitions",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"VfdPump\",\n    \"description\": \"Pump variant with a VFD - derives every Pump member and adds its own\",\n    \"baseDefinition\": \"Pump\",\n    \"slots\": [],\n    \"parameters\": [\n      {\n        \"name\": \"HighSpeedLimit\",\n        \"label\": \"High speed alarm limit\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"3600\"\n      }\n    ],\n    \"variableMembers\": [\n      {\n        \"enable\": true,\n        \"name\": \"{Plc}.{Instance}_VfdFrequency\",\n        \"deviceName\": \"{Plc}\",\n        \"units\": \"Hz\",\n        \"minRaw\": 0,\n        \"maxRaw\": 60,\n        \"minScaled\": 0,\n        \"maxScaled\": 60,\n        \"historian\": true,\n        \"modbusTcpType\": \"REAL\",\n        \"modbusTcpAddress\": \"%MW{= {BaseAddr} + 10 }\"\n      }\n    ],\n    \"alarmMembers\": [],\n    \"eventMembers\": [],\n    \"scriptMembers\": []\n  },\n  {\n    \"name\": \"DosingSkid\",\n    \"description\": \"Skid containing two identical motors - {Slot} keeps the copies distinct\",\n    \"baseDefinition\": \"\",\n    \"slots\": [\n      {\n        \"name\": \"MotorA\",\n        \"definition\": \"Motor\",\n        \"parameterMapping\": {\n          \"BaseAddr\": \"{= {SkidBase} + 0 }\",\n          \"Drive\": \"{Plc}\"\n        },\n        \"includeWhen\": \"\"\n      },\n      {\n        \"name\": \"MotorB\",\n        \"definition\": \"Motor\",\n        \"parameterMapping\": {\n          \"BaseAddr\": \"{= {SkidBase} + 100 }\",\n          \"Drive\": \"{Plc}\"\n        },\n        \"includeWhen\": \"{HasSecondMotor}\"\n      }\n    ],\n    \"parameters\": [\n      {\n        \"name\": \"SkidBase\",\n        \"label\": \"Skid base address\",\n        \"type\": \"Number\",\n        \"defaultValue\": \"1000\"\n      },\n      {\n        \"name\": \"HasSecondMotor\",\n        \"label\": \"Second motor fitted\",\n        \"type\": \"Text\",\n        \"defaultValue\": \"true\"\n      },\n      {\n        \"name\": \"Plc\",\n        \"label\": \"Controller\",\n        \"type\": \"Device\",\n        \"defaultValue\": \"\"\n      }\n    ],\n    \"variableMembers\": [],\n    \"alarmMembers\": [],\n    \"eventMembers\": [],\n    \"scriptMembers\": []\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE UdtDefinitions (POST /Delete, array body of ids)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtDefinitions/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "EXPORT UdtDefinitions (GET, portable version-stamped type file; ?names= optional filter)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtDefinitions/Export?names=Pump,Breaker",
+      "description": "Returns a portable type file: { kind: \"EnvisionUdtTypes\", schemaVersion, appVersion, exportedUtc, warnings, definitions }. ?names= is an optional comma-separated filter; omit it to export every definition. Name matching is CASE-SENSITIVE, and a name that matches nothing lands in warnings (with a \"did you mean\" when only the casing differs) instead of being dropped silently - check it, because without it a typo produced a short but perfectly well-formed file, so a partial type migration looked like a complete one and only failed at import. The filter also auto-includes the transitive base/slot closure of the types asked for, so a derived or containing type never exports into a file that cannot resolve on import. schemaVersion is this database's user_version and is what the import compatibility check reads. The graphics binding travels as names only - the referenced group symbol masters are design artifacts, moved with the design tools. Reading is not free of record: an export can replace a type library elsewhere, so it writes an audit record (category Config, entity UdtDefinitions, action Export) naming the filter, the exported type names and any warnings."
+     }
+    },
+    {
+     "name": "IMPORT UdtDefinitions (POST, type file; ?overwrite=false skips existing names)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtDefinitions/Import?overwrite=false",
+      "description": "Consumes the file EXPORT produced and answers { success, error, imported, skippedExisting, failed, warnings, schema }. A file whose schemaVersion is NEWER than this database is refused whole; an older one is upgraded after the rows are written, scoped to the definitions this file imported. success is false when any definition is in failed, and ALSO when that content upgrade itself fails: the upgrade runs as one transaction after the definitions are written, so it is caught and reported in error (null otherwise) instead of returning a bare 500 that would hide which types landed. Read that as an import failure, not a rollback - the definitions in imported are already stored, each audited and enqueued to the standby, but in the FILE's older shape rather than the shape this app expects. Do not use them: delete exactly the definitions listed in imported and import the file again once the cause is resolved. overwrite=false (the default, and the safe one for scripts and MCP) skips an existing name and reports it; overwrite=true replaces by name, reusing member ids so linked instances stay linked and go Outdated pending a push. Definitions may reference each other as base types or slots in any file order - they are imported in dependency passes. Member-id lists in a type file are DROPPED before anything is written: ids are machine-local and a type file is matched by NAME across machines, so a travelled id would otherwise name a member of an unrelated definition here. A binding to a group symbol master that is not present in this project is a warning, not a failure. Writes one audit record for the operation (category Config, entity UdtDefinitions, action Import) recording the overwrite flag, the file's schema and app version, what was imported, what was skipped as already existing and the warnings - beside the per-definition records the save itself writes, so a type-library import is distinguishable from hand edits.",
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"kind\": \"EnvisionUdtTypes\",\n  \"schemaVersion\": 68,\n  \"appVersion\": \"V20260101\",\n  \"exportedUtc\": \"2026-01-01T00:00:00Z\",\n  \"definitions\": [\n    {\n      \"name\": \"Pump\",\n      \"description\": \"Imported type\",\n      \"symbols\": [],\n      \"parameters\": [],\n      \"variableMembers\": [],\n      \"alarmMembers\": [],\n      \"eventMembers\": [],\n    \"scriptMembers\": []\n    }\n  ]\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "UDT Instances",
+   "item": [
+    {
+     "name": "GET UdtInstances",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtInstances"
+     }
+    },
+    {
+     "name": "GET UdtInstances by definition",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtInstances?definitionId={{udt_definition_id}}"
+     }
+    },
+    {
+     "name": "GET UdtInstance materialized rows (every protocol table at once)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/UdtInstances/Rows?instanceId={{udt_instance_id}}"
+     }
+    },
+    {
+     "name": "GET UdtInstance managed fields (owned set for one row)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "http://127.0.0.1/API/Config/UdtInstances/ManagedFields?instanceId=1&memberId=1&rowId=1&memberKind=Variable",
+       "protocol": "http",
+       "host": [
+        "127",
+        "0",
+        "0",
+        "1"
+       ],
+       "path": [
+        "API",
+        "Config",
+        "UdtInstances",
+        "ManagedFields"
+       ],
+       "query": [
+        {
+         "key": "instanceId",
+         "value": "1"
+        },
+        {
+         "key": "memberId",
+         "value": "1",
+         "description": "UdtMemberId of the row (variable/alarm/event read DTOs expose it)"
+        },
+        {
+         "key": "rowId",
+         "value": "1",
+         "description": "Optional: makes the answer row-accurate (owned set minus that row's overridden fields)"
+        },
+        {
+         "key": "memberKind",
+         "value": "Variable",
+         "description": "Variable (default), Alarm or Event"
+        }
+       ]
+      },
+      "description": "The field names the definition owns for one materialized row, plus the fields that row has overridden (released). Editors disable exactly this set; everything else on the row is per-row state and editable through the ordinary variable/alarm/event PUT. The set is per MEMBER (protocol extras are owned only when templated), so never hard-code it."
+     },
+     "response": []
+    },
+    {
+     "name": "RELEASE UdtInstance fields (override / hand back, POST)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"InstanceId\": 1,\n  \"MemberId\": 1,\n  \"MemberKind\": \"Variable\",\n  \"Fields\": [\n    \"Deadband\"\n  ],\n  \"Release\": true\n}"
+      },
+      "url": {
+       "raw": "http://127.0.0.1/API/Config/UdtInstances/ReleaseFields",
+       "protocol": "http",
+       "host": [
+        "127",
+        "0",
+        "0",
+        "1"
+       ],
+       "path": [
+        "API",
+        "Config",
+        "UdtInstances",
+        "ReleaseFields"
+       ]
+      },
+      "description": "Overrides (Release=true) or hands back (Release=false) fields of one member across every materialized row of one instance - all element rows of an array member together. An overridden field belongs to the row: pushes skip it and the ordinary PUT may edit it. Handing a field back re-materializes the definition's value in the same call. Name and Condition can never be overridden (they are how a push finds the row again). Mirrors the Override action in the Asset Manager drawer; MCP tool override_udt_fields."
+     },
+     "response": []
+    },
+    {
+     "name": "INSERT UdtInstances (POST, array body; STAGED - state NotMaterialized until pushed)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump01\",\n    \"definition\": \"Pump\",\n    \"asset\": \"Site/Line A/Pumps\",\n    \"sortOrder\": 0,\n    \"parameterValues\": {\n      \"BaseAddr\": \"200\",\n      \"Plc\": \"PLC_Test\"\n    }\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PUSH UdtInstances adopt mode (materializes by taking over matching unmanaged rows)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/Push",
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"ids\": [\n    1\n  ],\n  \"reason\": \"Adopt existing hand-written rows into the type\",\n  \"adopt\": true\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE UdtInstances (PUT, array body with ids; STAGED - a push delivers the change)",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"name\": \"Pump01\",\n    \"definition\": \"Pump\",\n    \"asset\": \"Site/Line A/Pumps\",\n    \"parameterValues\": {\n      \"BaseAddr\": \"200\",\n      \"HighSpeedLimit\": \"2500\",\n      \"Plc\": \"PLC_Test\"\n    },\n    \"id\": 1\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PUSH PREVIEW UdtInstances (POST, dry-run diff, no writes)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/PushPreview",
+      "description": "Computes the push plans and writes NOTHING: per instance the exact Add/Update/Delete/Adopt entries a push would apply, with per-field changes, reference warnings on deletes and blocking errors. The body is { ids, adopt } - adopt=true re-plans collisions with unmanaged rows as take-over entries instead of blocking errors, which is why the GUI re-previews when it is toggled. There is no reason here; that belongs to the push, which is the audited gate. It is a POST only because the request carries a body, so unlike Push it costs no electronic signature when compliance mode requires one for Config.Save: the operator signs once, for the push itself. That is the only rule it is exempt from - like every other non-GET config call it is refused on a STANDBY node with \"Configuration changes are only allowed on the primary node\". Administrators only, on the primary node.",
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"ids\": [\n    1\n  ],\n  \"adopt\": false\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PUSH UdtInstances (POST, materializes staged state; reason required unless every instance is new)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/Push",
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"ids\": [\n    1\n  ],\n  \"reason\": \"Definition update rollout\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DETACH UdtInstances (POST, strips provenance, keeps rows)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/Detach",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "REORDER UdtInstances (POST, display order inside the asset node)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/Reorder",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"Id\": 1,\n    \"SortOrder\": 0\n  },\n  {\n    \"Id\": 2,\n    \"SortOrder\": 1\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE UdtInstances (POST /Delete, removes materialized rows)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/UdtInstances/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  1\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UNGROUP VariableArrays (POST, one-way: elements become ordinary rows)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/VariableArrays/Ungroup",
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"deviceType\": \"ModbusTcp\",\n  \"id\": 1\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Assets",
+   "item": [
+    {
+     "name": "GET Assets",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Assets"
+     }
+    },
+    {
+     "name": "GET Assets attached row counts",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/Assets/Attached?id=1"
+     }
+    },
+    {
+     "name": "REORDER Assets (POST, ordered sibling id list; server renumbers, no path rewrite)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Assets/Reorder",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  3,\n  2,\n  4\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "INSERT Assets (POST, array body, parentId 0 = root)",
+     "request": {
+      "method": "POST",
+      "description": "Inserts asset nodes. parentId 0 = root. An asset node is the equipment hierarchy only and carries no geographic position: a symbol placed on a Map design object holds its own position, either the name of one variable whose value is \"lat,lon\" or a fixed longitude and latitude, set with the map child endpoints.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Assets",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"parentId\": 0,\n    \"name\": \"Site\",\n    \"description\": \"\",\n    \"sortOrder\": 0\n  },\n  {\n    \"parentId\": 1,\n    \"name\": \"Line A\",\n    \"description\": \"\",\n    \"sortOrder\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "UPDATE Assets (PUT, rename/move rewrites Asset paths)",
+     "request": {
+      "method": "PUT",
+      "description": "Updates asset nodes by id. An asset node carries no geographic position; a map symbol holds its own. See the insert request for details.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Assets",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  {\n    \"id\": 2,\n    \"parentId\": 1,\n    \"name\": \"Line B\",\n    \"description\": \"\",\n    \"sortOrder\": 0\n  }\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE Assets (POST /Delete, refused while children or instances exist)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": "{{base_url}}/API/Config/Assets/Delete",
+      "body": {
+       "mode": "raw",
+       "raw": "[\n  2\n]",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Project Files",
+   "item": [
+    {
+     "name": "GET Project files (list a section)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ProjectFiles?section=online",
+      "description": "Lists the files and folders of one Project tab section. section=online is the wwwroot/Project folder, which the web server serves at /Project/<path> and which holds anything a page or a report references by URL (images, logos, documents an operator downloads). section=offline is the project folder that is never web-served, and holds sqlite databases a report table queries, CSV inputs, and documents shown by a Document Viewer. section=python lists the Python libraries folder, which is read-only through this API. Optional path names a folder relative to the section root with forward slashes (Images/Symbols); omit it for the root. Optional recursive=true also walks sub-folders. Returns { section, path, files, total, truncated }, where each entry carries name, path (relative to the section root), isDirectory, size in bytes and modifiedUtc. A listing is capped at 2000 entries and reports truncated=true when it was cut, so a short answer is never mistaken for a small folder. GET, so it also answers on the standby node."
+     }
+    },
+    {
+     "name": "GET Project files (offline, recursive, sub-folder)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ProjectFiles?section=offline&path=Data&recursive=true",
+      "description": "The same listing narrowed to one folder and walking everything below it. A path that escapes the section root is refused."
+     }
+    },
+    {
+     "name": "UPLOAD Project file (POST, text content)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"section\": \"offline\",\n  \"path\": \"Data/Inputs\",\n  \"fileName\": \"setpoints.csv\",\n  \"contentText\": \"Tag,Value\\nPump1_Speed,72.5\\n\",\n  \"overwrite\": false\n}"
+      },
+      "url": "{{base_url}}/API/Config/ProjectFiles",
+      "description": "Writes ONE file into the Online or Offline project files. The body is a single object, not an array. Section picks the folder by what reads the file: online writes into wwwroot/Project and the answer carries the /Project/<path> url the file is served at, and every image used by a report goes there because the renderer resolves an image component's path against wwwroot; offline writes into the project folder, which is never served, and is the place for files the server itself reads, such as a custom sqlite database queried by a report table or a PythonScript, a CSV input or a data file a script opens by path. The picture of an ImageObject on a page belongs in neither section: a design object carries its image inline as a base64 data URL in its data-imgsrc attribute. path is the target FOLDER inside the section (missing folders are created) and fileName the file; both are checked against the section root, so a rooted path or one containing '..' is refused. Content goes in EITHER contentText (plain UTF-8: csv, json, txt, svg) OR contentBase64 (any binary), never both. The decoded file may not exceed 10 MB; upload a larger file from the Project tab. An existing file is KEPT and the call refused unless overwrite is true. The Python libraries section cannot be written here. Answers { success, section, path, bytes, overwritten, url }. Every upload is written to the audit trail as a Config record on entity type ProjectFiles. Like every other project file write, including a Git import, the file is NOT replicated to the standby node: upload it on both nodes when both must serve it."
+     }
+    },
+    {
+     "name": "UPLOAD Project file (POST, binary content, overwrite)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"section\": \"online\",\n  \"path\": \"Images\",\n  \"fileName\": \"logo.png\",\n  \"contentBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==\",\n  \"overwrite\": true\n}"
+      },
+      "url": "{{base_url}}/API/Config/ProjectFiles",
+      "description": "The binary form. contentBase64 accepts a bare base64 payload or a full data URI (data:image/png;base64,...), whose header is stripped. overwrite true replaces the existing file; the answer reports overwritten true and the audit record is written as an Update instead of a Create. A file uploaded to the online section here is what a report template's image component points at: take the path from the answer and write it in the template as 'Project/' plus that path, for example 'Project/Images/logo.png'. An image placed in the offline section renders nothing."
+     }
+    },
+    {
+     "name": "GET Project file content (read one file back)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": "{{base_url}}/API/Config/ProjectFiles/Content?section=offline&path=Data/setpoints.csv",
+      "description": "Reads one project file back as JSON rather than as a file stream, so the same contract serves the REST caller and the MCP tool. The answer carries section, path, fileName, bytes, a url for an online file, and either encoding 'text' with contentText or encoding 'base64' with contentBase64. Which one is used is decided by decoding the bytes, not by the extension, so a .dat holding CSV comes back readable and a .txt holding a binary blob is returned intact. A folder, a missing file and a file above the 10 MB ceiling are refused; an online file of any size stays reachable at its /Project/ URL. GET, so it also answers on the standby node."
+     }
+    },
+    {
+     "name": "CREATE Project folder (POST)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"section\": \"offline\",\n  \"path\": \"Archive/2026\"\n}"
+      },
+      "url": "{{base_url}}/API/Config/ProjectFiles/Folder",
+      "description": "Creates the folder named by path, including every missing level. A folder that already exists answers with success and created false, because the caller asked for the folder to be there and it is. Only needed for an empty folder: an upload already creates the folders its path names. Audited when the folder is actually created."
+     }
+    },
+    {
+     "name": "MOVE or RENAME Project file (POST)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"section\": \"offline\",\n  \"path\": \"Data/setpoints.csv\",\n  \"targetPath\": \"Archive/2026\",\n  \"overwrite\": false\n}"
+      },
+      "url": "{{base_url}}/API/Config/ProjectFiles/Move",
+      "description": "Moves or renames a file or folder inside one section. targetPath naming an EXISTING folder means 'move into it under the same name', which is how files are tidied into folders; anything else is the item's new full path, which is how a rename is expressed. Overwrite replaces an existing target FILE; an existing target folder is always refused, as is moving a folder into its own subtree, moving the section root, and any target outside the section root. The answer reports path, previousPath, isDirectory and the new url for an online file. Renaming an online file CHANGES ITS URL, so re-point whatever referenced it (a report template's image path, a page, a Document Viewer) in the same change. Audited with both the old and the new path."
+     }
+    },
+    {
+     "name": "DELETE Project file or folder (POST)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"section\": \"offline\",\n  \"path\": \"Archive\",\n  \"recursive\": true\n}"
+      },
+      "url": "{{base_url}}/API/Config/ProjectFiles/Delete",
+      "description": "Removes the file or folder named by path. A folder that still holds files or sub-folders needs recursive true, and the refusal says how many items it holds, so emptying a tree is always deliberate. The section root itself cannot be deleted, including when it is spelled '.', '/' or 'Folder/..'. Nothing here checks whether a page, report or script still points at the file, so list and re-point first. The answer reports isDirectory and deletedItems. Audited with the removed path."
+     }
+    }
+   ]
+  },
+  {
+   "name": "Rename References",
+   "item": [
+    {
+     "name": "POST {entityType}/RenameReferences/Preview",
+     "request": {
+      "method": "POST",
+      "description": "Lists everything in the project that still names something by its OLD name, without changing anything. entityType is what was renamed - Variables, Devices, PythonScripts, Converters, Pages, Reports or UserGroups - and it decides both how far the rename fans out and where a reference to that kind of name can live. Variables: an array parent takes its elements with it. Devices: a stored variable name may embed the {Device} token, so one device rename changes the runtime key of every one of those variables at once; literally named variables are pinned and not included. A device rename also carries the bare device NAME as a term, because a UDT/asset instance stores it as the value of a Device-typed parameter - those parameters are listed here and rewired by RenameReferences like any other reference, never repointed by the PUT itself, and rewiring one flags the instance PendingChanges so a push is still needed to rename the rows it materializes. Whole-reference matching keeps the bare name from matching inside PLC1.Level or PLC10. UserGroups: named as one entry of the comma-separated UserGroups access list on variables, pages, scripts, reports and UDT variable members, and as a user's membership. Those columns ONLY - a group name is an ordinary word, so searching it in descriptions or alarm messages would offer to rewrite prose - and matching there is per LIST ENTRY, not textual, so renaming Ops leaves Ops2 alone. Rows a UDT instance materializes are not listed: their access list is declared by the member, which is, and the next push applies it. PythonScripts: named by Execute Script actions, RunScript() and a report's hook script. Converters: named by the Converter field of every variable that converts through it. Pages: named by navigation actions and by the home page of a user or an AD group. Reports: named by Execute Report actions, RunReport() and a Document Viewer. Call it AFTER the rename is saved. Matching is whole-reference, so renaming Flow1 never touches Flow10. Answers { success, message, total, udtManaged, notes, renames, references[] }. Each reference carries a 'key' plus its location, current value and the names matched inside it; read them before rewiring, because a whole-reference hit is not always a binding - the same name inside an alarm message or a page label is a genuine match and still prose - and pass the keys to keep to RenameReferences as selectedKeys. Writes nothing, so it costs no electronic signature in compliance mode. Administrators only; refused on a standby node like every other non-GET config route.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"oldName\": \"PLC1.Flow\",\n  \"newName\": \"PLC1.FlowTotal\"\n}"
+      },
+      "url": "{{base_url}}/API/Config/Variables/RenameReferences/Preview"
+     }
+    },
+    {
+     "name": "POST {entityType}/RenameReferences",
+     "request": {
+      "method": "POST",
+      "description": "Rewrites every reference from the OLD name to the current one, across page objects, alarms, events, Python scripts, schedules, converters, report templates, UDT definition members and user home pages. For a UserGroups rename the surface is different and deliberately narrow: the UserGroups access lists and user membership only, matched per list entry, and rows a UDT instance materializes are left to the next push of that instance. Preview first. This is a SEPARATE call on purpose: a PUT never rewires references implicitly (a rename made to point the references at something else must not have them silently follow) and answers with a VariableRenameReferences or DeviceRenameReferences warning naming the count instead - the warning's fourth argument is the entityType to use here. The references are searched again here, so a stale preview cannot write values nobody looked at, and any item whose stored value moved on since is refused and reported in errors[]. Historian samples are NOT rewritten - they record what was measured under the name in force at the time, so a trend shows history from the rename onwards. Send selectedKeys (the 'key' values from the preview) to rewire only some of the references; omit it to rewire everything this call's own search finds. It narrows that result and can never add to it, so a key the fresh search no longer produces is ignored and that reference is left alone rather than written with a value nobody approved - and an empty list writes nothing. Answers { success, message, replaced, failed, skipped, notes, results[], errors[] }, where skipped counts the references found and not written. Administrators only, primary node only, signature-gated in compliance mode.",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"oldName\": \"PLC1.Flow\",\n  \"newName\": \"PLC1.FlowTotal\",\n  \"selectedKeys\": [\"3F2A9C1D5E7B48A0C6D1E9F30B7A4C82\"]\n}"
+      },
+      "url": "{{base_url}}/API/Config/Variables/RenameReferences"
+     }
+    }
+   ]
+  }
+ ]
+}

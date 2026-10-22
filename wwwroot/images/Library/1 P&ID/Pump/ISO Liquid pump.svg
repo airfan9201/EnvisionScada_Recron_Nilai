@@ -1,0 +1,47 @@
+<svg
+   viewBox="0 0 9.8765593 9.8247728"
+   version="1.1"
+   id="svg43751"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-88.79316,-96.538159)">
+    <g
+       id="g43840">
+      <g
+         id="g1507"
+         transform="matrix(2.6633981e-8,0.35277777,-0.35277777,2.6633981e-8,-126.08333,-365.59281)">
+        <path
+           d="m 1310.332,-623.023 c 0,-7.496 6.071,-13.571 13.571,-13.571 7.488,0 13.57,6.075 13.57,13.571 0,7.492 -6.082,13.57 -13.57,13.57 -7.5,0 -13.571,-6.078 -13.571,-13.57 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1509" />
+      </g>
+      <g
+         id="g1511"
+         transform="matrix(2.6633981e-8,0.35277777,-0.35277777,2.6633981e-8,-126.08333,-365.59281)">
+        <path
+           d="m 1310.332,-623.023 13.571,-13.571 13.57,13.571"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1513" />
+      </g>
+      <g
+         id="g1515"
+         transform="matrix(2.6633981e-8,0.35277777,-0.35277777,2.6633981e-8,-126.08333,-365.59281)">
+        <path
+           d="m 1316.938,-629.308 c 7.375,5.335 3.093,18.683 0,17.953"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1517" />
+      </g>
+      <g
+         id="g1519"
+         transform="matrix(0,-0.35277777,-0.35277777,0,-126.08326,-365.59274)">
+        <path
+           d="m -1330.867,-629.308 c 7.375,5.335 3.094,18.683 0,17.953"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1521" />
+      </g>
+    </g>
+  </g>
+</svg>

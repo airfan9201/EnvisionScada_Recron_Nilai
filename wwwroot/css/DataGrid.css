@@ -1,0 +1,1066 @@
+﻿/* Shared configuration data grid (DataGrid.js). Page layout, toolbar, grid, filter chips,
+   popovers and responsive behavior. All colors come from the theme variables in site.css. */
+
+.dg-page {
+    --dg-row-height: 42px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 12px);
+    min-height: 420px;
+    color: var(--ThemeFontColor);
+}
+
+.dg-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    gap: 14px;
+    min-height: 50px;
+    padding: 4px 0 8px;
+}
+
+.dg-page-heading,
+.dg-toolbar,
+.dg-page-meta,
+.dg-search,
+.dg-row-actions {
+    display: flex;
+    align-items: center;
+}
+
+.dg-page-heading {
+    gap: 10px;
+    min-width: max-content;
+}
+
+.dg-page-heading h1 {
+    margin: 0;
+    color: var(--ThemeFontColor);
+    font-size: 24px;
+    font-weight: 680;
+    letter-spacing: -0.02em;
+}
+
+.dg-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 4px 14px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 999px;
+    color: var(--ThemeFontColor2);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.dg-count strong {
+    color: var(--ThemeFontColor);
+    font-size: 12px;
+}
+
+.dg-page-meta {
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 1px;
+    color: var(--ThemeFontColor2);
+    font-size: 11px;
+}
+
+.dg-menu-button {
+    display: grid;
+    width: 28px;
+    height: 32px;
+    padding: 5px;
+    border: 0;
+    background: transparent;
+    place-items: center;
+}
+
+.dg-menu-button svg {
+    width: 20px;
+    fill: var(--ThemeIconColor);
+}
+
+.dg-menu-button:hover svg {
+    fill: var(--ThemeIconColorHover);
+}
+
+.dg-context,
+.dg-filtered,
+.dg-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.dg-context {
+    padding: 1px 7px;
+    border: 1px solid var(--ThemeBorderColor);
+}
+
+.dg-filtered {
+    padding: 1px 7px;
+    background: rgba(245, 158, 11, 0.14);
+    color: #d97706;
+}
+
+/* Beta marker next to a page title, matching the [BETA] labels in the side menu and home
+   navigation. Sized on its own, since the h1 it sits in is 24px. */
+.dg-beta {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+    padding: 1px 7px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 999px;
+    color: var(--ThemeFontColor2);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    vertical-align: middle;
+}
+
+.dg-toolbar {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.dg-toolbar > *,
+.dg-toolbar form {
+    float: none !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.dg-toolbar .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 32px;
+    width: auto;
+    padding: 5px 10px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, transform 100ms ease;
+}
+
+.dg-toolbar .btn svg {
+    display: block;
+    width: 15px;
+    min-width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    flex: 0 0 auto;
+}
+
+.dg-toolbar .btn > span {
+    line-height: 1;
+}
+
+.dg-toolbar .dg-return {
+    width: 34px;
+    padding-inline: 8px;
+}
+
+.dg-toolbar .btn:hover {
+    border-color: color-mix(in srgb, var(--ThemeIconColor) 55%, var(--ThemeBorderColor));
+    background: color-mix(in srgb, var(--ThemeIconColor) 10%, transparent);
+    color: var(--ThemeFontColorHover);
+}
+
+.dg-toolbar .btn:active {
+    transform: translateY(1px);
+}
+
+.dg-toolbar .dg-primary {
+    border-color: var(--ThemeIconColor);
+    background: var(--ThemeIconColor);
+    color: var(--ThemeButtonColor);
+}
+
+.dg-toolbar .dg-primary:hover {
+    border-color: var(--ThemeIconColorHover);
+    background: var(--ThemeIconColorHover);
+    color: var(--ThemeButtonColor);
+}
+
+.dg-toolbar .dg-danger:hover {
+    border-color: color-mix(in srgb, #dc2626 65%, var(--ThemeBorderColor));
+    background: rgba(220, 38, 38, 0.12);
+    color: #dc2626;
+}
+
+.dg-toolbar .dg-danger:hover svg {
+    stroke: #dc2626;
+}
+
+.dg-search {
+    position: relative;
+    width: clamp(160px, 20vw, 280px);
+}
+
+.dg-search input {
+    width: 100%;
+    height: 32px;
+    padding: 5px 30px 5px 10px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    background: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    font-size: 12px;
+}
+
+.dg-search svg {
+    position: absolute;
+    right: 10px;
+    width: 12px;
+    fill: var(--ThemeFontColor2);
+    pointer-events: none;
+}
+
+/* Modern, themed date/time pickers for the viewer date range (matches the search field). */
+.dg-daterange input[type="datetime-local"] {
+    height: 34px;
+    padding: 5px 8px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    background: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    font-size: 12px;
+}
+
+/* The date-range Apply button sits next to the pickers; size it to match them instead of the
+   compact toolbar buttons so it doesn't read as too small. */
+.dg-daterange .btn {
+    height: 34px;
+    min-height: 34px;
+    padding: 6px 16px;
+    font-size: 13px;
+}
+
+.dg-daterange .btn svg {
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+}
+
+.dg-daterange input[type="datetime-local"]:focus {
+    outline: none;
+    border-color: var(--ThemeIconColor);
+}
+
+/* Neutral-grey calendar glyph stays visible on both light and dark viewer backgrounds. */
+.dg-daterange input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    opacity: 0.75;
+    cursor: pointer;
+}
+
+.dg-filter-chips {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.dg-filter-chips:not(:empty) {
+    padding: 0 0 7px 38px;
+}
+
+.dg-chip {
+    gap: 5px;
+    padding: 3px 8px;
+    border: 1px solid color-mix(in srgb, var(--ThemeIconColor) 35%, transparent);
+    background: color-mix(in srgb, var(--ThemeIconColor) 10%, transparent);
+    color: var(--ThemeIconColor);
+    font-size: 11px;
+}
+
+.dg {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    border-top: 1px solid var(--ThemeBorderColor);
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+.dg-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Reserve the vertical scrollbar's space up front so that when rows fill the viewport and the
+       scrollbar appears it does not shrink the content width and trigger a spurious ~15px
+       horizontal scroll (the grid is already stretched to the pre-scrollbar width). */
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+}
+
+.dg-header,
+.dg-row {
+    display: grid;
+    grid-template-columns: var(--dg-columns);
+    width: max-content;
+    min-width: 100%;
+}
+
+.dg-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    min-height: 38px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    background: var(--ThemeFormBackgroundColor);
+}
+
+.dg-body {
+    min-width: 100%;
+}
+
+.dg-row {
+    min-height: var(--dg-row-height);
+    border-bottom: 1px solid var(--ThemeFormLineColorHorizontal);
+    background: transparent;
+    transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.dg-row:nth-of-type(even) {
+    background: var(--ThemeFormLineColorEven);
+}
+
+.dg-row:hover,
+.dg-row:focus-within {
+    position: relative;
+    z-index: 2;
+    background: var(--ThemeFormLineColorHover);
+    box-shadow: inset 3px 0 var(--ThemeIconColor);
+}
+
+.dg-cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    min-height: inherit;
+    border-right: 1px solid var(--ThemeFormLineColorVertical);
+}
+
+.dg-cell[hidden] {
+    display: none !important;
+}
+
+.dg-cell.dg-last-visible {
+    border-right: 0;
+}
+
+.dg-column-header,
+.dg-actions-header {
+    padding: 0 6px 0 10px;
+    color: var(--ThemeFontColor2);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+}
+
+.dg-sort,
+.dg-filter,
+.dg-row-actions button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+}
+
+.dg-sort {
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-overflow: ellipsis;
+    text-transform: inherit;
+    white-space: nowrap;
+}
+
+.dg-sort::after {
+    margin-left: 5px;
+    color: var(--ThemeIconColor);
+    content: attr(data-sort-index);
+    font-size: 8px;
+}
+
+.dg-sort[data-direction="asc"]::before {
+    content: "↑ ";
+}
+
+.dg-sort[data-direction="desc"]::before {
+    content: "↓ ";
+}
+
+.dg-filter {
+    width: 22px;
+    margin-left: auto;
+    padding: 0;
+    color: var(--ThemeFontColor2);
+    font-size: 14px;
+}
+
+.dg-filter:hover,
+.dg-sort:hover {
+    color: var(--ThemeIconColor);
+}
+
+.dg-resize {
+    position: absolute;
+    top: 0;
+    right: -4px;
+    bottom: 0;
+    z-index: 3;
+    width: 8px;
+    cursor: col-resize;
+    touch-action: none;
+}
+
+.dg-resize:hover,
+.dg-resize-active {
+    background: color-mix(in srgb, var(--ThemeIconColor) 45%, transparent);
+}
+
+.dg-resizing,
+.dg-resizing * {
+    cursor: col-resize !important;
+    user-select: none !important;
+}
+
+/* Header drag-to-reorder */
+.dg-reorderable {
+    cursor: grab;
+}
+
+.dg-col-reordering,
+.dg-col-reordering * {
+    cursor: grabbing !important;
+    user-select: none !important;
+}
+
+.dg-col-dragging {
+    opacity: 0.55;
+}
+
+.dg-drop-before {
+    box-shadow: inset 2px 0 0 0 var(--ThemeIconColor);
+}
+
+.dg-drop-after {
+    box-shadow: inset -2px 0 0 0 var(--ThemeIconColor);
+}
+
+.dg-select,
+.dg-enable,
+.dg-state-cell,
+.dg-value-cell,
+.dg-actions-header {
+    justify-content: center;
+}
+
+.dg-select input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    flex: 0 0 auto;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+    background: var(--ThemeConfigInputBackgroundColor);
+    cursor: pointer;
+    position: relative;
+}
+
+.dg-select input:checked,
+.dg-select input:indeterminate {
+    background: var(--ThemeIconColor);
+    border-color: var(--ThemeIconColor);
+}
+
+/* Checkmark uses the same on-primary pairing as .dg-primary (icon-colour fill + button-colour glyph). */
+.dg-select input:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid var(--ThemeButtonColor);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.dg-select input:indeterminate::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 6px;
+    width: 7px;
+    height: 2px;
+    background: var(--ThemeButtonColor);
+}
+
+/* Boolean flag cells (MustChangePassword, ByteSwap, the UserGroups *Right flags, etc.) render
+   as a themed square checkbox, matching the Select checkbox. Only the genuine Enable on/off
+   state (data-column="Enable") becomes a slider below, so a flag never looks like a power switch. */
+.dg-enable .form-check-input {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    flex: 0 0 auto;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+    background: var(--ThemeConfigInputBackgroundColor);
+    cursor: pointer;
+}
+
+.dg-enable .form-check-input:checked {
+    background: var(--ThemeIconColor);
+    border-color: var(--ThemeIconColor);
+}
+
+.dg-enable .form-check-input:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid var(--ThemeButtonColor);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* The genuine Enable on/off state renders as a themed slider, distinct from flag checkboxes. */
+.dg-enable[data-column="Enable"] .form-check-input {
+    width: 30px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--ThemeBorderColor);
+    border-color: var(--ThemeBorderColor);
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.dg-enable[data-column="Enable"] .form-check-input::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ThemeConfigInputBackgroundColor);
+    transform: translateY(-50%);
+    transition: left 0.15s ease;
+}
+
+.dg-enable[data-column="Enable"] .form-check-input:checked {
+    background: var(--ThemeIconColor);
+    border-color: var(--ThemeIconColor);
+}
+
+.dg-enable[data-column="Enable"] .form-check-input:checked::after {
+    top: 50%;
+    left: 16px;
+    width: 12px;
+    height: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ThemeConfigInputBackgroundColor);
+    transform: translateY(-50%);
+}
+
+.dg-row .dg-cell > .form-control,
+.dg-type-dropdown,
+.dg-type-dropdown > .form-control {
+    width: 100%;
+}
+
+.dg-row .form-control {
+    height: 32px;
+    min-width: 0;
+    padding: 5px 9px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ThemeFontColor2);
+    font-size: 13px;
+    /* Keep every cell on one line: long text is clipped with an ellipsis instead of wrapping
+       onto a second line and growing the row height (e.g. the EventViewer Message column). */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.dg-row .form-control:hover {
+    border-color: var(--ThemeBorderColor);
+    background: color-mix(in srgb, var(--ThemeElements) 65%, transparent);
+}
+
+.dg-row .form-control:focus {
+    border-color: var(--ThemeIconColor);
+    background: var(--ThemeGridInputBackgroundColorFocus, var(--ThemeConfigInputBackgroundColor));
+    color: var(--ThemeGridInputFontColorFocus, var(--ThemeConfigInputColor));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ThemeIconColor) 18%, transparent);
+}
+
+/* Picker cells (UserGroups, HomePage, Converter, SampleGroup, ...): a text input plus a button
+   that opens a selector dialog. Replace the old solid-blue square with a compact, subtle icon
+   button (centered horizontal ellipsis) that mirrors the toolbar buttons: quiet by default,
+   accent border/tint on hover. Scoped to the grid, so the modal input-group pickers are untouched. */
+.dg-input-with-button {
+    gap: 5px;
+    padding-right: 6px;
+}
+
+.dg-input-with-button .btn {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--ThemeElements) 55%, transparent);
+    color: var(--ThemeFontColor2);
+    font-size: 0;
+    line-height: 0;
+    box-shadow: none;
+    transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.dg-input-with-button .btn::before {
+    content: "\22EF"; /* horizontal ellipsis, vertically centered unlike the literal "..." */
+    font-size: 17px;
+    line-height: 1;
+}
+
+.dg-input-with-button .btn:hover {
+    border-color: color-mix(in srgb, var(--ThemeIconColor) 55%, var(--ThemeBorderColor));
+    background: color-mix(in srgb, var(--ThemeIconColor) 12%, transparent);
+    color: var(--ThemeIconColor);
+}
+
+.dg-input-with-button .btn:active {
+    transform: translateY(1px);
+}
+
+/* The masked password cell has no input, so pad it to match the text inset of the
+   sibling input cells (.dg-row .form-control padding 9px + 1px transparent border). */
+.dg-password-cell {
+    cursor: pointer;
+}
+
+.dg-password-mask {
+    padding-left: 10px;
+}
+
+/* Read-only value cells (plain text, no input) get the same 10px inset, otherwise the
+   text sits against the column border. */
+.dg-row .dg-cell.dg-statictext {
+    padding-left: 10px;
+}
+
+/* Blank "no rights" screen shown to an embedded caller without rights to view the page, in place
+   of the grid (the non-embedded path redirects instead). */
+.dg-norights {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 24px;
+    color: var(--ThemeFontColor2);
+    font-size: 15px;
+    text-align: center;
+}
+
+.dg-state,
+.dg-live-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: calc(100% - 8px);
+    min-height: 24px;
+    padding: 2px 8px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--ThemeIconColor) 28%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ThemeIconColor) 10%, transparent);
+    color: var(--ThemeIconColor);
+    font-size: 10px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dg-live-value {
+    min-width: 50px;
+    cursor: pointer;
+}
+
+.dg-row-actions {
+    justify-content: center;
+    gap: 2px;
+    padding: 0 4px;
+}
+
+.dg-row-actions form {
+    display: contents;
+}
+
+.dg-row-actions button {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 6px;
+    color: var(--ThemeIconColor);
+    cursor: pointer;
+    place-items: center;
+}
+
+.dg-row-actions button:hover {
+    background: var(--ThemeFormLineColorHover);
+    color: var(--ThemeIconColorHover);
+}
+
+.dg-row-actions button svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.dg-row-actions .dg-delete:hover {
+    background: rgba(220, 38, 38, 0.12);
+    color: #dc2626;
+}
+
+.dg-sentinel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    color: var(--ThemeFontColor2);
+    font-size: 11px;
+}
+
+.dg-loader {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--ThemeBorderColor);
+    border-top-color: var(--ThemeIconColor);
+    border-radius: 50%;
+    animation: dg-spin 0.7s linear infinite;
+}
+
+.dg-end,
+.dg-noresults,
+.dg-error-text {
+    display: none;
+}
+
+.dg-loading .dg-loader {
+    display: inline-block;
+}
+
+.dg-ended:not(.dg-empty):not(.dg-loading) .dg-end {
+    display: inline-block;
+}
+
+.dg-empty:not(.dg-loading) .dg-noresults {
+    display: inline-block;
+}
+
+.dg-error .dg-error-text {
+    display: inline-block;
+    color: #dc2626;
+    font-weight: 600;
+}
+
+@keyframes dg-spin {
+    to { transform: rotate(360deg); }
+}
+
+.dg-popover {
+    position: fixed;
+    z-index: 10050;
+    width: min(260px, calc(100vw - 24px));
+    padding: 12px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 10px;
+    background: var(--ThemeElements);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+    color: var(--ThemeFontColor);
+}
+
+.dg-popover > label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.dg-popover > .form-control {
+    background: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+}
+
+.dg-popover > div:last-child {
+    display: flex;
+    gap: 6px;
+    margin-top: 9px;
+}
+
+/* Filter popover Apply/Clear buttons: theme explicitly (Apply = primary) so they follow the
+   viewer parameters and aren't left on the chunky base .btn look. */
+.dg-popover .btn {
+    flex: 1;
+    height: auto;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 7px;
+    border: 1px solid var(--ThemeBorderColor);
+    background: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    cursor: pointer;
+}
+
+.dg-popover .btn[type="submit"] {
+    border-color: var(--ThemeIconColor);
+    background: var(--ThemeIconColor);
+    color: var(--ThemeButtonColor);
+}
+
+.dg-popover .btn:hover {
+    border-color: var(--ThemeIconColor);
+    background: color-mix(in srgb, var(--ThemeIconColor) 14%, var(--ThemeButtonBackgroundColor));
+}
+
+.dg-popover .btn[type="submit"]:hover {
+    background: var(--ThemeIconColorHover);
+}
+
+.dg-column-list {
+    max-height: min(420px, 60vh);
+    overflow-y: auto;
+}
+
+.dg-column-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 5px 6px;
+    border-radius: 6px;
+    cursor: grab;
+    font-size: 12px;
+}
+
+.dg-column-option:hover,
+.dg-column-option.dragging {
+    background: var(--ThemeFormLineColorHover);
+}
+
+.dg-drag-handle {
+    color: var(--ThemeFontColor2);
+    letter-spacing: -3px;
+    min-width: 12px;
+}
+
+.dg-column-label {
+    cursor: pointer;
+}
+
+.dg-column-anchored {
+    cursor: default;
+}
+
+@media (max-width: 1200px) {
+    .dg-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .dg-toolbar {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .dg-search {
+        flex: 1 1 180px;
+        width: auto;
+    }
+}
+
+@media (max-width: 960px) {
+    .dg-row-actions {
+        position: sticky;
+        right: 0;
+        z-index: 4;
+        background: inherit;
+    }
+}
+
+@media (max-width: 700px) {
+    .dg-page {
+        height: calc(100dvh - 6px);
+    }
+
+    .dg-page-heading h1 {
+        font-size: 18px;
+    }
+
+    .dg-toolbar > button,
+    .dg-toolbar > a,
+    .dg-toolbar > form,
+    .dg-toolbar > .dropdown {
+        flex: 1 1 calc(33.333% - 6px);
+    }
+
+    .dg-toolbar > button,
+    .dg-toolbar > a,
+    .dg-toolbar > form .btn,
+    .dg-toolbar > .dropdown > .btn {
+        width: 100% !important;
+    }
+
+    .dg-search {
+        order: 10;
+        flex-basis: 100%;
+    }
+
+    .dg-filter-chips:not(:empty) {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    .dg-page-header {
+        padding-top: 2px;
+    }
+
+    .dg-page-heading {
+        min-width: 0;
+    }
+
+    .dg-page-meta {
+        font-size: 10px;
+    }
+
+    .dg-toolbar > button,
+    .dg-toolbar > a,
+    .dg-toolbar > form,
+    .dg-toolbar > .dropdown {
+        flex-basis: calc(50% - 6px);
+    }
+
+    .dg-row-actions button {
+        width: 30px;
+    }
+}
+
+/* UDT-managed rows (F20): materialized by a UDT instance and locked against inline edits.
+   The config API rejects writes to these rows; this styling makes the lock visible. The
+   select checkbox stays usable so bulk actions can still target them (the API refuses). */
+.dg-row.udt-locked {
+    /* Cool tint + a left accent bar, rather than the old goldenrod wash. Goldenrod at 5% reads as
+       a stain (aged paper in light themes, muddy brown in dark) and says "warning" when the row is
+       not faulty - it is simply owned by something else. A neutral blue is the product's
+       informational colour, and the inset bar makes the marking look deliberate rather than like
+       discolouration. inset box-shadow, not border-left: it costs no layout width, so managed and
+       unmanaged rows stay aligned to the same grid columns. */
+    background: rgba(56, 132, 222, 0.06);
+    box-shadow: inset 3px 0 0 rgba(56, 132, 222, 0.45);
+}
+
+.dg-row.udt-locked .form-control,
+.dg-row.udt-locked .form-check-input,
+.dg-row.udt-locked .contextbutton {
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+.dg-row.udt-locked .dg-row-actions .dg-delete {
+    display: none;
+}
+
+/* Array parent marker in the Name cell: the element count in brackets, PLC-style, and the
+   fold toggle for the element rows. Same informational blue as the managed-row bar, because
+   it is state, not a warning. */
+.dg-array-badge {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 4px;
+    padding: 0 4px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: Consolas, monospace;
+    color: rgba(56, 132, 222, 0.9);
+    white-space: nowrap;
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dg-array-badge:hover {
+    background: rgba(56, 132, 222, 0.12);
+}
+
+/* Chevron mirrors the fold state: down = elements shown, right = folded away. */
+.dg-array-badge::before {
+    content: "\25BE";
+    font-size: 9px;
+    line-height: 1;
+}
+
+.dg-array-badge.dg-array-collapsed::before {
+    content: "\25B8";
+}
+
+.dg-row.dg-array-folded {
+    display: none;
+}
+
+/* Clickable built-in token in the variable modals' footer hint: click inserts the token
+   (e.g. {Device}) into the Name field at the caret. See EntityModal.insertToken. */
+.em-token {
+    cursor: pointer;
+}
+
+.em-token:hover {
+    text-decoration: underline;
+}

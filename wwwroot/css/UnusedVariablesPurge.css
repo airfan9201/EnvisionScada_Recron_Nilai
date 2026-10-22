@@ -1,0 +1,222 @@
+﻿/* =========================================================
+       Bootstrap-Table Theme (Light & Dark Mode)
+       ========================================================= */
+
+
+/* ---------------------------------------------------------
+           Base Table
+--------------------------------------------------------- */
+.bootstrap-table {
+    color: var(--ThemeFontColor);
+    background-color: var(--ThemeBackground);
+}
+
+
+    /* ---------------------------------------------------------
+           Pagination Buttons
+    --------------------------------------------------------- */
+    .bootstrap-table .pagination .page-link {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+        .bootstrap-table .pagination .page-link:hover {
+            background-color: var(--ThemeButtonBackgroundColor);
+            color: var(--ThemeButtonColorHover);
+            border-color: var(--ThemeBorderColorHover);
+        }
+
+    .bootstrap-table .pagination .page-item.active .page-link {
+        background-color: var(--ThemeButtonBackgroundColor);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+    .bootstrap-table .pagination .page-item.disabled .page-link {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemePlaceholderFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+
+    /* ---------------------------------------------------------
+           Page Size Dropdown (wrapper & button)
+           --------------------------------------------------------- */
+    .bootstrap-table .page-list {
+        background-color: var(--ThemeBackground);
+    }
+
+        .bootstrap-table .page-list .btn-group {
+            background-color: var(--ThemeBackground);
+        }
+
+        .bootstrap-table .page-list .btn.dropdown-toggle {
+            background-color: var(--ThemeButtonBackgroundColor);
+            color: var(--ThemeButtonColor);
+        }
+
+            .bootstrap-table .page-list .btn.dropdown-toggle:hover,
+            .bootstrap-table .page-list .btn.dropdown-toggle:focus {
+                background-color: var(--ThemeButtonBackgroundColor);
+                color: var(--ThemeButtonColorHover);
+            }
+
+
+    /* ---------------------------------------------------------
+           Page Size Select
+           --------------------------------------------------------- */
+    .bootstrap-table .page-size select {
+        background-color: var(--ThemeFormBackgroundColor);
+        color: var(--ThemeFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+        .bootstrap-table .page-size select:focus {
+            background-color: var(--ThemeGridInputBackgroundColorFocus);
+            color: var(--ThemeGridInputFontColorFocus);
+            border-color: var(--ThemeBorderColorHover);
+        }
+
+
+    /* ---------------------------------------------------------
+           Dropdown Menus (column selector, page numbers)
+           --------------------------------------------------------- */
+    .bootstrap-table .dropdown-menu {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+        .bootstrap-table .dropdown-menu .dropdown-item {
+            color: var(--ThemeFontColor);
+        }
+
+            .bootstrap-table .dropdown-menu .dropdown-item:hover,
+            .bootstrap-table .dropdown-menu .dropdown-item:focus {
+                background-color: var(--ThemeButtonBackgroundColor);
+                color: var(--ThemeButtonColorHover);
+            }
+
+            .bootstrap-table .dropdown-menu .dropdown-item.active,
+            .bootstrap-table .dropdown-menu .dropdown-item:active {
+                background-color: var(--ThemeButtonBackgroundColor);
+                color: var(--ThemeButtonColorHover);
+            }
+
+            .bootstrap-table .dropdown-menu .dropdown-item.disabled {
+                color: var(--ThemePlaceholderFontColor);
+            }
+
+
+    /* ---------------------------------------------------------
+           Search Box
+           --------------------------------------------------------- */
+    .bootstrap-table .search input {
+        background-color: var(--ThemeConfigInputBackgroundColor);
+        color: var(--ThemeConfigInputColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+        .bootstrap-table .search input::placeholder {
+            color: var(--ThemePlaceholderFontColor);
+        }
+
+        .bootstrap-table .search input:focus {
+            background-color: var(--ThemeGridInputBackgroundColorFocus);
+            color: var(--ThemeGridInputFontColorFocus);
+            border-color: var(--ThemeBorderColorHover);
+        }
+
+
+    /* ---------------------------------------------------------
+           Toolbar Buttons
+           --------------------------------------------------------- */
+    .bootstrap-table .fixed-table-toolbar .btn {
+        background-color: var(--ThemeButtonBackgroundColor);
+        color: var(--ThemeButtonColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+        .bootstrap-table .fixed-table-toolbar .btn:hover {
+            background-color: var(--ThemeButtonColorHover));
+            color: var(--ThemeButtonColorHover);
+            border-color: var(--ThemeBorderColorHover);
+        }
+
+        .bootstrap-table .fixed-table-toolbar .btn.active {
+            background-color: var(--ThemeElements);
+            border-color: var(--ThemeBorderColorHover);
+        }
+
+
+    /* ---------------------------------------------------------
+           Toolbar Icons
+           --------------------------------------------------------- */
+    .bootstrap-table .fixed-table-toolbar i,
+    .bootstrap-table .fixed-table-toolbar svg {
+        color: var(--ThemeIconColor);
+    }
+
+
+
+
+    /* ---------------------------------------------------------
+           Dropdown Caret Icon
+           --------------------------------------------------------- */
+    .bootstrap-table .fixed-table-toolbar .caret {
+        color: var(--ThemeIconColor);
+    }
+
+
+    /* ---------------------------------------------------------
+           Column Selector Dropdown Icons
+           --------------------------------------------------------- */
+    .bootstrap-table .dropdown-menu i,
+    .bootstrap-table .dropdown-menu svg {
+        color: var(--ThemeButtonHoverColor);
+    }
+
+
+
+
+    /* ---------------------------------------------------------
+           Fullscreen Mode
+           --------------------------------------------------------- */
+    .bootstrap-table.fullscreen {
+        background: var(--ThemeBackground);
+    }
+
+        .bootstrap-table.fullscreen .fixed-table-header,
+        .bootstrap-table.fullscreen .fixed-table-body {
+            background-color: var(--ThemeBackground);
+        }
+
+
+    /* ---------------------------------------------------------
+           Table Header & Body
+           --------------------------------------------------------- */
+    .bootstrap-table .table thead th {
+        background-color: var(--ThemeBackgroundSideMenu);
+        color: var(--ThemeFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+    .bootstrap-table .table tbody td {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+        border-color: var(--ThemeBorderColor);
+    }
+
+
+    /* ---------------------------------------------------------
+           Row Hover & Selected State
+           --------------------------------------------------------- */
+    .bootstrap-table .table tbody tr:hover {
+        background-color: var(--ThemeBackground2);
+    }
+
+    .bootstrap-table .table tbody tr.selected {
+        background-color: var(--ThemeElements);
+        color: var(--ThemeButtonColor);
+    }

@@ -1,0 +1,42 @@
+<svg
+   viewBox="0 0 9.8364325 9.8378639"
+   version="1.1"
+   id="svg14914"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-81.829309,-108.29393)">
+    <g
+       id="g14975">
+      <path
+         d="m 336.027,5719.73 v 0 c 7.637,0 13.828,6.192 13.828,13.829 0,7.64 -6.191,13.832 -13.828,13.832 0,0 0,0 0,0 v 0 0 c -7.636,0 -13.828,-6.192 -13.828,-13.832 0,-7.637 6.192,-13.829 13.828,-13.829 z"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path6757"
+         transform="matrix(0.35277777,0,0,-0.35277777,-31.795331,2135.8856)" />
+      <g
+         id="g6759"
+         transform="matrix(0.35277777,0,0,0.35277777,-31.795331,46.494487)">
+        <path
+           d="m 336.027,202.953 c 7.637,0 13.828,-6.191 13.828,-13.828 0,-7.641 -6.191,-13.832 -13.828,-13.832 0,0 0,0 0,0 v 0.004 -0.004 c -7.636,0.004 -13.828,6.191 -13.828,13.832 0,7.637 6.192,13.828 13.828,13.828 z m -13.828,-13.828 h 27.656"
+           style="stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6761" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text6767"
+         x="84.719177"
+         y="116.9274"><tspan
+           x="84.719177 86.387383"
+           y="116.9274"
+           id="tspan6763"
+           style="stroke-width:0.352778">65</tspan><tspan
+           x="84.719177 86.387383"
+           y="112.67753"
+           id="tspan6765"
+           style="stroke-width:0.352778">LC</tspan></text>
+    </g>
+  </g>
+</svg>

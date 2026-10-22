@@ -1,0 +1,267 @@
+﻿/* ================================
+   Z-Index Layers Sidebar (EnvisionSCADA)
+   ================================ */
+
+/* Sidebar container */
+#ZIndexLayersSidebar {
+    width: 500px !important; /* you can tweak this */
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-left: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+    /* Ensure header/body inside offcanvas follow theme */
+    #ZIndexLayersSidebar .offcanvas-header,
+    #ZIndexLayersSidebar .offcanvas-body {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+    }
+
+    /* Make close button theme-aware */
+    #ZIndexLayersSidebar .btn-close {
+        filter: var(--ThemeCloseButtonFilter, none);
+    }
+
+    /* Title / labels inherit font color */
+    #ZIndexLayersSidebar h5,
+    #ZIndexLayersSidebar label,
+    #ZIndexLayersSidebar small {
+        color: var(--ThemeFontColor);
+    }
+
+    /* ================================
+   Table layout
+   ================================ */
+
+    #ZIndexLayersSidebar table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    /* Remove all table borders for a clean, modern look */
+    #ZIndexLayersSidebar table,
+    #ZIndexLayersSidebar th,
+    #ZIndexLayersSidebar td {
+        border: none;
+    }
+
+    /* Optional: subtle row separator; remove if you want fully flat
+#ZIndexLayersSidebar tbody tr + tr td {
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+*/
+
+    #ZIndexLayersSidebar th,
+    #ZIndexLayersSidebar td {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 4px 6px;
+        color: var(--ThemeFontColor);
+        background-color: transparent;
+        font-size: 0.85rem;
+    }
+
+        /* Column widths (adjust as you like) */
+        /* 1: Z-Index, 2: Name, 3: Color, 4: #Count, 5: Actions */
+        #ZIndexLayersSidebar th:nth-child(1),
+        #ZIndexLayersSidebar td:nth-child(1) {
+            width: 60px;
+            text-align: right;
+        }
+
+        #ZIndexLayersSidebar th:nth-child(2),
+        #ZIndexLayersSidebar td:nth-child(2) {
+            width: 180px; /* Name column */
+        }
+
+        #ZIndexLayersSidebar th:nth-child(3),
+        #ZIndexLayersSidebar td:nth-child(3) {
+            width: 40px; /* Color column */
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #ZIndexLayersSidebar th:nth-child(4),
+        #ZIndexLayersSidebar td:nth-child(4) {
+            width: 60px; /* # column */
+            text-align: center;
+        }
+
+        #ZIndexLayersSidebar th:nth-child(5),
+        #ZIndexLayersSidebar td:nth-child(5) {
+            width: 80px; /* actions */
+            text-align: center;
+        }
+
+    /* Prefix the count column with # visually (if you want via CSS)
+   If you prefer the literal # in JS/HTML, skip this.
+*/
+    /*
+#ZIndexLayersSidebar td:nth-child(4)::before {
+    content: "#";
+    margin-right: 2px;
+}
+*/
+
+    /* ================================
+   Inputs (name + color)
+   ================================ */
+
+    #ZIndexLayersSidebar .zindex-name-input,
+    #ZIndexLayersSidebar input[type="text"] {
+        width: 100%;
+        padding: 2px 6px;
+        font-size: 0.85rem;
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+        border: 1px solid rgba(128, 128, 128, 0.4);
+    }
+
+    /* Square color picker (override Bootstrap's .form-control-color) */
+    #ZIndexLayersSidebar .zindex-color-input,
+    #ZIndexLayersSidebar input[type="color"] {
+        width: 24px !important;
+        height: 24px !important;
+        padding: 0;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid rgba(128, 128, 128, 0.6);
+        background-color: transparent;
+    }
+
+    /* Center the color picker in its cell */
+    #ZIndexLayersSidebar td:nth-child(3) {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* ================================
+   Hide / Show buttons (icon-only)
+   ================================ */
+
+    #ZIndexLayersSidebar .zindex-hide-btn,
+    #ZIndexLayersSidebar .zindex-show-btn {
+        width: 32px;
+        padding: 2px 0;
+        font-size: 0.8rem;
+    }
+
+    /* Use theme colors for buttons while preserving Bootstrap outline look */
+    #ZIndexLayersSidebar .btn-outline-secondary,
+    #ZIndexLayersSidebar .btn-outline-danger,
+    #ZIndexLayersSidebar .btn-outline-success {
+        color: var(--ThemeFontColor);
+        border-color: rgba(128, 128, 128, 0.5);
+        background-color: transparent;
+    }
+
+        #ZIndexLayersSidebar .btn-outline-secondary:hover,
+        #ZIndexLayersSidebar .btn-outline-danger:hover,
+        #ZIndexLayersSidebar .btn-outline-success:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+    /* Active state hint for hide/show toggle */
+    #ZIndexLayersSidebar .zindex-hide-btn.active,
+    #ZIndexLayersSidebar .zindex-show-btn.active {
+        background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* ================================
+   Button group (export/import JSON)
+   ================================ */
+
+    #ZIndexLayersSidebar .btn-group .btn {
+        border-radius: 0;
+    }
+
+        /* First button in group: rounded left */
+        #ZIndexLayersSidebar .btn-group .btn:first-child {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        /* Last button in group: rounded right */
+        #ZIndexLayersSidebar .btn-group .btn:last-child {
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+    /* Make sure file input stays hidden */
+    #ZIndexLayersSidebar #zIndexImportFile {
+        display: none;
+    }
+
+    /* Z-Index sidebar: theme-aware icons */
+    #ZIndexLayersSidebar i,
+    #ZIndexLayersSidebar .fa,
+    #ZIndexLayersSidebar .fas,
+    #ZIndexLayersSidebar .far {
+        color: var(--ThemeIconColor);
+    }
+
+    /* Color picker: no border (flat, modern look) */
+    #ZIndexLayersSidebar .zindex-color-input {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    #ZIndexLayersSidebar .offcanvas-header .d-flex > .btn {
+        min-width: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* 1. Kill Bootstrap's table-hover background inside this sidebar
+   and force our own color for both row AND cells */
+    #ZIndexLayersSidebar table.table-hover tbody tr:hover,
+    #ZIndexLayersSidebar table.table-hover tbody tr:hover > th,
+    #ZIndexLayersSidebar table.table-hover tbody tr:hover > td,
+    #ZIndexLayersSidebar tbody tr.locked,
+    #ZIndexLayersSidebar tbody tr.locked > th,
+    #ZIndexLayersSidebar tbody tr.locked > td {
+        background-color: var(--ThemeLayerSettingsFocus) !important; /* same color for hover + locked */
+    }
+
+    /* Pointer cursor on row hover */
+    #ZIndexLayersSidebar tbody tr:hover {
+        cursor: pointer;
+    }
+
+    /* But keep normal cursor on inputs/buttons inside rows */
+    #ZIndexLayersSidebar tbody tr input,
+    #ZIndexLayersSidebar tbody tr button {
+        cursor: default;
+    }
+
+    /* Force Bootstrap table hover variables to match exactly */
+    #ZIndexLayersSidebar table {
+        --bs-table-hover-bg: var(--ThemeLayerSettingsFocus);
+        --bs-table-bg: transparent;
+        --bs-table-striped-bg: transparent;
+    }
+
+    /* Hidden layer: color the slash eye icon */
+    #ZIndexLayersSidebar .zindex-hide-btn.active i {
+        color: #ff6b6b !important; /* or var(--ThemeDangerColor) if you have one */
+    }
+
+    /* Optional: shown layer: slightly tint normal eye */
+    #ZIndexLayersSidebar .zindex-show-btn.active i {
+        color: #4caf50 !important; /* or a themed success color */
+    }
+
+    #ZIndexLayersSidebar tr.ghost-layer {
+        opacity: 0.7;
+        font-style: italic;
+    }
+
+    #ZIndexLayersSidebar tr {
+        border-bottom-color: var(--ThemeFormLineColor);
+    }
+
+    #ZIndexLayersSidebar tr {
+        border-top-color: var(--ThemeFormLineColor);
+    }

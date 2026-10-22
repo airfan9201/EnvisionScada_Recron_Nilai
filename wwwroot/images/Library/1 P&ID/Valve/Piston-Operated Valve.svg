@@ -1,0 +1,98 @@
+<svg
+   viewBox="0 0 8.8058271 12.69915"
+   version="1.1"
+   id="svg16478"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-66.355131,-96.479308)">
+    <g
+       id="g16690"
+       transform="translate(-7.167698,0.27568069)">
+      <path
+         d="m 38.949,4817.797 v -12.867 l 21.059,12.867 v -12.867 z"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7613"
+         transform="matrix(0.35277777,0,0,-0.35277777,59.822493,1803.9038)" />
+      <g
+         id="g7615"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 38.949,1104.887 v 12.867 l 21.059,-12.867 v 12.867 z m 10.528,6.433 v -12.867"
+           style="stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7617" />
+      </g>
+      <g
+         id="g7619"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 44.426,1082.855 h 10.211 v 5.848 H 44.426 Z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7621" />
+      </g>
+      <path
+         d="m 44.426,4833.98 h 10.211 v -9.75 H 44.426 Z"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7623"
+         transform="matrix(0.35277777,0,0,-0.35277777,59.822493,1803.9038)" />
+      <g
+         id="g7625"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 44.426,1088.703 h 10.211 v 9.75 H 44.426 Z m 5.105,0 v 9.75"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7627" />
+      </g>
+      <g
+         id="g7629"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 54.637,1085.586 h 8.929"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7631" />
+      </g>
+      <g
+         id="g7633"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 58.645,1082.074 -2.188,6.352"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7635" />
+      </g>
+      <g
+         id="g7637"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 61.516,1082.074 -2.188,6.352"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7639" />
+      </g>
+      <g
+         id="g7641"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 54.863,1093.914 h 8.934"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7643" />
+      </g>
+      <g
+         id="g7645"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 58.875,1090.402 -2.187,6.352"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7647" />
+      </g>
+      <g
+         id="g7649"
+         transform="matrix(0.35277777,0,0,0.35277777,59.822493,-285.48731)">
+        <path
+           d="m 61.746,1090.402 -2.187,6.352"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7651" />
+      </g>
+    </g>
+  </g>
+</svg>

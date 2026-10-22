@@ -1,0 +1,38 @@
+<svg
+   viewBox="0 0 5.826407 9.0123711"
+   version="1.1"
+   id="svg17691"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  
+  <g
+     id="layer1"
+     transform="translate(-93.758827,-113.85268)">
+    <g
+       id="g17747">
+      <path
+         d="m 327.883,4914.172 v -8.145 l 16.289,8.145 v -8.145 z m 1.629,4.074 h 13.031 v 13.031 h -13.031 v -13.031"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7851"
+         transform="matrix(0.35277777,0,0,-0.35277777,-21.871002,1853.5378)" />
+      <g
+         id="g7853"
+         transform="matrix(0.35277777,0,0,0.35277777,-21.871002,-235.85331)">
+        <path
+           d="m 327.883,1008.512 v 8.144 l 16.289,-8.144 v 8.144 z m 8.144,4.074 v -8.148 m -6.515,0 h 13.031 v -13.032 h -13.031 v 13.032"
+           style="stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7855" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text7859"
+         x="95.643959"
+         y="117.61485"><tspan
+           x="95.643959"
+           y="117.61485"
+           id="tspan7857"
+           style="stroke-width:0.352778">W</tspan></text>
+    </g>
+  </g>
+</svg>

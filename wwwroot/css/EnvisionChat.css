@@ -1,0 +1,538 @@
+#EnvisionChatLaunchButton {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 52px;
+    height: 52px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ThemeButtonBackground, #0d6efd);
+    color: var(--ThemeButtonFontColor, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    z-index: 1040;
+}
+
+#EnvisionChatLaunchButton:hover {
+    filter: brightness(1.05);
+}
+
+.EnvisionChatSidebar {
+    --envision-chat-sidebar-width: min(420px, 90vw);
+    width: min(420px, 90vw);
+    max-width: 95vw;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    z-index: 1046;
+    border-left: 1px solid rgba(127, 127, 127, 0.2);
+}
+
+.EnvisionChatSidebar.show,
+.EnvisionChatSidebar.showing,
+.EnvisionChatSidebar.hiding {
+    width: var(--envision-chat-sidebar-width);
+}
+
+.EnvisionChatResizeHandle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    cursor: ew-resize;
+    z-index: 2;
+}
+
+.EnvisionChatResizeHandle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 56px;
+    border-radius: 999px;
+    background-color: rgba(127, 127, 127, 0.35);
+}
+
+.EnvisionChatResizeHandle:hover::after,
+.EnvisionChatSidebar.EnvisionChatSidebarResizing .EnvisionChatResizeHandle::after {
+    background-color: rgba(13, 110, 253, 0.6);
+}
+
+.EnvisionChatHeader {
+    border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+}
+
+.EnvisionChatCloseButton {
+    margin-left: 8px;
+}
+
+.EnvisionChatCloseButton svg {
+    display: block;
+}
+
+.EnvisionChatHeaderMeta {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.EnvisionChatBody {
+    --envision-chat-tool-activity-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+}
+
+.EnvisionChatMainPanel {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatMainPanel {
+    padding-left: 12px;
+}
+
+.EnvisionChatMessages {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 120px;
+}
+
+.EnvisionChatMessage {
+    padding: 12px 14px;
+    border-radius: 14px;
+    max-width: 92%;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.EnvisionChatMessageUser {
+    align-self: flex-end;
+    background-color: rgba(13, 110, 253, 0.16);
+}
+
+.EnvisionChatMessageAssistant {
+    align-self: flex-start;
+    background-color: rgba(127, 127, 127, 0.12);
+}
+
+.EnvisionChatMessageRole {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    opacity: 0.8;
+}
+
+.EnvisionChatMessageContent {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.EnvisionChatMessageContentCollapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 12;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.EnvisionChatMessageContentExpanded {
+    display: block;
+    overflow: visible;
+}
+
+.EnvisionChatMessageToggle {
+    margin-top: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ThemeIconColor, #0d6efd);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.EnvisionChatMessageToggle:hover {
+    color: var(--ThemeIconColorHover, var(--ThemeIconColor, #0d6efd));
+}
+
+.EnvisionChatEmptyState {
+    font-size: 14px;
+    opacity: 0.75;
+}
+
+.EnvisionChatStatusText {
+    margin-top: 6px;
+    min-height: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+    color: darkorange;
+}
+
+.EnvisionChatStatusText.EnvisionChatStatusTextConnected {
+    color: green;
+}
+
+.EnvisionChatStatusText.EnvisionChatStatusTextReloaded {
+    color: green;
+}
+
+.EnvisionChatToolActivitySummary {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+    opacity: 0.9;
+}
+
+.EnvisionChatSectionTitle {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0;
+}
+
+.EnvisionChatToolActivityPanel,
+.EnvisionChatDocumentsPanel,
+.EnvisionChatConfirmationPanel {
+    border-top: 1px solid rgba(127, 127, 127, 0.2);
+    padding-top: 12px;
+}
+
+.EnvisionChatToolActivityPanel.EnvisionChatToolActivityPanelExpanded {
+    flex: 0 0 var(--envision-chat-tool-activity-width);
+    min-width: 0;
+    order: -2;
+    border-top: none;
+    border-right: 1px solid rgba(127, 127, 127, 0.2);
+    padding-top: 0;
+    padding-right: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.EnvisionChatToolActivityPanel.EnvisionChatToolActivityPanelExpanded .EnvisionChatSectionContent {
+    display: flex;
+    flex: 1 1 0;
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.EnvisionChatToolActivityPanel.EnvisionChatToolActivityPanelExpanded .EnvisionChatToolActivitySummary {
+    margin-top: 12px;
+}
+
+.EnvisionChatToolActivityPanel.EnvisionChatToolActivityPanelExpanded .EnvisionChatToolActivityList {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatDocumentsPanel,
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatConfirmationPanel {
+    flex: 0 0 auto;
+}
+
+.EnvisionChatToolActivityResizeHandle {
+    display: none;
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatToolActivityResizeHandle {
+    display: block;
+    flex: 0 0 12px;
+    order: -1;
+    cursor: ew-resize;
+    position: relative;
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatToolActivityResizeHandle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 56px;
+    border-radius: 999px;
+    background-color: rgba(127, 127, 127, 0.35);
+}
+
+.EnvisionChatBody.EnvisionChatBodyToolActivityExpanded .EnvisionChatToolActivityResizeHandle:hover::after,
+.EnvisionChatBody.EnvisionChatBodyToolActivityResizing .EnvisionChatToolActivityResizeHandle::after {
+    background-color: rgba(13, 110, 253, 0.6);
+}
+
+.EnvisionChatSectionToggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+}
+
+.EnvisionChatSectionToggle:hover {
+    opacity: 0.9;
+}
+
+.EnvisionChatSectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.EnvisionChatSectionHeader .EnvisionChatSectionToggle {
+    flex: 1 1 auto;
+}
+
+.EnvisionChatIconButton {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.EnvisionChatIconButton:hover {
+    background-color: rgba(127, 127, 127, 0.12);
+    opacity: 1;
+}
+
+.EnvisionChatIconButton:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.EnvisionChatSectionChevron {
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 1;
+}
+
+.EnvisionChatSectionContent {
+    margin-top: 10px;
+    min-height: 0;
+}
+
+.EnvisionChatDocumentToolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.EnvisionChatDocumentHint {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: 0.75;
+    margin-bottom: 8px;
+}
+
+.EnvisionChatDocumentList {
+    max-height: 120px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.EnvisionChatDocumentItem {
+    border: 1px solid rgba(127, 127, 127, 0.18);
+    border-radius: 10px;
+    padding: 8px 10px;
+    background-color: rgba(127, 127, 127, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.EnvisionChatDocumentMeta {
+    min-width: 0;
+}
+
+.EnvisionChatDocumentName {
+    font-size: 13px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.EnvisionChatDocumentDetails,
+.EnvisionChatDocumentEmpty {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: 0.85;
+    word-break: break-word;
+}
+
+.EnvisionChatToolActivityList {
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.EnvisionChatToolActivityItem {
+    border: 1px solid rgba(127, 127, 127, 0.18);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(127, 127, 127, 0.06);
+}
+
+.EnvisionChatToolActivityToggle {
+    margin-top: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ThemeIconColor, #0d6efd);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.EnvisionChatToolActivityToggle:hover {
+    color: var(--ThemeIconColorHover, var(--ThemeIconColor, #0d6efd));
+}
+
+.EnvisionChatToolActivityDetails {
+    margin: 6px 0 0 0;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 220px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.EnvisionChatToolActivityHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.EnvisionChatToolActivityHeaderMeta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.EnvisionChatToolActivityName {
+    font-size: 13px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.EnvisionChatToolActivityExportButton {
+    margin-top: -2px;
+}
+
+.EnvisionChatToolActivityStatus {
+    font-size: 11px;
+    border-radius: 999px;
+    padding: 2px 8px;
+    text-transform: uppercase;
+}
+
+.EnvisionChatToolActivityStatusSuccess,
+.EnvisionChatToolActivityStatusConfirmed {
+    background-color: rgba(25, 135, 84, 0.16);
+    color: #198754;
+}
+
+.EnvisionChatToolActivityStatusFailed {
+    background-color: rgba(220, 53, 69, 0.16);
+    color: #dc3545;
+}
+
+.EnvisionChatToolActivityText,
+.EnvisionChatConfirmationSummary,
+.EnvisionChatToolActivityEmpty {
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+    opacity: 0.9;
+    max-height: 80px;
+    overflow-y: auto;
+}
+
+.EnvisionChatComposer {
+    border-top: 1px solid rgba(127, 127, 127, 0.2);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.EnvisionChatComposer .form-control,
+.EnvisionChatComposer .form-control:focus,
+.EnvisionChatComposer .form-control:disabled {
+    background-color: var(--ThemeConfigInputBackgroundColor, var(--ThemeBackground));
+    color: var(--ThemeConfigInputColor, var(--ThemeFontColor));
+    border-color: var(--ThemeSettingsInputBorderColor, rgba(127, 127, 127, 0.2));
+}
+
+.EnvisionChatComposer .form-control:disabled {
+    opacity: 1;
+}
+
+.EnvisionChatComposer .form-control::placeholder,
+.EnvisionChatComposer .form-control:disabled::placeholder {
+    color: var(--ThemePlaceholderFontColor, var(--ThemeConfigInputColor, var(--ThemeFontColor)));
+}
+
+.EnvisionChatComposerButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}

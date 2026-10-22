@@ -1,0 +1,50 @@
+<svg
+   viewBox="0 0 7.728931 14.926292"
+   version="1.1"
+   id="svg17618"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-74.061277,-135.52322)">
+    <g
+       id="g17808">
+      <g
+         id="g17707">
+        <g
+           id="g853"
+           transform="matrix(0.35277777,0,0,0.35277777,-40.699316,-346.02571)">
+          <path
+             d="m 325.66,1375.77 c 0,-5.747 4.637,-10.395 10.367,-10.395 5.723,0 10.368,4.648 10.368,10.395 0,5.742 -4.645,10.398 -10.368,10.398 -5.73,0 -10.367,-4.656 -10.367,-10.398 z"
+             style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path855" />
+        </g>
+        <g
+           id="g857"
+           transform="matrix(0.35277777,0,0,0.35277777,-40.699316,-346.02571)">
+          <path
+             d="m 325.66,1396.582 c 0,-5.75 4.637,-10.398 10.367,-10.398 5.723,0 10.368,4.648 10.368,10.398 0,5.738 -4.645,10.395 -10.368,10.395 -5.73,0 -10.367,-4.657 -10.367,-10.395 z"
+             style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path859" />
+        </g>
+        <g
+           id="g861"
+           transform="matrix(0.35277777,0,0,0.35277777,-40.699316,-346.02571)">
+          <path
+             d="m 325.633,1386.207 h 20.789"
+             style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path863" />
+        </g>
+        <g
+           id="g865"
+           transform="matrix(0.35277777,0,0,0.35277777,-40.699316,-346.02571)">
+          <path
+             d="m 340.754,1383.375 5.668,2.832 -5.668,2.836 z"
+             style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path867" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg
+   viewBox="0 0 11.264635 9.797163"
+   version="1.1"
+   id="svg52309"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  
+  <g
+     id="layer1"
+     transform="translate(-62.524845,-76.063874)">
+    <g
+       id="g52468">
+      <path
+         d="m 178.25,4605.133 c 0,6.941 5.629,12.57 12.574,12.57 6.942,0 12.571,-5.629 12.571,-12.57 0,-6.945 -5.629,-12.574 -12.571,-12.574 -6.945,0 -12.574,5.629 -12.574,12.574 z"
+         style=";fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path459"
+         transform="matrix(0.35277777,0,0,-0.35277777,1.8594159,1705.8886)" />
+      <g
+         id="g461"
+         transform="matrix(0.35277777,0,0,0.35277777,1.8594159,-383.50251)">
+        <path
+           d="m 178.25,1317.551 c 0,-6.942 5.629,-12.571 12.574,-12.571 6.942,0 12.571,5.629 12.571,12.571 0,6.945 -5.629,12.574 -12.571,12.574 -6.945,0 -12.574,-5.629 -12.574,-12.574 z m -6.285,0 h 18.859 m 0,-12.571 h 12.571"
+           style="fill:none;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path463" />
+      </g>
+      <g
+         id="g465"
+         transform="matrix(0.35277777,0,0,0.35277777,1.8594159,-383.50251)">
+        <path
+           d="m 189.406,1316.133 1.418,1.418 -1.418,1.418 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path467" />
+      </g>
+      <g
+         id="g469"
+         transform="matrix(0.35277777,0,0,0.35277777,1.8594159,-383.50251)">
+        <path
+           d="m 201.977,1303.563 1.418,1.417 -1.418,1.418 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path471" />
+      </g>
+    </g>
+  </g>
+</svg>

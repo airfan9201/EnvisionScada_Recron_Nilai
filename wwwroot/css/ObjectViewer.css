@@ -1,0 +1,202 @@
+﻿
+#ObjectViewerContext {
+    user-select: none;
+    border: 0px solid red;
+}
+
+    #ObjectViewerContext::-webkit-scrollbar {
+        width: 6px; /* width of the entire scrollbar */
+    }
+
+    #ObjectViewerContext::-webkit-scrollbar-track {
+        background: var(--ThemeBackground);
+    }
+
+    #ObjectViewerContext::-webkit-scrollbar-thumb {
+        background-color: deepskyblue; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: 0px solid orange; /* creates padding around scroll thumb */
+    }
+
+    #ObjectViewerContext ul {
+        /* margin: 0;
+    padding: 0;*/
+        list-style-type: none;
+    }
+
+    #ObjectViewerContext li {
+        line-height: 40px;
+        position: relative;
+    }
+
+        #ObjectViewerContext li ul {
+            padding-left: 25px;
+        }
+
+    #ObjectViewerContext > ul {
+        border-bottom: 1px solid lightgray;
+        overflow: hidden;
+    }
+
+    #ObjectViewerContext li:after {
+        content: "\00A0";
+        position: absolute;
+        width: 200%;
+        left: -100%;
+        top: 0;
+        border-top: 1px solid var(--ThemeSettingsInputBorderColor);
+        z-index: -1;
+    }
+
+.ObjectViewerWrapper {
+}
+
+.ObjectViewerName {
+    width: 100%;
+    border: 0px solid red;
+    color: var(--ThemeFontColor);
+}
+
+#ObjectViewerName svg:hover {
+    fill: var(--ThemeFontColorHover);
+    cursor: pointer;
+}
+
+.ObjectViewerHide, .ObjectViewerVisible {
+    width: 30px;
+    border: 0px solid red;
+    margin-top: -42px;
+    float: right;
+    padding-left: 5px;
+    padding-right: 5px;
+    fill: var(--ThemeFontColor);
+}
+
+    .ObjectViewerHide svg:hover, .ObjectViewerVisible svg:hover {
+        /*fill: var(--ThemeFontColorHover);*/
+        cursor: pointer;
+    }
+
+.ObjectViewerHide {
+    margin-right: 0px;
+    fill: lightgrey;
+}
+
+.ObjectViewerCollapse ul {
+    display: none;
+}
+
+.ObjectViewerCollapse > .ObjectViewerCaretUp {
+    display: none;
+}
+
+.ObjectViewerCaretDown {
+    display: block;
+}
+
+.ObjectViewerCaretUp {
+    display: none;
+}
+
+.ObjectViewerCollapse > .ObjectViewerCaretDown {
+    display: none;
+}
+
+.ObjectViewerCollapse > .ObjectViewerCaretUp {
+    display: block;
+}
+
+.ObjectViewerCaret {
+    width: 30px;
+    border: 0px solid red;
+    margin-top: -42px;
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+    fill: var(--ThemeFontColor);
+}
+
+    .ObjectViewerCaret svg:hover {
+        /*fill: var(--ThemeFontColorHover);*/
+        cursor: pointer;
+    }
+
+.ObjectViewerCaret {
+    margin-left: -30px;
+    fill: #2e2e2e;
+}
+
+    .ObjectViewerCaret:first-of-type {
+        border: 2px solid orange;
+    }
+
+.ObjectViewerObjectHidden {
+    fill: red;
+}
+
+.ObjectViewerVisible {
+    margin-right: 30px;
+    fill: lightgrey;
+}
+
+.ObjectViewerObjectInvisible {
+    fill: lightgrey;
+}
+
+.ObjectViewerObjectVisibleForced {
+    fill: #50C878;
+}
+
+.ObjectViewerName:hover {
+    cursor: pointer;
+    min-width: 100%;
+    color: var(--ThemeFontColorHover);
+}
+
+#ObjectViewerIcon {
+    width: 25px;
+    float: right;
+    fill: var(--ThemeFontColor);
+    margin-top: 3px;
+    margin-right: 30px;
+    z-index:1;
+}
+
+#ObjectViewerIcon:hover {
+    fill: var(--ThemeFontColorHover);
+    cursor: pointer;
+}
+
+.ObjectLayerNo {
+    border: 1px solid lightgrey;
+    float: right;
+    margin-top: -33px;
+    margin-right: 90px;
+    cursor: pointer;
+    width: auto;
+    height: 26px;
+    display: flex;
+    align-items: center; /* ✅ vertical centering */
+    justify-content: right; /* ✅ horizontal centering */
+    font-size: 11px;
+    line-height: 1; /* prevent baseline weirdness */
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+    min-width: 30px;
+}
+
+
+.ObjectLayerColorBox {
+    width: 17px;
+    height: 17px;
+    box-sizing: border-box;
+    margin-top: -28px;
+    margin-right: 65px;
+    float: right;
+    border-radius: 5px;
+    border: 0;
+    padding: 0;
+}

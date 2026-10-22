@@ -1,0 +1,1726 @@
+﻿/* UDT Manager / Asset Manager (F20). All colors come from the theme variables in site.css.
+   Class names are udt-/asset- prefixed to avoid collisions with shared styles. */
+
+.udt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.udt-chip-ok {
+    background: rgba(46, 139, 87, 0.12);
+    color: seagreen;
+}
+
+.udt-chip-warn {
+    background: rgba(245, 158, 11, 0.14);
+    color: #d97706;
+}
+
+.udt-chip-line {
+    border: 1px solid var(--ThemeFormLineColor);
+    color: var(--ThemeFontColor2);
+}
+
+.udt-chip-crit {
+    background: rgba(220, 53, 69, 0.12);
+    color: #dc3545;
+}
+
+.udt-version,
+.udt-paramvalues {
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Definition editor tabs */
+.udt-tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    margin-bottom: 10px;
+}
+
+.udt-tab {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 16px 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ThemeFontColor2);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.udt-tab[aria-selected="true"] {
+    color: var(--ThemeFontColor);
+    border-bottom-color: var(--ThemeIconColor);
+}
+
+.udt-tabpane {
+    display: none;
+}
+
+.udt-tabpane.show {
+    display: block;
+}
+
+/* Member editor tables */
+.udt-members {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.udt-members th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ThemeFontColor2);
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    white-space: nowrap;
+}
+
+/* ---- variable member detail drawer ---------------------------------------------------- */
+
+.uam-member-namecell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.uam-detail-twisty {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--ThemeFontColor2);
+    transition: transform 0.1s ease;
+}
+
+.uam-detail-twisty svg {
+    width: 11px;
+    height: 11px;
+    min-width: 11px;
+}
+
+.uam-detail-twisty:hover {
+    color: var(--ThemeFontColor);
+}
+
+.uam-detail-twisty.open {
+    transform: rotate(90deg);
+}
+
+/* The drawer is a panel belonging to the row above, not another table row: tinted surface
+   plus an accent edge, so an expanded member reads as one block. */
+.udt-members tr.uam-member-detail > td {
+    padding: 0 0 10px;
+}
+
+.uam-detail-panel {
+    background: rgba(127, 127, 127, 0.06);
+    border-left: 2px solid var(--ThemeIconColor);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px 10px;
+}
+
+.uam-detail-group + .uam-detail-group {
+    margin-top: 10px;
+}
+
+.uam-detail-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ThemeFontColor2);
+    padding-bottom: 3px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+/* ---- Uam nested dialogs: read-only vs editable ------------------------------------------
+   Device type and Device are disabled once an instance exists (moving an instance is a
+   different operation), but Bootstrap's disabled styling is overridden on this page, so they
+   rendered as ordinary white inputs and read as editable. Make not-editable look not-editable. */
+#UamInstModal .form-control:disabled,
+#UamNodeModal .form-control:disabled,
+#UamDefModal .form-control:disabled,
+#UamInstModal select:disabled,
+#UamNodeModal select:disabled {
+    background: rgba(127, 127, 127, 0.09);
+    color: var(--ThemeFontColor2);
+    border-style: dashed;
+    cursor: not-allowed;
+    opacity: 1;   /* Bootstrap dims disabled controls; the muted fill already says it */
+}
+
+/* Field + [...] picker. The button must stay a direct sibling of the input: the shared pickers
+   find their target with el.parentElement.getElementsByTagName("input")[0]. */
+.uam-detail-picker {
+    display: flex;
+    align-items: stretch;
+    gap: 4px;
+}
+
+    .uam-detail-picker input {
+        flex: 1;
+        min-width: 0;
+    }
+
+.uam-detail-pickerbtn {
+    flex: 0 0 auto;
+    padding: 0 7px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ThemeFontColor);
+    background: var(--ThemeElements);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+}
+
+    .uam-detail-pickerbtn:hover {
+        border-color: var(--ThemeBorderColorHover);
+        color: var(--ThemeIconColor);
+    }
+
+/* A parameter is not just another field: it is the token members reference, and it falls back
+   to the definition default when left empty. Both facts belong next to the input. */
+.uam-param-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: var(--ThemeFontColor2);
+}
+
+.uam-param-hint code {
+    font-size: 10.5px;
+    padding: 0 3px;
+    border-radius: 3px;
+    background: rgba(127, 127, 127, 0.12);
+    color: var(--ThemeFontColor);
+}
+
+/* Collapsible protocol group header. An inline SVG with no width/height fills its container,
+   so size it explicitly like every other icon here. */
+.uam-detail-title.uam-group-head {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.uam-detail-title.uam-group-head:hover {
+    color: var(--ThemeFontColor);
+}
+
+.uam-detail-title.uam-group-head svg {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    fill: none;
+    stroke: currentColor;
+    transition: transform 0.1s ease;
+}
+
+.uam-detail-title.uam-group-head.open svg {
+    transform: rotate(90deg);
+}
+
+.uam-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 8px 14px;
+}
+
+/* Label above its input: at four columns wide, a side-by-side label leaves the value
+   stranded far from its name. Stacking keeps the pair unambiguous. */
+.uam-detail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+    margin: 0;
+    min-width: 0;
+}
+
+.uam-detail-field > span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    color: var(--ThemeFontColor2);
+    white-space: nowrap;
+}
+
+/* The member table hides its inputs until hover (the row separators carry the structure).
+   That reads as stray text in a form-style drawer, so give these a permanent field edge.
+   Selects need it as much as inputs: an unbordered EMPTY dropdown renders as nothing at all,
+   so a protocol group you have not filled in looked like a missing control rather than a
+   waiting one. */
+.udt-members tr.uam-member-detail input,
+.udt-members tr.uam-member-detail select {
+    width: 100%;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 5px;
+    /* Control height: 20px line-box + 2x5px padding + 2x1px border = 32px. Sized between the
+       original cramped ~23px and the 38px of the Uam dialogs' .form-control - the drawer packs
+       four fields per row, so matching the dialog exactly made the panel too tall. The height
+       comes from the line-height, NOT the font size, so the drawer's 12px text is unchanged.
+       The checkbox rule below overrides this for checkboxes. */
+    padding: 5px;
+    line-height: 20px;
+    font-size: 12px;
+    /* A <select> ignores the line-height above (it computes to `normal`), so it would sit
+       shorter than the inputs beside it. Pin the box explicitly to the same total the inputs
+       resolve to. Keep these three numbers in step, and with .uam-detail-value below. */
+    min-height: 32px;
+    /* Lift the fields off the drawer's tint. The panel is a grey wash over the page surface,
+       so painting the fields back to that surface separates them instead of leaving one flat
+       block. The theme variable keeps it right both ways: lighter than the panel in a light
+       theme, darker in a dark one. */
+    background: var(--ThemeBackground, #fff);
+    color: var(--ThemeFontColor);
+}
+
+.udt-members tr.uam-member-detail input:focus,
+.udt-members tr.uam-member-detail select:focus {
+    border-color: var(--ThemeBorderColorHover, deepskyblue);
+}
+
+.udt-members tr.uam-member-detail input[type="checkbox"] {
+    width: 15px;
+    min-width: 15px;
+    height: 15px;
+    /* Must cancel the control min-height above, or the box stretches to full field height. */
+    min-height: 15px;
+    padding: 0;
+    align-self: start;
+    /* The UA default margin would offset the box from its stacked label's left edge. */
+    margin: 3px 0 0 0;
+}
+
+/* Read-only twin of the drawer input, used by the resolved instance detail. Same box metrics
+   as the editor field so both drawers line up, but no border: nothing here is editable. */
+.uam-detail-value {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    /* Tracks the editable field's box above (20px line-box + 2x5px padding + its 2px border),
+       so the instance drawer's read-only values stay on the same baseline grid as the editor
+       drawer's inputs. If one changes, change the other. */
+    min-height: 32px;
+    padding: 5px 0;
+    font-size: 12px;
+    color: var(--ThemeFontColor);
+    word-break: break-word;
+}
+
+.uam-detail-value.uam-detail-empty {
+    color: var(--ThemeFontColor2);
+}
+
+/* Which protocols an extra applies to. Protocol names are proper nouns, so no translation. */
+.uam-extra-tag {
+    font-size: 9px;
+    padding: 0 3px;
+}
+
+/* Sortable headers on the definition/instance lists: the arrow only appears on hover or on
+   the column actually driving the sort, so the header row stays quiet. */
+.udt-members th.uam-sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.udt-members th.uam-sortable:hover,
+.udt-members th.uam-sortable.sorted {
+    color: var(--ThemeFontColor);
+}
+
+.udt-members th.uam-sortable svg.uam-sort-arrow {
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+    margin-left: 4px;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+}
+
+.udt-members th.uam-sortable:hover svg.uam-sort-arrow {
+    opacity: 0.45;
+}
+
+.udt-members th.uam-sortable.sorted svg.uam-sort-arrow {
+    opacity: 1;
+}
+
+/* Search matched nothing: keep the table structure and explain the empty body. */
+.udt-members td.uam-empty {
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+}
+
+.udt-members td {
+    padding: 4px 8px;
+    /* Envision.css carries legacy design-object rules whose selector lists end in a bare
+       `td` (border + 16px font on every cell); the modal renders on that page, so pin the
+       intended look explicitly instead of inheriting. */
+    border: 0;
+    border-bottom: 1px solid var(--ThemeFormLineColor);
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* Inline-edit fields stay invisible until interaction: the row separators carry the table
+   structure, and only the field being hovered or edited shows its underline. */
+.udt-members input,
+.udt-members select {
+    width: 100%;
+    min-width: 60px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    color: var(--ThemeFontColor);
+    font-size: 12.5px;
+    padding: 3px 2px;
+    outline: none;
+}
+
+.udt-members input:hover,
+.udt-members select:hover {
+    border-bottom-color: var(--ThemeFormLineColor);
+}
+
+.udt-members input:focus,
+.udt-members select:focus {
+    border-bottom-color: var(--ThemeBorderColorHover, deepskyblue);
+}
+
+.udt-members input[type="checkbox"] {
+    width: 15px;
+    min-width: 15px;
+    height: 15px;
+    padding: 0;
+    border: 1px solid var(--ThemeBorderColor);
+    vertical-align: middle;
+}
+
+.udt-members .udt-row-remove {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: var(--ThemeFontColor2);
+    font-size: 15px;
+}
+
+.udt-members .udt-row-remove:hover {
+    color: red;
+}
+
+.udt-add-row {
+    margin-top: 8px;
+}
+
+/* Member row reordering: handle-only dragging so text selection keeps working in inputs. */
+.uam-member-drag {
+    width: 18px;
+    min-width: 18px;
+    cursor: grab;
+    color: var(--ThemeFontColor2);
+    user-select: none;
+    text-align: center;
+}
+
+.uam-member-drag svg {
+    width: 11px;
+    height: 11px;
+    display: block;
+    margin: 0 auto;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.uam-member-drag:active {
+    cursor: grabbing;
+}
+
+.udt-members tr.uam-drop-target td {
+    border-top: 2px solid var(--ThemeIconColor);
+}
+
+/* padding-bottom keeps the tools row off the scroll container's edge: the row sits last, and an
+   `overflow:auto` box clips at its content edge, so a focused button's outline was being sliced
+   off along the bottom. Padding is inside the scrollable area, so it also gives the last row a
+   little breathing room when the list is long enough to scroll. */
+.udt-editor-scroll {
+    max-height: 55vh;
+    overflow: auto;
+    padding-bottom: 6px;
+}
+
+/* The instance detail stacks Parameters / Variables / Alarms / Events as separate tables. Left to
+   auto layout each sizes its own columns, so the panel reads as several differently-ruled grids
+   ragged against each other. One fixed rhythm across all four lines them up: identifier, value,
+   then a narrow right-hand column for the chips. */
+.udt-detail-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+    .udt-detail-table th:nth-child(1),
+    .udt-detail-table td:nth-child(1) {
+        width: 58%;
+    }
+
+    .udt-detail-table th:nth-child(2),
+    .udt-detail-table td:nth-child(2) {
+        width: 26%;
+    }
+
+    .udt-detail-table th:nth-child(3),
+    .udt-detail-table td:nth-child(3) {
+        width: 16%;
+        text-align: right;
+    }
+
+    /* The drawer spans the whole row, so the fixed widths above must not apply to it. */
+    .udt-detail-table tr.uam-member-detail td {
+        width: auto;
+        text-align: left;
+    }
+
+    .udt-detail-table td:nth-child(1) {
+        overflow-wrap: anywhere;
+    }
+
+/* Push preview: per-instance selection. A push is per-instance atomic, so any subset is valid;
+   unticked instances just stay Outdated. */
+.uam-push-selectall {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+    cursor: pointer;
+    user-select: none;
+}
+
+.uam-push-check {
+    margin-right: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* Push preview */
+.udt-diff-instance {
+    font-weight: 700;
+    margin: 12px 0 4px;
+}
+
+.udt-diff-entry {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 5px 2px;
+    border-bottom: 1px solid var(--ThemeFormLineColor);
+    font-size: 12.5px;
+}
+
+.udt-diff-mark {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.udt-diff-add { background: rgba(46, 139, 87, 0.12); color: seagreen; }
+.udt-diff-update { background: rgba(245, 158, 11, 0.14); color: #d97706; }
+.udt-diff-delete { background: rgba(192, 57, 43, 0.12); color: #c0392b; }
+.udt-diff-adopt { background: rgba(218, 165, 32, 0.15); color: var(--ThemeFontColor); }
+
+.udt-diff-changes {
+    color: var(--ThemeFontColor2);
+    font-size: 11.5px;
+    display: block;
+}
+
+.udt-diff-warning {
+    color: #d97706;
+    font-size: 11.5px;
+    display: block;
+}
+
+.udt-diff-error {
+    color: #c0392b;
+    font-size: 12px;
+    padding: 4px 2px;
+}
+
+.udt-param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 22px;
+}
+
+/* Disabled/read-only fields in the Uam dialogs. Bootstrap's own :disabled shading loses to
+   the theme's .form-control background here, so a field you cannot edit (Device type once an
+   instance exists, since moving protocol is not an edit) looked identical to one you can. */
+[id^="Uam"] .form-control:disabled,
+[id^="Uam"] .form-control[readonly] {
+    background: rgba(127, 127, 127, 0.12);
+    color: var(--ThemeFontColor2);
+    cursor: not-allowed;
+}
+
+/* The dialog's column headings reuse the drawer's section styling, but they are not
+   collapsible headers, so keep them out of the flex/pointer behaviour of .uam-group-head. */
+.udt-param-grid > div > .uam-detail-title {
+    margin-bottom: 10px;
+}
+
+/* Asset Manager tree */
+.asset-split {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 0 26px;
+}
+
+/* Modal variant with a draggable splitter between the tree and the detail panel; the
+   standalone page keeps the fixed two-column layout above. */
+.asset-split.uam-resizable {
+    grid-template-columns: minmax(200px, var(--uam-tree-width, 360px)) 6px 1fr;
+    gap: 0 10px;
+}
+
+.uam-splitter {
+    cursor: col-resize;
+    border-left: 1px solid var(--ThemeFormLineColor);
+    margin: 4px 0;
+}
+
+.uam-splitter:hover,
+.uam-splitter.uam-splitting {
+    border-left: 2px solid var(--ThemeIconColor);
+}
+
+/* The splitter IS the divider in the resizable layout; without this the tree's own
+   border-right (needed on the standalone page, which has no splitter) doubles it. */
+.asset-split.uam-resizable .asset-tree {
+    border-right: 0;
+}
+
+/* Hierarchical parent picker: a combo that renders the tree with real indentation and
+   node icons instead of a native select with nbsp padding. */
+.uam-combo {
+    position: relative;
+}
+
+.uam-combo-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.uam-combo-toggle::after {
+    content: "";
+    margin-left: auto;
+    border: 4px solid transparent;
+    border-top-color: var(--ThemeFontColor2);
+    transform: translateY(2px);
+}
+
+.uam-combo-menu {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    z-index: 11070;
+    max-height: 260px;
+    overflow: auto;
+    background: var(--ThemeBackground);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 6px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+    padding: 4px;
+}
+
+.uam-combo-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ThemeFontColor);
+    white-space: nowrap;
+}
+
+.uam-combo-item:hover {
+    background: rgba(218, 165, 32, 0.07);
+}
+
+.uam-combo-item.selected {
+    background: rgba(218, 165, 32, 0.15);
+    font-weight: 700;
+}
+
+.uam-combo-item svg {
+    width: 12px;
+    height: 12px;
+    min-width: 12px;
+    fill: var(--ThemeIconColor);
+}
+
+.asset-tree {
+    border-right: 1px solid var(--ThemeFormLineColor);
+    padding-right: 18px;
+    max-height: calc(100dvh - 160px);
+    overflow: auto;
+}
+
+/* user-select: these rows are double-clicked to edit, and without it the second click selects the
+   node label as text behind the dialog that just opened. */
+.asset-node {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ThemeFontColor);
+    user-select: none;
+}
+
+.asset-node:hover {
+    background: rgba(218, 165, 32, 0.07);
+}
+
+.asset-node.selected {
+    background: rgba(218, 165, 32, 0.15);
+    font-weight: 700;
+}
+
+.asset-node svg {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    fill: var(--ThemeIconColor);
+}
+
+.asset-node .asset-count {
+    margin-left: auto;
+    font-size: 10.5px;
+    color: var(--ThemeFontColor2);
+}
+
+/* Instance expander on a tree node (only nodes with attached instances get one). */
+.asset-twisty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
+    margin-left: -4px;
+    cursor: pointer;
+}
+
+.asset-twisty svg {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    fill: none;
+    stroke: var(--ThemeFontColor2);
+    transition: transform 0.1s ease;
+}
+
+.asset-twisty.open svg {
+    transform: rotate(90deg);
+}
+
+.asset-twisty-none {
+    cursor: default;
+}
+
+/* Instance child rows in the tree: drag onto a node to re-attach, click for resolved details. */
+.asset-instance-node {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 8px 3px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--ThemeFontColor);
+    user-select: none;
+}
+
+.asset-instance-node:hover {
+    background: rgba(218, 165, 32, 0.07);
+}
+
+.asset-instance-node.selected {
+    background: rgba(218, 165, 32, 0.15);
+    font-weight: 700;
+}
+
+.asset-instance-node svg {
+    width: 11px;
+    height: 11px;
+    min-width: 11px;
+    fill: none;
+    stroke: var(--ThemeIconColor);
+    stroke-width: 2;
+}
+
+/* Sync state icon on tree instance rows: sync arrows = synced, warning = outdated. */
+.asset-instance-node svg.asset-instance-sync {
+    width: 12px;
+    height: 12px;
+    min-width: 12px;
+    fill: none;
+    stroke: seagreen;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.asset-instance-node svg.asset-instance-sync.outdated {
+    stroke: #d97706;
+}
+
+.asset-instance-node .asset-instance-def {
+    margin-left: auto;
+    font-size: 10.5px;
+    color: var(--ThemeFontColor2);
+    font-weight: 400;
+}
+
+/* Collapsible sections in the instance detail panel. */
+.asset-panel-section {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ThemeFontColor2);
+    margin: 16px 0 4px;
+    padding: 3px 0;
+    border-bottom: 2px solid var(--ThemeIconColor);
+    cursor: pointer;
+    user-select: none;
+}
+
+.asset-panel-section:hover {
+    color: var(--ThemeFontColor);
+}
+
+.asset-panel-section svg {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.1s ease;
+}
+
+.asset-panel-section.open svg {
+    transform: rotate(90deg);
+}
+
+.asset-panel-section .udt-chip {
+    margin-left: auto;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/* Runtime keys, conditions and addresses read as code. */
+.uam-code {
+    font-family: Consolas, monospace;
+    font-size: 12px;
+}
+
+.asset-panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 2px 0 1px;
+}
+
+.asset-panel-path {
+    font-family: Consolas, monospace;
+    font-size: 11.5px;
+    color: var(--ThemeFontColor2);
+    margin-bottom: 12px;
+}
+
+/* The chips sit right after the name/device text, so a plain space reads too tight. */
+.asset-panel-title .udt-chip,
+.asset-panel-path .udt-chip {
+    margin-left: 5px;
+}
+
+/* The right-hand panel is read-only: its row separators only need to group the rows, not
+   compete with the content. Reuse the header underline color so the whole table reads as
+   one weight instead of the heavier form-line color the editable member tables use. */
+#UamAssetPanel .udt-members td {
+    border-bottom-color: var(--ThemeBorderColor);
+}
+
+/* ...and the header keeps the heavier line, so the column titles stay separated from the
+   rows they label. */
+#UamAssetPanel .udt-members th {
+    border-bottom-color: var(--ThemeFormLineColor);
+}
+
+.asset-warnbox {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    background: rgba(245, 158, 11, 0.14);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-size: 12px;
+    color: var(--ThemeFontColor);
+    margin: 12px 0;
+}
+
+/* Bootstrap's .btn-close is a DARK X image on a transparent background at 0.5 opacity: on the
+   Envision page's dark modal headers it is all but invisible. The other Envision modals (Cross
+   Reference, Git, Page History, Purge Unused Variables, Push to Instances) each fix this inline
+   with background-color:var(--ThemeButtonColor), which gives the X a light chip to sit on. Same
+   treatment here, as one scoped rule rather than repeated on six buttons - and it covers any UAM
+   dialog added later. Only the colour is set: the longhand keeps Bootstrap's X background-image,
+   which the shorthand in .btn-close supplies. */
+#UdtAssetModal .btn-close,
+#UamMsgModal .btn-close,
+#UamNodeModal .btn-close,
+#UamNodeCopyModal .btn-close,
+#UamDefModal .btn-close,
+#UamInstModal .btn-close,
+#UamPushModal .btn-close,
+#UamFindingsModal .btn-close,
+#UamImportPickModal .btn-close,
+#UamSymbolModal .btn-close {
+    background-color: var(--ThemeButtonColor);
+}
+
+/* Findings dialog: one row per finding, left-aligned, scrolling on its own so the footer and the
+   count stay put however many rows arrive. Wider than the default modal because these messages
+   quote full variable names. */
+.uam-findings-dialog {
+    max-width: 640px;
+}
+
+.uam-findings-dialog .modal-body {
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.uam-findings-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.uam-findings-list li {
+    position: relative;
+    padding: 7px 0 7px 16px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ThemeFontColor);
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    word-break: break-word;
+}
+
+.uam-findings-list li:last-child {
+    border-bottom: 0;
+}
+
+/* A marker rather than a list bullet: list-style markers sit outside the padding box and would
+   misalign against the wrapped second line of a long message. */
+.uam-findings-list li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ThemeAlarmColor, #d9534f);
+}
+
+/* Never-materialized instance in the tree: muted, not alarming - it is configuration that
+   simply has not been pushed yet. The dashed circle glyph carries the meaning; the colour only
+   de-emphasizes it against synced (accent) and outdated (warning). */
+.asset-instance-sync.staged {
+    stroke: var(--ThemeFontColor2);
+    opacity: 0.8;
+}
+
+.uam-findings-count {
+    flex: 1;
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+}
+
+/* Asset/UDT modal shell on the Envision page (F20). */
+.uam-dialog {
+    max-width: 92vw;
+    height: 88vh;
+    margin: 4vh auto;
+    transition: max-width 0.15s ease, height 0.15s ease, margin 0.15s ease;
+}
+
+.uam-dialog.uam-full {
+    max-width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.uam-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.uam-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.uam-body > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.uam-fill {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+.uam-scroll {
+    overflow: auto;
+    /* Keep the content off the scrollbar. */
+    padding-right: 16px;
+    /* And off the left edge: an `overflow:auto` box clips at its content edge, so a focused
+       control sitting flush against it had its focus ring sliced down the left-hand side. The
+       ring is ~4px (Bootstrap's 0.25rem), so 5px clears it while being imperceptible as an
+       indent. Same reasoning as the padding-right above, other edge. */
+    padding-left: 5px;
+}
+
+.uam-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 0 10px;
+    flex: 0 0 auto !important;
+    flex-direction: row !important;
+}
+
+.uam-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 3px 10px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ThemeFontColor);
+    background: transparent;
+}
+
+.uam-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Toolbar sections hold a search box next to their buttons; the sections themselves are
+   shown/hidden per view, so they keep their own alignment instead of relying on .uam-toolbar. */
+.uam-toolbar-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.uam-search {
+    width: 190px;
+    min-height: 30px;
+    padding: 3px 10px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    background: transparent;
+    color: var(--ThemeFontColor);
+    font-size: 12px;
+    outline: none;
+}
+
+.uam-search:focus {
+    border-color: var(--ThemeBorderColorHover, deepskyblue);
+}
+
+.uam-btn.uam-danger:hover {
+    color: red;
+    border-color: red;
+}
+
+.uam-crumb {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ThemeFontColor2);
+    margin-left: 6px;
+}
+
+/* Cap the description column so the row's action buttons stay on one line now that the
+   definitions list also carries a selection checkbox column. */
+.uam-def-desc {
+    max-width: 560px;
+}
+
+.uam-actions {
+    white-space: nowrap;
+}
+
+.uam-actions .uam-btn {
+    min-height: 24px;
+    padding: 1px 8px;
+    font-size: 11px;
+}
+
+.uam-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uam-headbtn {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: var(--ThemeFontColor);
+    opacity: 0.7;
+}
+
+.uam-headbtn:hover {
+    opacity: 1;
+}
+
+/* AI focus mode active: the header button keeps the accent while the assistant is docked. */
+.uam-headbtn.uam-on {
+    opacity: 1;
+    color: var(--ThemeIconColor);
+}
+
+/* Drag and drop: tree re-parent/re-attach (drop ONTO a row) and reorder (drop BETWEEN rows).
+   The two must not look alike - mid-drag, the outline vs the insertion line is the only thing
+   telling the user whether they are about to re-parent or just reposition. */
+.asset-node[draggable="true"] {
+    cursor: grab;
+}
+
+/* Drop INTO: re-parent a node, or re-attach an instance to this node. */
+.asset-node.uam-drop-target,
+.asset-node.asset-drop-target {
+    outline: 2px dashed var(--ThemeIconColor);
+    outline-offset: -2px;
+    background: rgba(218, 165, 32, 0.12);
+}
+
+/* Drop BETWEEN: an insertion line on the edge the row would be inserted at, matching the member
+   table's reorder cue (.udt-members tr.uam-drop-target td). Inset by the row's own indent so the
+   line starts at the text, not under the tree gutter. */
+.asset-node.uam-drop-before,
+.asset-instance-node.uam-drop-before {
+    box-shadow: inset 0 2px 0 0 var(--ThemeIconColor);
+}
+
+.asset-node.uam-drop-after,
+.asset-instance-node.uam-drop-after {
+    box-shadow: inset 0 -2px 0 0 var(--ThemeIconColor);
+}
+
+.uam-draggable,
+.asset-draggable {
+    cursor: grab;
+}
+
+/* ==================== Symbol tab ====================
+   One block per bound group symbol master: the master picker, then the replacers that master
+   declares. Scoped names (udt-symbol-*) so nothing here collides with the designer's own group
+   symbol styling. */
+
+.udt-symbol-block {
+    border: 1px solid var(--ThemeBorderColor, #d9d9d9);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.udt-symbol-head {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.udt-symbol-head .form-label {
+    margin: 0 0 2px 0;
+}
+
+.udt-symbol-head .udt-symbol-master {
+    flex: 1;
+}
+
+.udt-symbol-hint,
+.udt-symbol-warning {
+    font-size: 12px;
+    margin: 4px 0 0 0;
+}
+
+.udt-symbol-hint {
+    color: var(--ThemeFontColor2);
+}
+
+.udt-symbol-warning {
+    color: var(--ThemeAlarmColor, #c0392b);
+}
+
+/* The replacer label carries the master's own label; the default is shown beside it so the
+   designer-owned fallback is visible while writing the token expression. */
+.udt-replacer-label {
+    display: block;
+}
+
+.udt-replacer-default {
+    display: block;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+}
+
+/* Read-only binding list on the standalone /UdtManager page. */
+.udt-symbols-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.udt-symbols-count {
+    color: var(--ThemeFontColor2);
+}
+
+.udt-symbols-empty {
+    color: var(--ThemeFontColor2);
+}
+
+/* Instance rows in the asset node panel open that instance's detail, like the tree's instance
+   children do. Hover feedback only - the row stays draggable for re-attaching to another node. */
+.udt-members tbody tr.uam-row-clickable {
+    cursor: pointer;
+}
+
+.udt-members tbody tr.uam-row-clickable:hover td {
+    background-color: var(--ThemeElements);
+}
+
+/* Find master, beside the group symbol picker in the Symbol tab. Same crosshair and same
+   FindMasterSymbol call as the group symbol decorator's button; sized to match the picker's row
+   rather than the decorator's 32px .ctxbtn, which lives in a much denser panel. */
+.uam-find-master {
+    flex: 0 0 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 4px;
+    color: var(--ThemeFontColor2);
+    cursor: pointer;
+}
+
+.uam-find-master:hover {
+    border-color: var(--ThemeFontColor2);
+    color: var(--ThemeFontColor);
+}
+
+.uam-find-master > svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Divider between an instance's ordinary actions (Edit, Place on page) and the destructive pair
+   (Detach, Delete) in the tree detail panel. Detach is one-way and Delete removes the materialized
+   rows, so neither should sit flush against Edit where a mis-click is cheap. */
+.uam-action-sep {
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    margin: 0 6px;
+    vertical-align: middle;
+    background-color: var(--ThemeBorderColor);
+}
+
+/* Selection column on the UDT definitions list, and the import picker's list. */
+.uam-select-cell {
+    width: 34px;
+    text-align: center;
+}
+
+.uam-import-picklist {
+    max-height: 46vh;
+    overflow-y: auto;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+}
+
+.uam-import-pick {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    cursor: pointer;
+}
+
+.uam-import-pick:last-child {
+    border-bottom: 0;
+}
+
+.uam-import-pick:hover {
+    background-color: var(--ThemeFormLineColorHover);
+}
+
+/* Instance name in the instances list: opens that instance in the Asset Manager. A link rather
+   than a whole-row click so the checkbox and the row's action buttons stay unambiguous. */
+.uam-link {
+    color: var(--ThemeIconColor);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.uam-link:hover {
+    color: var(--ThemeIconColorHover);
+    text-decoration: underline;
+}
+
+.uam-member-textarea {
+    width: 100%;
+    font-family: var(--bs-font-monospace, monospace);
+    font-size: 12px;
+    resize: vertical;
+}
+
+.uam-detail-hint {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+}
+
+/* Actions drawer: a summary of what the member's actions do, plus the button that opens the
+   product's own Actions editor. The raw JSON is export/import territory now, not something the
+   editor asks anyone to type. */
+.uam-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uam-actions-summary {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Count pill on the Edit Actions button. */
+.uam-actions-count {
+    display: inline-block;
+    min-width: 17px;
+    padding: 0 5px;
+    margin-left: 4px;
+    border-radius: 9px;
+    background: var(--ThemeFormLineColorHover, #e6e6e6);
+    color: var(--ThemeFontColor2);
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+}
+
+/* Read-only view of the stored JSON: reference only, the rich editor does the editing. */
+.uam-actions-json {
+    margin-top: 6px;
+}
+
+.uam-actions-json-label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    width: fit-content;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    margin-bottom: 3px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.uam-actions-json-label .uam-detail-twisty svg {
+    width: 10px;
+    height: 10px;
+}
+
+.uam-actions-json pre {
+    margin: 0;
+    max-height: 160px;
+    overflow: auto;
+    padding: 6px 8px;
+    border: 1px solid var(--ThemeBorderColor, #d9d9d9);
+    border-radius: 4px;
+    background: var(--ThemeFormLineColor, #fafafa);
+    color: var(--ThemeFontColor2);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: pre;
+}
+
+.uam-actions-json.invalid pre {
+    border-color: var(--ThemeAlarmColor, #c0392b);
+}
+
+/* Who owns a field, on both the definition member drawer and the instance drawer. One pen, two
+   colours: muted = the definition owns it (click to hand it to the instance), accent = the
+   instance owns it (click to hand it back). Colour rather than two glyphs, so the icon never has
+   to be re-learned per screen and a row stays visually quiet until something is overridden. */
+.uam-released-btn {
+    border: 0;
+    background: none;
+    padding: 0 2px;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ThemeFontColor);
+    opacity: 0.45;
+}
+
+.uam-released-btn:hover {
+    opacity: 1;
+}
+
+.uam-released-btn.on {
+    color: var(--ThemeIconColor);
+    opacity: 1;
+}
+
+/* Export/Import in a panel section header. Pushed to the right and sized down so the header
+   still reads as a heading rather than a toolbar; the buttons stop their click from reaching
+   the header, which toggles the section. */
+.uam-rowio {
+    margin-left: auto;
+    display: inline-flex;
+    gap: 4px;
+}
+
+.uam-rowio .uam-btn {
+    font-size: 10.5px;
+    padding: 1px 8px;
+    min-height: 0;
+    line-height: 16px;
+}
+
+/* ---------- Copy node dialog ----------
+   The dialog is the RESULT tree, so the controls above it have to stay small. Parent is the only
+   one left (the find/replace pair that shared this row was removed), and it is capped rather than
+   stretched: a lone combo spanning 78vw reads as the dialog's subject instead of one setting. */
+.uam-copy-form {
+    display: grid;
+    grid-template-columns: minmax(220px, 380px);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Scrolls on its own so a 60-instance branch never pushes the footer off screen. */
+/* The Result heading carries the tree's own controls - export/import of the plan file and
+   expand/collapse - so the label and the buttons share one baseline instead of floating above
+   the tree. */
+.uam-copy-resulthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    /* The label used to supply this gap through its own margin, which is zeroed below to keep it
+       on the button's baseline - so the row has to carry it, or the button sits on the tree. */
+    margin-bottom: 6px;
+}
+
+.uam-copy-resulthead .form-label {
+    margin-bottom: 0;
+}
+
+.uam-copy-resultbtns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* The composed identity under the instance dialog's Name field. The field takes a leaf, so this is
+   where the user sees what the instance will actually be called before saving. */
+.uam-name-preview {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    word-break: break-all;
+    min-height: 14px;
+}
+
+/* Same line, when that identity is already in use. Colour alone would not carry it for a
+   colour-blind reader, so the text itself says so - this is only the emphasis. */
+.uam-name-preview.uam-name-taken {
+    color: var(--ThemeAlarmColor, #d9534f);
+    font-weight: 600;
+}
+
+
+.uam-copy-tree {
+    max-height: 38vh;
+    overflow: auto;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 7px;
+    padding: 6px 4px;
+}
+
+/* The tree is FLAT in the DOM, indented by padding, exactly like the asset tree: a row is a row
+   whatever its depth, so no nesting containers have to be kept in step. */
+.uam-copy-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 4px 2px 0;
+}
+
+.uam-copy-icon {
+    flex: 0 0 13px;
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+    opacity: 0.55;
+}
+
+.uam-copy-icon-inst {
+    opacity: 0.4;
+}
+
+.uam-copy-name {
+    flex: 1 1 auto;
+    min-width: 90px;
+    height: 26px;
+    padding: 2px 8px;
+    font-size: 12.5px;
+}
+
+.uam-copy-ro {
+    font-size: 12.5px;
+    color: var(--ThemeFontColor);
+    line-height: 26px;
+}
+
+.uam-copy-row.uam-copy-bad .uam-copy-name {
+    border-color: var(--ThemeAlarmColor, #c0392b);
+}
+
+.uam-copy-rowerr {
+    font-size: 11.5px;
+    color: var(--ThemeAlarmColor, #c0392b);
+    padding-bottom: 4px;
+}
+
+.uam-copy-msg,
+.uam-copy-msg-bad {
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.uam-copy-msg {
+    color: var(--ThemeFontColor2);
+}
+
+.uam-copy-msg-bad {
+    color: var(--ThemeAlarmColor, #c0392b);
+}
+
+/* The copy dialog is a WORKSPACE, not a form: it holds the whole result tree of a branch that can
+   run to dozens of instances, each row carrying a name field and a device picker. Sized like the
+   Asset Manager itself rather than a Bootstrap modal.
+   Height goes on .modal-content, NOT .modal-dialog: .modal-dialog-centered carries
+   min-height: calc(100% - 56px), which beats a height set there and silently yields ~94vh. */
+#UamNodeCopyModal .modal-dialog {
+    max-width: 78vw;
+    width: 78vw;
+}
+
+#UamNodeCopyModal .modal-content {
+    height: 88vh;
+}
+
+/* The body is the flex column that gives the tree the leftover height; min-height:0 is what keeps
+   the footer (and the Copy button) on screen instead of being pushed out by a long tree. */
+#UamNodeCopyModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#UamNodeCopyModal .uam-copy-tree {
+    flex: 1 1 auto;
+    max-height: none;
+    min-height: 0;
+}
+
+/* In-place renaming: the name field IS the tree label, so it carries no chrome until you reach
+   for it. The placeholder is the DERIVED name, not a hint, so it has to read as ordinary text -
+   that is what makes an untouched row look like a plain tree row while still being an empty
+   input that hands the row back to its derived name when cleared. */
+#UamNodeCopyModal .uam-copy-name {
+    background: transparent;
+    border-color: transparent;
+}
+
+#UamNodeCopyModal .uam-copy-row:hover .uam-copy-name,
+#UamNodeCopyModal .uam-copy-name:focus {
+    background: var(--ThemeElements);
+    border-color: var(--ThemeBorderColor);
+}
+
+/* A row that is overridden or blocked keeps its edge without hovering: both are states you must
+   be able to see while scanning the tree. */
+#UamNodeCopyModal .uam-copy-row.uam-copy-bad .uam-copy-name {
+    border-color: var(--ThemeAlarmColor, #c0392b);
+}
+
+#UamNodeCopyModal .uam-copy-row:hover {
+    background: rgba(127, 127, 127, 0.07);
+    border-radius: 5px;
+}
+
+/* flex-basis 0, not auto: with `auto` the tree's basis is its full content height, so it absorbs
+   nearly all the shrinkage of the flex column and collapses to a couple of rows. Basis 0 makes it
+   GROW into the space the fixed-height controls above it leave over. */
+#UamNodeCopyModal .modal-body > * {
+    flex: 0 0 auto;
+}
+
+#UamNodeCopyModal .uam-copy-tree {
+    flex: 1 1 0;
+    min-height: 140px;
+}
+
+/* Per-instance parameters in the copy tree. A device is a parameter, so it is edited here with the
+   rest rather than through a control of its own; the row above only summarises where it lands. */
+.uam-copy-twisty {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--ThemeFontColor2);
+    transition: transform 0.1s ease;
+}
+
+.uam-copy-twisty svg {
+    width: 11px;
+    height: 11px;
+}
+
+.uam-copy-twisty.open {
+    transform: rotate(90deg);
+}
+
+.uam-copy-params {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 6px;
+}
+
+.uam-copy-paramrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    margin: 0;
+    min-width: 0;
+}
+
+.uam-copy-paramrow > span {
+    flex: 0 0 180px;
+    color: var(--ThemeFontColor2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Same metrics as the name field one row up: a parameter is edited in the same tree, so it must
+   not read as a smaller, lesser control. */
+.uam-copy-param {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 480px;
+    height: 26px;
+    padding: 2px 8px;
+    font-size: 12.5px;
+}

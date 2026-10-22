@@ -1,0 +1,53 @@
+<svg
+   viewBox="0 0 8.2524424 16.050594"
+   version="1.1"
+   id="svg38909"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-69.756205,-104.08482)">
+    <g
+       id="g38994">
+      <g
+         id="g1847"
+         transform="matrix(0.35277777,0,0,0.35277777,-44.660077,-702.41371)">
+        <path
+           d="m 324.684,2286.492 h 22.684 v 44.789 h -22.684 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1849" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text1855"
+         x="71.605003"
+         y="111.61272"><tspan
+           x="71.605003 73.771271"
+           y="111.61272"
+           id="tspan1851"
+           style="stroke-width:0.352778">HE</tspan><tspan
+           x="71.854431 73.852676"
+           y="115.36375"
+           id="tspan1853"
+           style="stroke-width:0.352778">PA</tspan></text>
+      <g
+         id="g1857"
+         transform="matrix(0.35277777,0,0,0.35277777,-44.660077,-702.41371)">
+        <path
+           d="m 324.684,2295.453 h 22.683"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:1.77188, 1.77188;stroke-dashoffset:0;stroke-opacity:1"
+           id="path1859" />
+      </g>
+      <g
+         id="g1861"
+         transform="matrix(0.35277777,0,0,0.35277777,-44.660077,-702.41371)">
+        <path
+           d="m 324.684,2317.844 11.343,13.437 11.34,-13.437"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:1.77188, 1.77188;stroke-dashoffset:0;stroke-opacity:1"
+           id="path1863" />
+      </g>
+    </g>
+  </g>
+</svg>

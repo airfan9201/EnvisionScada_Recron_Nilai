@@ -1,0 +1,55 @@
+<svg
+   viewBox="0 0 8.2993612 7.8786678"
+   version="1.1"
+   id="svg21733"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-75.613933,-93.284075)">
+    <g
+       id="g21841">
+      <g
+         id="g7931"
+         transform="matrix(0.35277777,0,0,0.35277777,-90.490995,-238.42391)">
+        <path
+           d="m 482.613,943.145 -0.008,12.578"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7933" />
+      </g>
+      <g
+         id="g7935"
+         transform="matrix(0.35277777,0,0,0.35277777,-90.490995,-238.42391)">
+        <path
+           d="m 482.613,955.723 -11.41,6.285 v -12.574 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7937" />
+      </g>
+      <g
+         id="g7939"
+         transform="matrix(-0.35277777,0,0,0.35277777,-90.490995,-238.42391)">
+        <path
+           d="m -482.613,955.723 -11.407,6.285 v -12.574 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7941" />
+      </g>
+      <g
+         id="g7943"
+         transform="matrix(0.35277777,0,0,0.35277777,-90.490995,-238.42391)">
+        <path
+           d="m 476.91,943.133 c 0,-1.387 2.531,-2.504 5.668,-2.504 3.137,0 5.68,1.117 5.68,2.504 0,1.387 -2.543,2.508 -5.68,2.508 -3.137,0 -5.668,-1.121 -5.668,-2.508 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7945" />
+      </g>
+      <g
+         id="g7947"
+         transform="matrix(0.35277777,0,0,0.35277777,-90.490995,-238.42391)">
+        <path
+           d="m 476.91,943.145 h 11.406"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7949" />
+      </g>
+    </g>
+  </g>
+</svg>

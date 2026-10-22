@@ -1,0 +1,38 @@
+<svg
+   viewBox="0 0 5.9340043 9.1792374"
+   version="1.1"
+   id="svg16539"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+ 
+  <g
+     id="layer1"
+     transform="translate(-85.25082,-127.73709)">
+    <g
+       id="g16595">
+      <path
+         d="m 327.73,4989.844 v -8.297 l 16.594,8.297 v -8.297 z m 1.661,4.148 h 13.273 v 13.278 h -13.273 v -13.278"
+         style="fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7831"
+         transform="matrix(0.35277777,0,0,-0.35277777,-30.325034,1894.2305)" />
+      <g
+         id="g7833"
+         transform="matrix(0.35277777,0,0,0.35277777,-30.325034,-195.16061)">
+        <path
+           d="m 327.73,932.84 v 8.297 l 16.594,-8.297 v 8.297 z m 8.297,4.148 v -8.297 m -6.636,0 h 13.273 v -13.277 h -13.273 v 13.277"
+           style="stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7835" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text7839"
+         x="87.189926"
+         y="131.55432"><tspan
+           x="87.189926"
+           y="131.55432"
+           id="tspan7837"
+           style="stroke-width:0.352778">M</tspan></text>
+    </g>
+  </g>
+</svg>

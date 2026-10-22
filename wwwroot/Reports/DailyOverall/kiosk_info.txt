@@ -1,0 +1,225 @@
+============================================================
+ RECRON NILAI AUTOMATED PERFORMANCE AUDIT: 2026-09-04 11:47:59
+============================================================
+TotalEMonthly Current Raw Register           : 0.00000 MWh
+DailyEnergy Current Raw Register             : 0.00000 kWh
+YesterdayEnergy (From SCADA)                 : 86,199.59000 kWh
+Total_EDaily_MWh Current Raw Register        : 0.00000 MWh
+Last Month Genuine YTD Base (DB Last Record) : 10,330.63763 MWh
+Last Month TotalEMonthly (DB Last Record)    : 2,625.55352 MWh
+Plant Commissioning Tare Subtracted          : 185.10468 MWh
+This Month Net Energy Yield (Calculated)     : 0.00000 MWh
+Year-to-Date Net Energy Accumulation (TRUE)  : 10,145.53295 MWh
+------------------------------------------------------------
+ CAPACITY UTILIZATION FACTORS (CUF)
+------------------------------------------------------------
+Local.CurrentMonth_CUF          : 0.00%
+ 
+FORMULA =   (Year_to_Date_Net_Energy_Accumulation / (DESIGNED_POWER_MW * hours_performance)) * 100
+ :   (10145.532950000003 / (69670.31388160303)) * 100
+Local.Annual_CUF                : 14.56%
+ 
+Local.LastMonth_CUF (Automated) : 14.89%
+------------------------------------------------------------
+ CAPACITY POWER LOAD DISPLACEMENTS
+------------------------------------------------------------
+Local.MonthlyAvg_MW (Monthly)   : 0.0000 MW
+Local.Today_AVG_Power_MW        : 0.0000 MW
+Local.Yesterday_AVG_Power_MW    : 3.5916 MW
+ 
+FORMULA = Prev Month Net Energy Acc / prev month days * 24  : 2625.5535 / 744.0
+Local.LastMonthAvg_MW (24-Hr) : 3.5290 MW
+ 
+FORMULA = Year to Date energy Acc / day till yesterday * 24  : 10145.5330 / 2928.0
+days_ytd_completed : 122
+Local.YearlyAvg_MW (24-Hr Base) : 3.4650 MW
+ 
+------------------------------------------------------------
+ ENVIRONMENTAL & SUSTAINABILITY INDICES
+------------------------------------------------------------
+Coal Reduction (Tonnes)        | Month: 0 TN | YTD Accumulated: 4,058 TN
+15W Lightbulbs Powered         | Month: 0  | YTD Accumulated: 28,182,035
+Clean Residential Power Base   | Month: 0  | YTD Accumulated: 1,014,553 Homes
+Carbon Sequestration Offset    | Month: 0  | YTD Accumulated: 334,802 Trees
+Passenger Vehicle Displacement | Month: 0 KM | YTD Accumulated: 25,363,832 KM
+============================================================
+============================================================
+ RECRON NILAI AUTOMATED PERFORMANCE AUDIT: 2026-09-04 11:50:30
+============================================================
+TotalEMonthly Current Raw Register           : 0.00000 MWh
+DailyEnergy Current Raw Register             : 0.00000 kWh
+YesterdayEnergy (From SCADA)                 : 86,199.59000 kWh
+Total_EDaily_MWh Current Raw Register        : 0.00000 MWh
+Last Month Genuine YTD Base (DB Last Record) : 10,330.63763 MWh
+Last Month TotalEMonthly (DB Last Record)    : 2,625.55352 MWh
+Plant Commissioning Tare Subtracted          : 185.10468 MWh
+This Month Net Energy Yield (Calculated)     : 0.00000 MWh
+Year-to-Date Net Energy Accumulation (TRUE)  : 10,145.53295 MWh
+------------------------------------------------------------
+ CAPACITY UTILIZATION FACTORS (CUF)
+------------------------------------------------------------
+Local.CurrentMonth_CUF          : 0.00%
+ 
+FORMULA =   (Year_to_Date_Net_Energy_Accumulation / (DESIGNED_POWER_MW * hours_performance)) * 100
+ :   (10145.532950000003 / (69671.30931019971)) * 100
+Local.Annual_CUF                : 14.56%
+ 
+Local.LastMonth_CUF (Automated) : 14.89%
+------------------------------------------------------------
+ CAPACITY POWER LOAD DISPLACEMENTS
+------------------------------------------------------------
+Local.MonthlyAvg_MW (Monthly)   : 0.0000 MW
+Local.Today_AVG_Power_MW        : 0.0000 MW
+Local.Yesterday_AVG_Power_MW    : 3.5916 MW
+ 
+FORMULA = Prev Month Net Energy Acc / prev month days * 24  : 2625.5535 / 744.0
+Local.LastMonthAvg_MW (24-Hr) : 3.5290 MW
+ 
+FORMULA = Year to Date energy Acc / day till yesterday * 24  : 10145.5330 / 2928.0
+days_ytd_completed : 122
+Local.YearlyAvg_MW (24-Hr Base) : 3.4650 MW
+ 
+------------------------------------------------------------
+ ENVIRONMENTAL & SUSTAINABILITY INDICES
+------------------------------------------------------------
+Coal Reduction (Tonnes)        | Month: 0 TN | YTD Accumulated: 4,058 TN
+15W Lightbulbs Powered         | Month: 0  | YTD Accumulated: 28,182,035
+Clean Residential Power Base   | Month: 0  | YTD Accumulated: 1,014,553 Homes
+Carbon Sequestration Offset    | Month: 0  | YTD Accumulated: 334,802 Trees
+Passenger Vehicle Displacement | Month: 0 KM | YTD Accumulated: 25,363,832 KM
+============================================================
+============================================================
+ RECRON NILAI AUTOMATED PERFORMANCE AUDIT: 2026-09-04 12:03:12
+============================================================
+TotalEMonthly Current Raw Register           : 0.00000 MWh
+DailyEnergy Current Raw Register             : 0.00000 kWh
+YesterdayEnergy (From SCADA)                 : 86,199.59000 kWh
+Total_EDaily_MWh Current Raw Register        : 0.00000 MWh
+Last Month Genuine YTD Base (DB Last Record) : 10,330.63763 MWh
+Last Month TotalEMonthly (DB Last Record)    : 2,625.55352 MWh
+Plant Commissioning Tare Subtracted          : 185.10468 MWh
+This Month Net Energy Yield (Calculated)     : 0.00000 MWh
+Year-to-Date Net Energy Accumulation (TRUE)  : 10,145.53295 MWh
+------------------------------------------------------------
+ CAPACITY UTILIZATION FACTORS (CUF)
+------------------------------------------------------------
+Local.CurrentMonth_CUF          : 0.00%
+ 
+FORMULA =   (Year_to_Date_Net_Energy_Accumulation / (DESIGNED_POWER_MW * hours_performance)) * 100
+ :   (10145.532950000003 / (69676.33027179154)) * 100
+Local.Annual_CUF                : 14.56%
+ 
+Local.LastMonth_CUF (Automated) : 14.89%
+------------------------------------------------------------
+ CAPACITY POWER LOAD DISPLACEMENTS
+------------------------------------------------------------
+Local.MonthlyAvg_MW (Monthly)   : 0.0000 MW
+Local.Today_AVG_Power_MW        : 0.0000 MW
+Local.Yesterday_AVG_Power_MW    : 3.5916 MW
+ 
+FORMULA = Prev Month Net Energy Acc / prev month days * 24  : 2625.5535 / 744.0
+Local.LastMonthAvg_MW (24-Hr) : 3.5290 MW
+ 
+FORMULA = Year to Date energy Acc / day till yesterday * 24  : 10145.5330 / 2928.0
+days_ytd_completed : 122
+Local.YearlyAvg_MW (24-Hr Base) : 3.4650 MW
+ 
+------------------------------------------------------------
+ ENVIRONMENTAL & SUSTAINABILITY INDICES
+------------------------------------------------------------
+Coal Reduction (Tonnes)        | Month: 0 TN | YTD Accumulated: 4,058 TN
+15W Lightbulbs Powered         | Month: 0  | YTD Accumulated: 28,182,035
+Clean Residential Power Base   | Month: 0  | YTD Accumulated: 1,014,553 Homes
+Carbon Sequestration Offset    | Month: 0  | YTD Accumulated: 334,802 Trees
+Passenger Vehicle Displacement | Month: 0 KM | YTD Accumulated: 25,363,832 KM
+============================================================
+============================================================
+ RECRON NILAI AUTOMATED PERFORMANCE AUDIT: 2026-09-04 12:06:24
+============================================================
+TotalEMonthly Current Raw Register           : 0.00000 MWh
+DailyEnergy Current Raw Register             : 0.00000 kWh
+YesterdayEnergy (From SCADA)                 : 86,199.59000 kWh
+Total_EDaily_MWh Current Raw Register        : 0.00000 MWh
+Last Month Genuine YTD Base (DB Last Record) : 10,330.63763 MWh
+Last Month TotalEMonthly (DB Last Record)    : 2,625.55352 MWh
+Plant Commissioning Tare Subtracted          : 185.10468 MWh
+This Month Net Energy Yield (Calculated)     : 0.00000 MWh
+Year-to-Date Net Energy Accumulation (TRUE)  : 10,145.53295 MWh
+------------------------------------------------------------
+ CAPACITY UTILIZATION FACTORS (CUF)
+------------------------------------------------------------
+Local.CurrentMonth_CUF          : 0.00%
+ 
+FORMULA =   (Year_to_Date_Net_Energy_Accumulation / (DESIGNED_POWER_MW * hours_performance)) * 100
+ :   (10145.532950000003 / (69677.59050760293)) * 100
+Local.Annual_CUF                : 14.56%
+ 
+Local.LastMonth_CUF (Automated) : 14.89%
+------------------------------------------------------------
+ CAPACITY POWER LOAD DISPLACEMENTS
+------------------------------------------------------------
+Local.MonthlyAvg_MW (Monthly)   : 0.0000 MW
+Local.Today_AVG_Power_MW        : 0.0000 MW
+Local.Yesterday_AVG_Power_MW    : 3.5916 MW
+ 
+FORMULA = Prev Month Net Energy Acc / prev month days * 24  : 2625.5535 / 744.0
+Local.LastMonthAvg_MW (24-Hr) : 3.5290 MW
+ 
+FORMULA = Year to Date energy Acc / day till yesterday * 24  : 10145.5330 / 2928.0
+days_ytd_completed : 122
+Local.YearlyAvg_MW (24-Hr Base) : 3.4650 MW
+ 
+------------------------------------------------------------
+ ENVIRONMENTAL & SUSTAINABILITY INDICES
+------------------------------------------------------------
+Coal Reduction (Tonnes)        | Month: 0 TN | YTD Accumulated: 4,058 TN
+15W Lightbulbs Powered         | Month: 0  | YTD Accumulated: 28,182,035
+Clean Residential Power Base   | Month: 0  | YTD Accumulated: 1,014,553 Homes
+Carbon Sequestration Offset    | Month: 0  | YTD Accumulated: 334,802 Trees
+Passenger Vehicle Displacement | Month: 0 KM | YTD Accumulated: 25,363,832 KM
+============================================================
+============================================================
+ RECRON NILAI AUTOMATED PERFORMANCE AUDIT: 2026-09-04 12:07:26
+============================================================
+TotalEMonthly Current Raw Register           : 0.00000 MWh
+DailyEnergy Current Raw Register             : 0.00000 kWh
+YesterdayEnergy (From SCADA)                 : 86,199.59000 kWh
+Total_EDaily_MWh Current Raw Register        : 0.00000 MWh
+Last Month Genuine YTD Base (DB Last Record) : 10,330.63763 MWh
+Last Month TotalEMonthly (DB Last Record)    : 2,625.55352 MWh
+Plant Commissioning Tare Subtracted          : 185.10468 MWh
+This Month Net Energy Yield (Calculated)     : 0.00000 MWh
+Year-to-Date Net Energy Accumulation (TRUE)  : 10,145.53295 MWh
+------------------------------------------------------------
+ CAPACITY UTILIZATION FACTORS (CUF)
+------------------------------------------------------------
+Local.CurrentMonth_CUF          : 0.00%
+ 
+FORMULA =   (Year_to_Date_Net_Energy_Accumulation / (DESIGNED_POWER_MW * hours_performance)) * 100
+ :   (10145.532950000003 / (69677.99962271581)) * 100
+Local.Annual_CUF                : 14.56%
+ 
+Local.LastMonth_CUF (Automated) : 14.89%
+------------------------------------------------------------
+ CAPACITY POWER LOAD DISPLACEMENTS
+------------------------------------------------------------
+Local.MonthlyAvg_MW (Monthly)   : 0.0000 MW
+Local.Today_AVG_Power_MW        : 0.0000 MW
+Local.Yesterday_AVG_Power_MW    : 3.5916 MW
+ 
+FORMULA = Prev Month Net Energy Acc / prev month days * 24  : 2625.5535 / 744.0
+Local.LastMonthAvg_MW (24-Hr) : 3.5290 MW
+ 
+FORMULA = Year to Date energy Acc / day till yesterday * 24  : 10145.5330 / 2928.0
+days_ytd_completed : 122
+Local.YearlyAvg_MW (24-Hr Base) : 3.4650 MW
+ 
+------------------------------------------------------------
+ ENVIRONMENTAL & SUSTAINABILITY INDICES
+------------------------------------------------------------
+Coal Reduction (Tonnes)        | Month: 0 TN | YTD Accumulated: 4,058 TN
+15W Lightbulbs Powered         | Month: 0  | YTD Accumulated: 28,182,035
+Clean Residential Power Base   | Month: 0  | YTD Accumulated: 1,014,553 Homes
+Carbon Sequestration Offset    | Month: 0  | YTD Accumulated: 334,802 Trees
+Passenger Vehicle Displacement | Month: 0 KM | YTD Accumulated: 25,363,832 KM
+============================================================

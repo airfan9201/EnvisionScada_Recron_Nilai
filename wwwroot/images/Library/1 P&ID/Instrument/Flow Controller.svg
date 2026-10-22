@@ -1,0 +1,33 @@
+<svg
+   viewBox="0 0 9.8378429 9.8378429"
+   version="1.1"
+   id="svg44753"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-87.801685,-122.81312)">
+    <g
+       id="g45714">
+      <g
+         id="g7347"
+         transform="matrix(0.35277777,0,0,0.35277777,25.402847,-78.365313)">
+        <path
+           d="m 190.824,598.043 c 7.637,0 13.828,-6.191 13.828,-13.832 0,-7.637 -6.191,-13.828 -13.828,-13.828 0,0 0,0 0,0 -7.64,0 -13.832,6.191 -13.832,13.828 0,7.641 6.192,13.832 13.832,13.832 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7349" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text7353"
+         x="90.661224"
+         y="127.08502"><tspan
+           x="90.661224"
+           y="127.08502"
+           id="tspan7351"
+           style="stroke-width:0.352778">FC</tspan></text>
+    </g>
+  </g>
+</svg>

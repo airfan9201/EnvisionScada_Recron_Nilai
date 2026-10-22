@@ -1,0 +1,5353 @@
+﻿
+html {
+    touch-action: none;
+}
+
+body {
+    padding: 10px;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+#EnvisionPage {
+    position: fixed; /* position: absolute; 2023 03 11 Changed to fixed for auto scroll issue on input focus */
+    border: 1px solid white;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    cursor: default;
+    /*    margin-left: auto;
+    margin-right: auto;
+*/
+    /*background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0"><rect x="0" y="0" width="100" height="100" style="fill:none;stroke:lightblue;stroke-width:1;opacity:0.1" /></svg>');
+    background-size: 20px 20px;
+    background-color: white;*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+
+    transform-origin: 0% 0%; /* IMPORTANT FOR SCALING */
+    /*    -webkit-transform-origin: 0 0;*/
+}
+
+#EnvisionPage:focus {
+    outline: none;
+}
+
+#TheGrid {
+    position: absolute;
+    border: 0px solid white;
+    top: 0px;
+    left: 0px;
+    /*    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0"><rect x="0" y="0" width="100" height="100" style="fill:none;stroke:lightblue;stroke-width:4;opacity:0.1"/></svg>');
+    background-size: 20px 20px;*/
+    background-color: transparent;
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+    transform-origin: 0% 0%;
+    object-fit: cover;
+    /*background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.2) 0.1px, transparent 0.5px),*/ /* Vertical lines */
+    /*linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0.1px, transparent 0.5px);*/ /* Horizontal lines */
+
+    background-image: linear-gradient(to right, rgba(117,117,117, 0.1) 0.6px, transparent 0.1px), /* Vertical lines */
+    linear-gradient(to bottom, rgba(117,117,117, 0.1) 0.6px, transparent 0.1px); /* Horizontal lines */
+
+    background-position: top left; /* Position the grid at the top left */
+}
+
+
+#TheGridDetails {
+    position: absolute;
+    border: 0px solid black;
+    bottom: 70px;
+    right: 40px;
+    background-color: transparent;
+    z-index: 1;
+    display: none;
+}
+
+#draggable-element1 {
+    background-color: #666;
+    color: white;
+    padding: 10px 12px;
+    width: 100px;
+    height: 100px;
+}
+
+#draggable-element2 {
+    background-color: #666;
+    color: white;
+    padding: 10px 12px;
+    width: 100px;
+    height: 100px;
+}
+
+.draggable {
+    position: absolute; /* important (all position that's not `static`) */
+}
+
+.linebox {
+    position: absolute; /* important (all position that's not `static`) */
+    pointer-events: none;
+}
+
+.lineboxhelper {
+    position: absolute; /* important (all position that's not `static`) */
+    pointer-events: none;
+}
+
+/*.Group {
+    position: absolute; 
+}
+*/
+
+.contexticondivcontainer {
+    width: 100%;
+    margin-bottom: 0.3rem;
+    border: 0px solid red;
+    display: inline-block;
+}
+
+.contexticondiv {
+    width: 22px;
+    height: 22px;
+    padding-top: 5px;
+    cursor: pointer;
+    border: 0px solid blue;
+}
+
+.contexticondiv:hover .contexticon {
+    /*fill: black;*/
+    fill: var(--ThemeFontColorHover);
+}
+
+.contexticon {
+    fill: var(--ThemeIconColor);
+}
+
+/* Modernized decorator action strips (ObjectActionsContext / GroupActionsContext) */
+.ctxbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    margin-bottom: 0.4rem;
+}
+
+.ctxbar + .ctxbar {
+    margin-top: 4px;
+}
+
+.ctxbtn {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--ThemeIconColor);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ctxbtn:hover {
+    background: color-mix(in srgb, var(--ThemeIconColor) 16%, transparent);
+}
+
+.ctxbtn svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+
+.ctxbar-divider {
+    width: 1px;
+    height: 18px;
+    flex: 0 0 auto;
+    margin: 0 4px;
+    background: var(--ThemeBorderColor);
+    opacity: 0.25;
+}
+
+.ctxbtn.ctxbtn-danger {
+    margin-left: auto;
+}
+
+.ctxbtn.ctxbtn-danger:hover {
+    background: color-mix(in srgb, #e24b4a 16%, transparent);
+    color: #e24b4a;
+}
+
+.dropdown.ctxbar-align {
+    position: relative;
+    background-color: transparent;
+    border: 0;
+}
+
+.ctxbtn.ctxbtn-wide {
+    width: auto;
+    padding: 0 8px;
+    gap: 1px;
+}
+
+.ctxbtn svg.ctxbtn-caret {
+    width: 12px;
+    height: 12px;
+}
+
+.ctxbar-align .ctxbtn-wide,
+.ctxbar-align .ctxbtn-wide:focus,
+.ctxbar-align .ctxbtn-wide:focus-visible,
+.ctxbar-align .ctxbtn-wide:active,
+.ctxbar-align .ctxbtn-wide.show,
+.ctxbar-align.show .ctxbtn-wide {
+    background-color: transparent;
+    color: var(--ThemeIconColor);
+    outline: none;
+    box-shadow: none;
+}
+
+.ctxbar-align .ctxbtn-wide:hover {
+    background-color: color-mix(in srgb, var(--ThemeIconColor) 16%, transparent);
+}
+
+.ContextHeader {
+    float: left;
+    font-size: 25px;
+    font-weight: bold;
+    border: 0px solid black;
+}
+
+.Decorator {
+    position: absolute;
+    border: 0px solid black;
+    font-size: 15px;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
+    display: none;
+    z-index: 999;
+    width: 420px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    /*background-color: #ededed;*/
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    overflow: scroll;
+    overflow-x: hidden;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 29px 7px 0px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    user-drag: none;
+    -webkit-user-drag: none;
+}
+
+.DecoratorDragLine {
+    position: absolute;
+    border: 0px solid black;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: none;
+    z-index: 999;
+    width: 5px;
+    margin-right: 415px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    /*background-color: #ededed;*/
+    background-color: transparent;
+    color: var(--ThemeFontColor);
+    border: 0px solid red;
+    cursor: col-resize;
+}
+
+.Decorator::-webkit-scrollbar {
+    width: 6px; /* width of the entire scrollbar */
+}
+
+.Decorator::-webkit-scrollbar-track {
+    background: #e8e8e8; /* color of the tracking area */
+}
+
+.Decorator::-webkit-scrollbar-thumb {
+    background-color: deepskyblue; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: 0px solid orange; /* creates padding around scroll thumb */
+}
+
+.replacerlabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#UploadSVG {
+
+}
+
+#LicenseModal {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+}
+
+#CenterCross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 15px;
+    height: 15px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#PolygonDotContextMenu {
+    width: 225px;
+    height: auto;
+    border: 0px solid red;
+    border-radius: 10px;
+    position: absolute;
+    background: rgba(255, 255, 255, .8);
+    backdrop-filter: blur(10px);
+    color: #5c5c5c;
+    fill: #5c5c5c;
+    z-index: 999;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.PolygonDotContextMenuItem {
+    border-bottom: 1px solid lightgrey;
+    padding: 8px 14px;
+    height: 40px;
+}
+
+.PolygonDotContextMenuText {
+    float: left;
+}
+.PolygonDotContextMenuItemIcon {
+    width: 20px;
+    float: right;
+    pointer-events:none;
+    
+}
+
+.PolygonDotContextMenuItem:hover {
+    color: lightgrey;
+    fill: lightgrey;
+    cursor: pointer;
+}
+
+.PolygonDotContextMenuItemLast {
+    border-bottom: 0px solid lightgrey;
+}
+
+.PolygonDotContextMenuItemLast > .PolygonDotContextMenuText {
+    width:100%;
+    color:orange;
+    text-align:center;
+}
+
+    .PolygonDotContextMenuItemLast > .PolygonDotContextMenuText:hover {
+        color: lightgrey;
+    }
+
+#PolylineDotContextMenu {
+    width: 225px;
+    height: auto;
+    border: 0px solid red;
+    border-radius: 10px;
+    position: absolute;
+    background: rgba(255, 255, 255, .8);
+    backdrop-filter: blur(10px);
+    color: #5c5c5c;
+    fill: #5c5c5c;
+    z-index: 999;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.PolylineDotContextMenuItem {
+    border-bottom: 1px solid lightgrey;
+    padding: 8px 14px;
+    height: 40px;
+}
+
+.PolylineDotContextMenuText {
+    float: left;
+}
+
+.PolylineDotContextMenuItemIcon {
+    width: 20px;
+    float: right;
+    pointer-events: none;
+}
+
+.PolylineDotContextMenuItem:hover {
+    color: lightgrey;
+    fill: lightgrey;
+    cursor: pointer;
+}
+
+.PolylineDotContextMenuItemLast {
+    border-bottom: 0px solid lightgrey;
+}
+
+    .PolylineDotContextMenuItemLast > .PolylineDotContextMenuText {
+        width: 100%;
+        color: orange;
+        text-align: center;
+    }
+
+        .PolylineDotContextMenuItemLast > .PolylineDotContextMenuText:hover {
+            color: lightgrey;
+        }
+
+#ClientPerformance {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 2;
+    /* display toggled to flex by edit-mode show; keep as a themed pill */
+    align-items: center;
+    gap: 16px;
+    padding: 5px 15px;
+    font-size: 12px;
+    color: var(--ThemeFontColor);
+    background: color-mix(in srgb, var(--ThemeBackground) 65%, transparent);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px;
+}
+
+.perf-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.perf-item + .perf-item::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 13px;
+    margin-right: 5px;
+    background: var(--ThemeBorderColor);
+}
+
+.perf-icon {
+    width: 13px;
+    height: 13px;
+    fill: var(--ThemeIconColor);
+    flex: 0 0 auto;
+}
+
+#PageInfo {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    /*    width: 100px;
+    height: 100px;*/
+    z-index: 0;
+    color: black;
+    z-index: 2;
+}
+
+
+.draggable.ActiveSelected .resizer-right {
+    width: 5px;
+    height: 100%;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: e-resize;
+}
+
+.draggable.ActiveSelected .resizer-bottom {
+    width: 100%;
+    height: 5px;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: n-resize;
+}
+
+
+.draggable.ActiveSelected .resizer-both {
+    width: 5px;
+    height: 5px;
+    background-color: transparent;
+    z-index: 999;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
+}
+
+.resizertext {
+    z-index: 999;
+    position: absolute;
+    /*    right: 0;
+    bottom: -25px;*/
+    font-size: 0.8rem;
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    /*color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 0px solid blue;
+    pointer-events: none;
+}
+
+.resizertextgroup {
+    z-index: 999;
+    position: absolute;
+    /*    right: -75px;
+    bottom: 20px;*/
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    color: rgba(75, 75, 75, 0.8);
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.positiontext {
+    z-index: 999;
+    position: absolute;
+    font-size: 0.8rem;
+    /*    background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: right;
+    width: 120px;
+    border: 0px solid blue;
+    pointer-events: none;
+    padding-right: 5px;
+
+}
+
+.screenpositiontext {
+    z-index: 999;
+    position: absolute;
+    /*    left: 0;
+    top: -45px;*/
+    font-size: 0.8rem;
+    /*    background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: right;
+    width: 120px;
+    border: 0px solid blue;
+    pointer-events: none;
+    padding-right: 5px;
+}
+
+elementidtext {
+    z-index: 999;
+    position: absolute;
+    /*    right: 0px;
+    bottom: -65px;*/
+    font-size: 0.8rem;
+    /*    background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: right;
+    width: 130px;
+    border: 0px solid blue;
+    pointer-events: none;
+    display: none;
+}
+
+.lockinfo {
+    z-index: 999;
+    position: absolute;
+/*    right: -20px;
+    bottom: -20.9px;*/
+    border:0px solid blue;
+    pointer-events:none;
+}
+
+/*.scaleinfo {
+    z-index: 999;
+    position: absolute;*/
+    /*    right: -20px;
+    bottom: -20.9px;*/
+    /*border: 0px solid blue;
+    pointer-events: none;
+}*/
+
+.scaleinfo {
+    z-index: 999;
+    position: absolute;
+    /*    right: 0px;
+    bottom: -45px;*/
+    font-size: 0.8rem;
+    /*background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: orange;
+    font-weight: bold;
+    text-align: left;
+    width: 87px;
+    border: 0px solid blue;
+    pointer-events: none;
+    padding-left: 5px;
+    margin-top: 6px;
+}
+
+.statusicon {
+    z-index: 999;
+    position: absolute;
+    /*    right: 2.5px;
+    bottom: 2.5px;*/
+    border: 0px solid blue;
+    pointer-events: none;
+}
+
+.positiontextgroup {
+    z-index: 999;
+    position: absolute;
+    /*    left: -80px;
+    top: 0px;*/
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    text-align: right;
+    color: rgba(75, 75, 75, 0.8);
+    border: 0px solid blue;
+    pointer-events: none;
+}
+
+.zindextext {
+    z-index: 999;
+    position: absolute;
+    /*    right: 0px;
+    bottom: -45px;*/
+    font-size: 0.8rem;
+    /*background-color: rgba(255, 255, 255, 0.8);
+    color: rgba(75, 75, 75, 0.8);*/
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+    width: 60px;
+    border: 0px solid blue;
+    pointer-events: none;
+    padding-left: 5px;
+}
+
+.zindextextgroup {
+    background: lightgrey;
+    z-index: 999;
+    position: absolute;
+/*    right: -35px;
+    bottom: 0px;*/
+    font-size: 0.8rem;
+    background-color: rgba(102, 102, 102, 0.3);
+    color: white;
+    border: 0px solid blue;
+    pointer-events: none;
+}
+
+.draggable .groupline {
+    z-index: 998;
+    position: absolute;
+    border-width: 0px;
+    border-color: deepskyblue;
+    border-style: dashed;
+    margin-left: -2px;
+    margin-top: -2px;
+}
+
+.btn {
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+}
+
+.btn:hover {
+    color: var(--ThemeButtonColorHover);
+}
+
+.polygondot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: absolute;
+    border: 2px solid deepskyblue;
+}
+
+    .polygondot:hover {
+        background-color: transparent;
+        border: 2px solid orange;
+        cursor: move;
+    }
+
+.polylinedot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: absolute;
+    border: 2px solid deepskyblue;
+}
+
+    .polylinedot:hover {
+        background-color: transparent;
+        border: 2px solid orange;
+        cursor: move;
+    }
+
+.polylinedotstart {
+    border: 2px solid #BF68FF;
+}
+
+    .polylinedotstart:hover {
+        background-color: transparent;
+    }
+
+.buttonobject {
+    width: 100%;
+    height: 100%;
+    font-weight: normal;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+    /*cursor: default;*/
+}
+
+    .buttonobject:hover {
+        cursor: unset;
+    }
+
+.inputobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.datetimepickerobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    background-color: var(--dtp-display-background, #ffffff);
+    color: var(--dtp-display-text, #000000);
+}
+
+.datetimepickerobject:focus {
+    background-color: var(--dtp-display-background, #ffffff);
+    color: var(--dtp-display-text, #000000);
+    border-color: var(--dtp-display-focus-border, #c9c9c9);
+    box-shadow: none;
+}
+
+.checkboxobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.donutobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.DonutContextDataDynamic {
+    border-top: 1px solid lightblue;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+
+.bargrapgobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.BarGraphContextDataDynamic {
+    border-top: 1px solid lightblue;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+
+.radiobuttonobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.sliderobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.dropdownobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    outline: none;
+}
+
+.dropdown-menu {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+@supports (-moz-appearance: none) {
+    .dropdown-menu {
+        scrollbar-width: thin;
+        scrollbar-color: var(--dropdown-scrollbar-color, deepskyblue) var(--dropdown-scrollbar-track-color, #e8e8e8);
+    }
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: var(--dropdown-scrollbar-color, deepskyblue);
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background-color: var(--dropdown-scrollbar-track-color, #e8e8e8);
+}
+
+.listboxobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+@supports (-moz-appearance: none) {
+    .listboxobject {
+        scrollbar-width: thin;
+        scrollbar-color: var(--listbox-scrollbar-color, deepskyblue) var(--listbox-scrollbar-track-color, #e8e8e8);
+    }
+}
+
+.listboxobject::-webkit-scrollbar-thumb {
+    background-color: var(--listbox-scrollbar-color, deepskyblue);
+}
+
+.listboxobject::-webkit-scrollbar-track {
+    background-color: var(--listbox-scrollbar-track-color, #e8e8e8);
+}
+
+.listboxobject option:checked,
+.listboxobject option:focus {
+    background: var(--listbox-selected-background-color, #0d6efd) linear-gradient(0deg, var(--listbox-selected-background-color, #0d6efd) 0%, var(--listbox-selected-background-color, #0d6efd) 100%);
+    color: var(--listbox-selected-text-color, #ffffff);
+}
+
+    .dropdown-menu li a:hover {
+/*        background-color: lightgrey !important;
+        color: white !important;*/
+        font-weight:bold;
+        cursor:pointer;
+    }
+
+    .dropdownobject button {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: 0px;
+        
+    }
+
+.labelobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    resize: none;
+    overflow: hidden;
+}
+
+.webframeobject {
+    position: absolute;
+    bottom: 0px;
+    resize: none;
+    overflow: hidden;
+    margin: 0%;
+    border-width: 1px;
+    border-style: solid;
+    border-color:black;
+}
+
+/* The five viewer objects (Alarm, Event, Audit Trail, Trend Analyst, Users) share one class:
+   they differ only in the in-product page they frame. Same frame as .documentviewerobject. */
+.viewerobject {
+    position: absolute;
+    bottom: 0px;
+    resize: none;
+    overflow: hidden;
+    margin: 0%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+}
+
+/* Document Viewer: same frame as .webframeobject, with rounded corners by default because it
+   shows a document (a page or an image) rather than an embedded application. Both values are
+   also written on the template's data-borderwidth/data-borderradius so the Border decorator
+   opens on the same numbers instead of on the browser's computed value. */
+.documentviewerobject {
+    position: absolute;
+    bottom: 0px;
+    resize: none;
+    overflow: hidden;
+    margin: 0%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+}
+
+.widgetobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    resize: none;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+/*
+textarea:hover,
+textarea:active,
+textarea:focus
+{
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+}*/
+
+#ExpressionEditor:focus {
+    outline: none !important;
+    box-shadow: 0 0 10px lightgrey;
+    border-color: lightgrey;
+
+}
+
+#ExpressionEditor {
+/*    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;*/
+}
+
+
+/* resize: none;  remove the resize handle on the bottom right*/
+.form-control[readonly]:focus {
+    box-shadow: none;
+}
+
+.form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject)[readonly]:focus {
+    background-color: var(--ThemeConfigInputReadOnlyBackgroundColor);
+    color: var(--ThemeConfigInputReadOnlyColor);
+}
+
+.form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject)[readonly] {
+    background-color: var(--ThemeConfigInputReadOnlyBackgroundColor);
+    color: var(--ThemeConfigInputReadOnlyColor);
+}
+
+.form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject) {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+    .form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject):focus {
+        background-color: var(--ThemeConfigInputBackgroundColor);
+        color: var(--ThemeConfigInputColor);
+        border-color: var(--ThemeSettingsInputBorderColor);
+    }
+
+.draggable svg {
+    /*    width: 100%;
+    height: 100%;*/
+    position: absolute;
+    /*    top: 0px;
+    left: 0px;*/
+}
+
+.linebox svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+.linebox svg line {
+    pointer-events:auto;
+}
+
+.lineboxhelper svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    pointer-events: none;
+}
+
+.squareobject {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position:absolute;
+    bottom:0px;
+    border-width:1px;
+}
+
+.circleobject {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    bottom: 0px;
+    border-radius: 50%;
+    border-width: 1px;
+}
+
+.trendobject {
+    width: 100%;
+    height: 100%;
+/*    background-color: lightblue;*/
+    position: absolute;
+/*    bottom: 0px;*/
+}
+
+
+.datatableobject {
+    width: 100%;
+    height: 100%;
+    /*    background-color: lightblue;*/
+    position: absolute;
+        bottom: 0px;
+}
+
+.bitmapobject {
+    width: 100%;
+    height: 100%;
+    /*    background-color: lightblue;*/
+    position: absolute;
+    /*    bottom: 0px;*/
+}
+
+.mapobject-mappane .leaflet-attribution-flag {
+    display: none !important;
+}
+
+
+.picker {
+    border-radius: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
+    /* Subtle outline so a swatch matching the panel background (dark-on-dark /
+       light-on-light) stays visible. Derived from the theme FONT color, which is light on
+       dark themes and dark on light themes, so the ring always contrasts with the panel. */
+    border: 1px solid color-mix(in srgb, var(--ThemeFontColor) 40%, transparent);
+    /*box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;*/
+    /*box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;*/
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    float: right;
+    z-index: 1;
+    position: relative;
+}
+
+.picker:hover {
+    transform: scale(1.1);
+    position: relative;
+}
+
+.textmiddle {
+    height: 38px;
+    padding-top: 4px;
+    border: 0px solid black;
+}
+
+/* A hint line under a properties field. Deliberately NOT .textmiddle: that one is 38px tall on
+   purpose so a right-hand label lines up with the box beside it, which means a note long enough to
+   wrap draws straight over the next row's label. This grows with its text instead. */
+.contextnote {
+    padding-top: 2px;
+    padding-bottom: 4px;
+    font-size: 0.85em;
+    line-height: 1.3;
+    opacity: 0.75;
+}
+
+.rowcontext {
+    margin-bottom:0.3rem;
+}
+
+.rowcontextfixed {
+    width: 140px;
+    border: 0px solid blue;
+    padding-top: 5px;
+}
+
+.rowcontextfixedbtn {
+    width: 140px;
+    border: 0px solid purple;
+    padding-top:5px;
+}
+
+.rowcontextfixeddash {
+    width: 5px;
+    border: 0px solid yellow;
+    padding-top: 5px;
+}
+
+.rowcontextfixedcolor {
+    width: 60px;
+    border: 0px solid green;
+}
+
+.rowcontextfixedarrows {
+    width: 10px;
+    border: 0px solid green;
+    padding: 0px;
+    margin-left: -10px;
+}
+
+.rowcontextfixedarrowup {
+    width: 8px;
+    height: 16px;
+    margin-top: 4px;
+    margin-left: 8px;
+    fill: #c7c5c5;
+    border: 0px solid red;
+}
+
+.rowcontextfixedarrowup > svg {
+    margin-top: -15px;
+}
+
+.rowcontextfixedarrowup:hover {
+    fill: var(--ThemeFontColor);
+    cursor:pointer;
+}
+
+.rowcontextfixedarrowdown {
+    height: 16px;
+    width: 8px;
+    margin-top: 1px;
+    margin-left: 8px;
+    fill: #c7c5c5;
+    border: 0px solid red;
+}
+
+    .rowcontextfixedarrowdown > svg {
+        margin-top: -15px;
+    }
+
+.rowcontextfixedarrowdown:hover {
+    fill: var(--ThemeFontColor);
+    cursor: pointer;
+}
+
+
+
+.rowcontextfixedsmallvarbox {
+    width: 22px;
+    border: 0px solid green;
+    padding: 0px;
+}
+
+.rowcontextfixedsmallvarboxdel {
+    width: 22px;
+    border: 0px solid green;
+    padding: 0px;
+    margin-left: 10px;
+}
+
+.col {
+    border: 0px solid pink;
+    padding-right: 5px;
+}
+.smallvar {
+}
+
+.rowcontextfixedsmallvarbox > button {
+    width: 22px;
+    padding-left: 5px;
+}
+
+.rowcontextfixedsmallvarboxdel > button {
+    width: 22px;
+    padding-left:7px;
+}
+
+/*
+.smallvarboxsymbol {
+    float: left;
+    margin-left: 4px;
+}
+*/
+
+
+
+.testxx {
+    margin-bottom: 2rem;
+}
+
+
+#EditPageReplacerDelete:hover {
+    cursor: pointer;
+}
+
+.LeftMenuBox {
+    position: fixed;
+    overflow: hidden;
+    top: 0px;
+    width: 0px;
+    height: 100%;
+    border: 0px solid black;
+    background-color: none;
+    z-index: 999;
+    left: 0px;
+}
+
+.LeftMenuBoxDragLine {
+    position: fixed;
+    overflow: hidden;
+    top: 0px;
+    width: 5px;
+    height: 100%;
+    border: 0px solid green;
+    background-color: none;
+    z-index: 999;
+    left: 0px;
+    cursor: col-resize;
+    display:none;
+}
+
+
+#LeftMenu {
+    position: fixed;
+    left: -100%;
+    /* The closed position is left:-100%, which is one VIEWPORT width, not one menu width.
+       Without this cap a menu wider than the screen keeps sticking into view when collapsed. */
+    max-width: 100%;
+    /*    margin-top: 0.5%;*/
+    /*height: 98%;*/
+    height: 100%;
+    top: 0%;
+    /*background: var(--ThemeBackgroundFancy); #F0F1F3*/
+    background: var(--ThemeBackground);
+    /*   background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(0,141,154,0.89) 100%);*/
+    /*background-color: #F0F1F3;*/
+    /*    box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
+    border-radius: 20px;*/
+    /*    margin-left: 15px;*/
+    /*padding: 20px;*/
+    /*border-right: 1px solid var(--ThemeBorderColor);*/
+    /*border-right: 1px solid darkgrey;*/
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 29px 7px 0px;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    /*    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;*/
+}
+
+.ProjectHeader, .ConfigurationHeader, .ServerHeader {
+    position: relative;
+    left: -10px;
+    opacity: 0;
+    -webkit-transition: all 0.02s ease;
+    -moz-transition: all 0.02s ease;
+    -ms-transition: all 0.02s ease;
+    -o-transition: all 0.02s ease;
+    transition: all 0.02s ease;
+}
+
+.ProjectHeader.active, .ConfigurationHeader.active, .ServerHeader.active {
+    opacity: 1;
+    left: 0;
+}
+
+.EnvisionLeftMenuIcons {
+    width: 25px;
+    height: 20px;
+    float: right;
+    margin-left: 10px;
+    margin-top: 10px;
+    border: 0px solid black;
+    padding: 0px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.EnvisionLeftMenuIcons svg path {
+    fill: var(--ThemeIconColor);
+}
+
+.EnvisionLeftMenuIcons:hover {
+    cursor:pointer
+}
+
+    .EnvisionLeftMenuIcons:hover svg path {
+        fill: var(--ThemeIconColorHover);
+    }
+
+.TheGridOpen {
+
+}
+
+
+.TheGridOpen svg path{
+    fill: var(--ThemeIconColor);
+}
+
+.TheGridOpen:hover {
+    cursor: pointer
+}
+
+.TheGridOpen:hover svg path {
+    fill: var(--ThemeIconColorHover);
+}
+
+/* ~ ~ ~ Grid settings dialog: centered overlay with Legend (left) + options (right) ~ ~ ~ */
+.gridsettings-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    z-index: 3000;
+    /* display toggled to flex by OpenTheGridSettings() */
+    align-items: center;
+    justify-content: center;
+}
+
+.gridsettings-dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 92vw;
+    max-height: 88vh;
+    padding: 24px 26px;
+    background: var(--ThemeBackground);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 16px;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 12px 40px, rgba(0, 0, 0, 0.15) 0px 4px 12px;
+    overflow: hidden;
+}
+
+.gridsettings-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--ThemeFontColor);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.gridsettings-close:hover {
+    color: var(--ThemeIconColor);
+}
+
+.gridsettings-dialog-body {
+    display: flex;
+    align-items: stretch;
+    gap: 26px;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.gridsettings-panel {
+    flex: 0 0 auto;
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 26px;
+    border-left: 1px solid var(--ThemeBorderColor);
+}
+
+.gridsettings-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ThemeFontColor);
+}
+
+.gridsettings-panel-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--ThemeIconColor);
+    flex: 0 0 auto;
+}
+
+.gridsettings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.gridsettings-row-label {
+    font-size: 14px;
+    color: var(--ThemeFontColor);
+}
+
+/* grid-size button: compact square showing the current size */
+.gridsettings-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--ThemeFontColor);
+    cursor: pointer;
+    transition: border-color linear .15s;
+}
+
+.gridsettings-btn:hover {
+    border-color: var(--ThemeIconColorHover);
+}
+
+.gridsettings-btn-text {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+/* the global .dropdown rule paints a white box + black text; neutralise it inside the dialog */
+#TheGridSettings .dropdown {
+    background-color: transparent;
+    color: var(--ThemeFontColor);
+    border-color: transparent;
+}
+
+/* theme-aware dropdown menu (Bootstrap default renders a white box — wrong in dark themes).
+   Override both the direct properties and Bootstrap 5.3's --bs-dropdown-* variables. */
+#TheGridSettings .dropdown-menu {
+    --bs-dropdown-bg: var(--ThemeBackground);
+    --bs-dropdown-border-color: var(--ThemeBorderColor);
+    --bs-dropdown-link-color: var(--ThemeFontColor);
+    --bs-dropdown-link-hover-color: var(--ThemeIconColor);
+    --bs-dropdown-link-hover-bg: rgba(128, 128, 128, 0.14);
+    --bs-dropdown-link-active-color: var(--ThemeIconColor);
+    --bs-dropdown-link-active-bg: rgba(128, 128, 128, 0.14);
+    min-width: 46px;
+    padding: 4px;
+    background: var(--ThemeBackground);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 20px, rgba(0, 0, 0, 0.08) 0px 2px 6px;
+}
+
+#TheGridSettings .dropdown-item {
+    padding: 5px 12px;
+    border-radius: 5px;
+    color: var(--ThemeFontColor);
+    background: transparent;
+}
+
+#TheGridSettings .dropdown-item:hover,
+#TheGridSettings .dropdown-item:focus {
+    background: rgba(128, 128, 128, 0.14);
+    color: var(--ThemeIconColor);
+}
+
+/* keep the color swatch aligned with the size selector */
+#TheGridSettings .picker {
+    float: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+#TheGridSize {
+    right: 5px;
+    bottom: 75px;
+    position: absolute;
+    border: 0px solid black;
+    display: none;
+}
+
+.menuicon {
+    fill: var(--ThemeIconColor);
+    
+}
+
+    .menuicon:hover {
+        fill: var(--ThemeIconColorHover);
+        cursor: pointer;
+    }
+
+.menuiconnoclick {
+    fill: var(--ThemeIconColor);
+}
+
+.infoiconmenu svg{
+    fill: var(--ThemeIconColor);
+}
+
+.infoiconmenu:hover svg {
+    fill: var(--ThemeIconColorHover);
+    cursor: pointer;
+}
+
+
+
+.EnvisionLeftMenuCenterBlock {
+    width: 130px;
+    height: 130px;
+    border: 0px solid black;
+    float: left;
+    padding: 20px;
+}
+
+
+.EnvisionLeftMenuCenterHomeBlock {
+    width: 120px;
+    height: 100px;
+    border: 1px solid var(--ThemeBorderColor);
+    float: left;
+    padding-top: 10px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-top: 35px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    background-color: var(--ThemeElements);
+    color: var(--ThemeFontColor);
+    font-size: 15px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Groups the object library into sections. Deliberately a <div> and not an <hr>: Bootstrap styles
+   hr with background-color: currentColor, which would paint the whole spacer below as a solid bar.
+   The tiles are floated, so the element has to clear the float to start a new row instead of
+   sitting next to the last tile. The gap above the line is padding, not margin: clearance is
+   measured from the top margin edge, so a margin-top is absorbed by the clearance and never shows.
+   The line itself is the bottom border of the spacer. */
+.MenuLibrarySeparator {
+    clear: both;
+    width: calc(100% - 20px);
+    height: 0;
+    padding-top: 24px;
+    margin: 0 0 4px 10px;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+    .EnvisionLeftMenuCenterHomeBlock:hover {
+        color: var(--ThemeBorderColorHover);
+        border: 1px solid var(--ThemeFontColorHover);
+        cursor: pointer;
+    }
+
+.EnvisionLeftMenuCenterHomeBlockDirectory {
+    width: 120px;
+    height: 100px;
+    border: 1px solid var(--ThemeBorderColor);
+    float: left;
+    padding-top: 10px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-top: 35px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    background-color: var(--ThemeElements);
+    color: var(--ThemeIconColor);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    /*    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;*/
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;*/
+}
+
+    .EnvisionLeftMenuCenterHomeBlockDirectory:hover {
+        color: var(--ThemeElements);
+        background-color: var(--ThemeElementsHover);
+        border: 1px solid var(--ThemeBorderColorHover);
+        cursor: pointer;
+    }
+
+.Logo {
+    color: var(--ThemeFontColor);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.Logo:hover {
+    color: var(--ThemeFontColor);
+}
+
+.EnvisionLeftMenuCenterHomeWide {
+    /*width: 380px;*/
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    /*float: left;*/
+    padding-top: 10px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 5px;
+    padding-top: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0px;
+    /*background-color: var(--ThemeElements);*/
+    color: var(--ThemeFontColor);
+    font-size: 15px;
+}
+
+    .EnvisionLeftMenuCenterHomeWide:hover {
+        color: var(--ThemeFontColorHover);
+        border-bottom: 1px solid var(--ThemeFontColorHover);
+        cursor: pointer;
+        fill: var(--ThemeFontColorHover);
+    }
+
+.EnvisionLeftMenuCenterHomeWideLeftText {
+    float: left;
+    margin-left:40px;
+    /*font-weight:bold;*/
+}
+
+.EnvisionLeftMenuCenterHomeWideRightIcon {
+    float: left;
+    border: 0px solid red;
+    width: 20px;
+    height: 1px;
+    margin-top: -2px;
+}
+
+.EnvisionLeftMenuCenterHomeBlockNameText {
+    position: absolute;
+    border: 0px solid black;
+    text-align: center;
+    /*padding-top: 70px;*/
+    padding-top: 40px;
+    padding-right: 0px;
+    width: 120px;
+    height: 100px;
+    word-break: break-all;
+    font-size: 15px;
+}
+
+.ReturnButton {
+    border: 0px solid red;
+    background-color: #7198C8;
+    color: white;
+}
+
+    .ReturnButton:hover {
+        border: 0px solid red;
+        background-color: lightgrey;
+        color: black;
+    }
+
+.EnvisionLeftMenuCenterHomeBlockGraphics {
+    zoom: 0.1;
+    -moz-transform: scale(0.1);
+    position: absolute;
+    z-index: -1;
+}
+
+
+.EnvisionLeftMenuBottomBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    flex: 1 1 0;
+    height: 52px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--ThemeFontColor);
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.15s ease, border-color 0.15s ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+.EnvisionLeftMenuBottomBlock:not(.active):hover {
+    opacity: 0.5;
+}
+.EnvisionLeftMenuBottomBlock svg {
+    fill: var(--ThemeIconColor);
+}
+.EnvisionLeftMenuBottomBlock.active {
+    border-bottom-color: var(--ThemeIconColor);
+}
+
+#Legend {
+    display: flex;
+    flex-direction: column;
+    width: 540px;
+    max-width: 60vw;
+    min-width: 0;
+    max-height: 78vh;
+    overflow-y: auto;
+    padding-right: 6px;
+    font-size: 13px;
+    color: var(--ThemeFontColor);
+    text-align: left;
+}
+
+#Legend .legend-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+#Legend .legend-header-icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--ThemeIconColor);
+    flex: 0 0 auto;
+}
+
+#Legend .legend-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ThemeFontColor);
+}
+
+#Legend .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px 22px;
+}
+
+#Legend .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+}
+
+#Legend .legend-keys {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+#Legend .legend-desc {
+    color: var(--ThemeFontColor);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#Legend kbd {
+    display: inline-block;
+    min-width: 21px;
+    padding: 4px 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+    color: var(--ThemeFontColor);
+    background: rgba(128, 128, 128, 0.12);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 5px;
+    box-shadow: none;
+}
+
+#EnvisionLeftMenuHeader {
+    z-index: 1;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    top: 0px;
+    border: 0px solid red;
+    padding-right: 20px;
+    position: absolute;
+    /*    
+    padding:8px;*/
+}
+
+#EnvisionLeftMenuTop {
+    z-index: 1;
+    right: 5px;
+    width: 280px;
+    height: 34px;
+    top: 17px;
+    border: 0px solid red;
+    position: absolute;
+}
+
+.EnvisionLeftMenuCenter {
+    z-index: 1;
+    width: 100%;
+    height: calc(100% - 160px);
+    border: 0px solid blue;
+    top: 60px;
+    position: absolute;
+    overflow: scroll;
+    overflow-x: hidden;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.EnvisionLeftMenuCenter::-webkit-scrollbar {
+    width: 6px; /* width of the entire scrollbar */
+}
+
+.EnvisionLeftMenuCenter::-webkit-scrollbar-track {
+    background: var(--ThemeBackground);
+}
+
+.EnvisionLeftMenuCenter::-webkit-scrollbar-thumb {
+    background-color: deepskyblue; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: 0px solid orange; /* creates padding around scroll thumb */
+}
+
+#EnvisionLeftMenuBottom {
+    z-index: 1;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    bottom: 0px;
+    border: 0px solid red;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+}
+
+.LibraryStandardIcons {
+    width: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    fill: var(--ThemeIconColor);
+    stroke: var(--ThemeIconColor);
+}
+
+.LibraryStandardIconsAdvanced {
+    width: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    fill: var(--ThemeIconColor);
+    stroke: var(--ThemeIconColor);
+ /*   filter: brightness(150%);*/
+}
+
+.HomeNav {
+    text-decoration: none;
+    color: black;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.dropdown {
+    color:black;
+    background-color:white;
+    border-color:lightgrey;
+    text-align:left;
+}
+
+.ActiveSelected {
+    border-width: 2px;
+    /*border-color: red;*/
+    border-color: deepskyblue;
+    border-style: dashed;
+    margin-top: -2px;
+    margin-left: -2px;
+    box-sizing: content-box;
+}
+
+    .ActiveSelected[name="GroupObject"] {
+        border-width: 2px;
+        /*border-color: red;*/
+        border-color: lightcoral;
+        border-style: dashed;
+        margin-top: -2px;
+        margin-left: -2px;
+        box-sizing: content-box;
+    }
+    .ActiveSelected iframe {
+        pointer-events: none;
+    }
+
+    .ActiveSelected[name="WidgetObject"] div[name="Widget"] {
+        pointer-events: none;
+    }
+
+    .ActiveSelected[name="PolylineObject"] {
+        border-width: 2px;
+        /*border-color: red;*/
+        border-color: transparent;
+        border-style: dashed;
+        margin-top: -2px;
+        margin-left: -2px;
+        box-sizing: content-box;
+    }
+
+        .ActiveSelected[name="PolylineObject"] .poly-hit {
+            stroke: rgba(0, 191, 255, 0.2);
+        }
+
+.MenuTexts {
+    color: var(--ThemeFontColor);
+    font-size: 15px;
+}
+
+.MenuTexts:focus {
+    color: var(--ThemeFontColor);
+}
+
+.popup {
+    border-width: 0px !important;
+    border-color: darkgrey;
+    border-style: solid;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+}
+
+.GroupLine {
+    border-width: 2px;
+    border-color: green;
+    border-style: dashed;
+    position: absolute;
+    margin-top: -2px;
+    margin-left: -2px;
+    z-index: 999;
+}
+
+.popupGroupLine {
+    border-width: 0px !important;
+}
+
+
+.blink1s {
+    animation: blinker 2s linear infinite;
+}
+
+.blink1soffset {
+    opacity: 0;
+    animation: blinker 2s linear infinite;
+    animation-delay: 1s;
+}
+
+.blink05s {
+    animation: blinker 1s linear infinite;
+}
+
+.blink05soffset {
+    opacity: 0;
+    animation: blinker 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.blink2s {
+    animation: blinker 4s linear infinite;
+}
+
+.blink2soffset {
+    opacity: 0;
+    animation: blinker 4s linear infinite;
+    animation-delay: 2s;
+}
+
+.borderblink1s {
+    animation: borderblinker 2s linear infinite;
+}
+
+.borderblink1soffset {
+    animation: borderblinker 2s linear infinite;
+    animation-delay: 1s;
+}
+
+.borderblink05s {
+    animation: borderblinker 1s linear infinite;
+}
+
+.borderblink05soffset {
+    animation: borderblinker 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.borderblink2s {
+    animation: borderblinker 4s linear infinite;
+}
+
+.borderblink2soffset {
+    animation: borderblinker 4s linear infinite;
+    animation-delay: 2s;
+}
+
+
+
+.strokeblink1s {
+    animation: strokeblinker 2s linear infinite;
+}
+
+.strokeblink1soffset {
+    animation: strokeblinker 2s linear infinite;
+    animation-delay: 1s;
+}
+
+.strokeblink05s {
+    animation: strokeblinker 1s linear infinite;
+}
+
+.strokeblink05soffset {
+    animation: strokeblinker 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.strokeblink2s {
+    animation: strokeblinker 4s linear infinite;
+}
+
+.strokeblink2soffset {
+    animation: strokeblinker 4s linear infinite;
+    animation-delay: 2s;
+}
+
+/* A polyline arrowhead is marker content with its OWN explicit fill, so the stroke-opacity
+   animation above does not reach it and a blinking line would keep a solid head. These mirror the
+   strokeblink timings exactly, on fill-opacity/stroke-opacity, so the head blinks with its line. */
+.strokeblink1s .poly-arrowhead {
+    animation: headblinker 2s linear infinite;
+}
+
+.strokeblink1soffset .poly-arrowhead {
+    animation: headblinker 2s linear infinite;
+    animation-delay: 1s;
+}
+
+.strokeblink05s .poly-arrowhead {
+    animation: headblinker 1s linear infinite;
+}
+
+.strokeblink05soffset .poly-arrowhead {
+    animation: headblinker 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.strokeblink2s .poly-arrowhead {
+    animation: headblinker 4s linear infinite;
+}
+
+.strokeblink2soffset .poly-arrowhead {
+    animation: headblinker 4s linear infinite;
+    animation-delay: 2s;
+}
+
+@keyframes headblinker {
+    0% {
+        fill-opacity: 1;
+        stroke-opacity: 1;
+    }
+
+    49% {
+        fill-opacity: 1;
+        stroke-opacity: 1;
+    }
+
+    50% {
+        fill-opacity: 0;
+        stroke-opacity: 0;
+    }
+
+    100% {
+        fill-opacity: 0;
+        stroke-opacity: 0;
+    }
+}
+
+@keyframes blinker {
+/*    50% {
+        opacity: 0;
+    }*/
+
+    0% {
+        opacity: 1;
+    }
+
+    49% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes borderblinker {
+    /*    50% {
+        opacity: 0;
+    }*/
+
+    0% {
+        border-style: solid;
+    }
+
+    49% {
+        border-style: solid;
+    }
+
+    50% {
+        border-style: none;
+    }
+
+    100% {
+        border-style: none;
+    }
+}
+
+@keyframes strokeblinker {
+    /*    50% {
+        opacity: 0;
+    }*/
+
+    0% {
+        stroke-opacity:1;
+    }
+
+    49% {
+        stroke-opacity:1;
+    }
+
+    50% {
+        stroke-opacity: 0;
+    }
+
+    100% {
+        stroke-opacity: 0;
+    }
+}
+
+.BlinkAlarms1s {
+    animation: blinkeralarms 2s linear infinite;
+    /*color: lightcoral !important;*/
+}
+
+@keyframes blinkeralarms {
+    50% {
+        /*opacity: 0;*/
+        color: lightgray;
+        /*background-color: green;*/
+    }
+}
+
+/*<div class="loader" > </div >*/
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+#PageLoaderContainer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    border: 0px solid red;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+}
+
+.pageloaderbackground {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color:white;
+    opacity:0.4;
+    filter: brightness(40%);
+}
+
+.pageloadertext {
+    z-index: 2;
+    font-size: 25px;
+    position: absolute;
+    transform: translateX(-45.2%);
+    left: 45.2%;
+    transform: translateY(-55%);
+    top: 55%;
+    
+}
+
+.pageloaderrefresh {
+    z-index: 2;
+    font-size: 12px;
+    position: absolute;
+    transform: translateX(-45.2%);
+    left: 45.2%;
+    transform: translateY(-95%);
+    top: 95%;
+    border-radius: 5px;
+    background-color: lightgrey;
+    text-align: center;
+    padding-top: 15px;
+    height: 50px;
+    width: 150px;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    animation: 10s ease 0s normal forwards 1 delaypageloaderrefresh;
+}
+
+@keyframes delaypageloaderrefresh {
+
+    70% {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.pageloader {
+    z-index: 2;
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #137A81; /* EnvisionColor */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translateX(-47%);
+    left: 47%;
+    transform: translateY(-45%);
+    top: 45%;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.mousepos { 
+    background: lightgrey;
+    z-index: 999;
+    position: absolute;
+    font-size: 0.8rem;
+    background-color: rgba(102, 102, 102, 0.3);
+    color: white;
+    width: 80px;
+}
+
+.draggable img {
+    height: 100%;
+    width: 100%;
+    border: 0px solid red;
+    pointer-events: none;
+}
+
+/* Secondary picker at the end of a decorator row. The left button keeps its usual meaning
+   everywhere (it is the field label and opens the variable picker); this one picks a configured
+   item for that field - a report, on the Document Viewer. Narrow on purpose, so the value box keeps
+   most of the row. */
+.rowcontextselectbtn {
+    width: 74px;
+    border: 0px solid purple;
+    padding-top: 5px;
+    padding-left: 0px;
+}
+
+.contextbuttonselect {
+    width: 70px;
+    /* Same height as the value box beside it. Bootstrap's .form-control is
+       line-height 1.5 + .375rem padding top and bottom + 1px border each side; the button's own
+       font-size is smaller, so the height is stated in rem rather than em to stay in step. */
+    height: calc(1.5rem + 0.75rem + 2px);
+    padding: 0px;
+    line-height: 1;
+    /* -5px, not the -4px the label button uses: the column adds 5px of padding-top, so -4px would
+       leave this button 1px below the value box it sits against. */
+    margin-top: -5px;
+    margin-left: 0px;
+    font-size: 13px;
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+    .contextbuttonselect:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+.contextbutton {
+    width: 120px;
+    margin-top: -4px;
+    margin-left: 0px;
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+}
+    .contextbutton:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+
+.EditInstanceSymbolReplacersNameBox {
+    margin-bottom: 5px;
+    float: left;
+
+    width:300px;
+}
+
+/* Replacers owned by a bound UDT instance: badged and disabled, because their value comes from the
+   instance's parameters and the definition's replacer mapping. Editing one here would be reverted
+   by the next push, so the dialog does not offer it - "Update from UDT" refreshes them instead.
+   --ThemeFontColor2 is the border colour used here on purpose: --ThemeBorderColor has no contrast
+   against the element background in the dark themes (see the checkbox contrast note). */
+.udt-owned-badge {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 28px;
+    line-height: 18px;
+    padding: 4px 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--ThemeFontColor2);
+    border-radius: 4px;
+    color: var(--ThemeFontColor2);
+}
+
+/* A disabled input keeps Bootstrap's default grey; tie it to the theme so it reads as
+   "owned elsewhere" rather than as a broken field. */
+.udt-owned-input:disabled {
+    background-color: var(--ThemeElements);
+    color: var(--ThemeFontColor2);
+    cursor: not-allowed;
+}
+
+.modal-content {
+    background-color: var(--ThemeBackground);
+}
+
+.modal-header {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+    width: 100%;
+    padding-bottom:10px;
+}
+
+
+.modal-body {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    max-height: calc(100vh - 190px);
+    overflow:scroll;
+}
+
+.modal-body textarea {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+    .modal-body textarea:focus {
+        background-color: var(--ThemeConfigInputBackgroundColor);
+        color: var(--ThemeConfigInputColor);
+        border-color: var(--ThemeSettingsInputBorderColor);
+    }
+
+.modal-footer {
+    border-top: 1px solid lightgrey;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+}
+
+#PageHistoryModal .btn-secondary {
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+    #PageHistoryModal .btn-secondary:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+#PageHistoryModal .table {
+    color: var(--ThemeFontColor);
+    --bs-table-color: var(--ThemeFontColor);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--ThemeBorderColor);
+    --bs-table-hover-bg: var(--ThemeFormLineColorHover);
+    --bs-table-hover-color: var(--ThemeFontColor);
+}
+
+#PageHistoryModal .table thead th {
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+#PageHistoryModal .table tbody td {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+/* The rules above theme the CELLS; .table-bordered also borders every ROW, and that border kept
+   Bootstrap's near-white #dee2e6, drawing bright grid lines on the dark themes. The
+   --bs-table-border-color set on .table above does not drive it in the bundled Bootstrap build,
+   so set the colour outright. This table is a plain Bootstrap table (not a .bootstrap-table), so
+   it needs its own rule; the Cross Reference and Purge grids get the equivalent from
+   CrossReference.css. */
+#PageHistoryModal .table > :not(caption) > * {
+    border-color: var(--ThemeBorderColor);
+}
+
+/*.modal-body input[type="text"], h4 {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    
+}*/
+
+h4 {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    font-size: 1.4rem;
+}
+
+#InstancesModal .table {
+    color: var(--ThemeFontColor);
+    --bs-table-color: var(--ThemeFontColor);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--ThemeBorderColor);
+    --bs-table-hover-bg: var(--ThemeFormLineColorHover);
+    --bs-table-hover-color: var(--ThemeFontColor);
+}
+
+#InstancesModal .table thead th {
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+#InstancesModal .table tbody td {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+    /* Same 9px as the matrix view and the replacer dialogs, so switching between the two Push
+       views does not change the row rhythm. Bootstrap's own .table default is 0.5rem. */
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+/* Push to Instances dialog: master context, replacer pivot and instance value grid */
+
+.pushmasterinfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    background-color: var(--ThemeBackground2);
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+}
+
+.pushmasterinfolabel {
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+}
+
+.pushmasterinfovalue {
+    font-size: 13px;
+    color: var(--ThemeFontColor);
+    word-break: break-all;
+}
+
+/* The view switch, pinned to the right of the master info strip. margin-left:auto pushes it past
+   the info blocks; align-self keeps it centred against their two-line height instead of stretching
+   to fill the strip. */
+.pushviewswitch {
+    margin-left: auto;
+    align-self: center;
+    white-space: nowrap;
+    color: white;
+    font-size: 12px;
+    padding: 4px 9px;
+}
+
+.pushwarning {
+    background-color: var(--ThemeBackground2);
+    border-left: 3px solid orange;
+    color: var(--ThemeFontColor);
+    font-size: 12px;
+    padding: 7px 10px;
+    margin-bottom: 10px;
+}
+
+.pushtoolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pushtoolbarcheck {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--ThemeFontColor);
+    white-space: nowrap;
+    cursor: pointer;
+    margin: 0;
+}
+
+.pushtoolbarbtn {
+    white-space: nowrap;
+    color: white;
+    font-size: 12px;
+    padding: 4px 9px;
+}
+
+.pushimportstatus {
+    background-color: var(--ThemeBackground2);
+    border-left: 3px solid green;
+    color: var(--ThemeFontColor);
+    font-size: 12px;
+    padding: 7px 10px;
+    margin-bottom: 10px;
+}
+
+.pushpivot {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.pushreplacerpanel {
+    width: 220px;
+    flex-shrink: 0;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pushvaluepanel {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pushpanelheader {
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor2);
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    font-size: 11px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pushvalueheaderdefault {
+    color: var(--ThemePlaceholderFontColor);
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pushreplacerscroll {
+    overflow-y: auto;
+    max-height: 42vh;
+    flex: 1;
+}
+
+.pushinstancescroll {
+    overflow-y: auto;
+    max-height: 42vh;
+    flex: 1;
+}
+
+/* Push to Instances is a bulk editing surface, not a confirm box: a replacer/value pivot over
+   every instance of a master. Give it a fixed share of the viewport rather than Bootstrap's
+   modal-xl so the instance list has room. Scoped to the dialog: the .push* classes are only
+   used here today, but the sizing is a property of this modal, not of the panels. */
+#InstancesModal .modal-dialog {
+    max-width: 70vw;
+}
+
+/* The height belongs on the content, not the dialog: modal-dialog-centered gives the dialog a
+   min-height of the whole viewport so it can center its content, and that min-height beats a
+   height set here (which is why the dialog measured 94vh instead of 80vh). Sizing the content
+   keeps Bootstrap's centering intact. */
+#InstancesModal .modal-content {
+    height: 80vh;
+}
+
+#InstancesModal .modal-body {
+    flex: 1;
+    /* min-height:0 lets the pivot shrink inside the flex column; without it the body grows to
+       fit the table and pushes the footer (Update Instances / Cancel) out of the dialog. */
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#InstancesModal .pushpivot {
+    flex: 1;
+    min-height: 0;
+}
+
+/* The 42vh caps sized these panes for the old auto-height dialog; inside a fixed-height one they
+   would strand most of it empty. Both panels are already flex columns owning their overflow. */
+#InstancesModal .pushreplacerscroll,
+#InstancesModal .pushinstancescroll {
+    max-height: none;
+}
+
+/* These checkboxes are the control that arms a row for the push, but unchecked they read as
+   disabled, so make the box unmistakably present in every theme.
+   Bootstrap draws .form-check-input itself (appearance:none) and its edge is the only thing
+   marking an unchecked box, yet each theme lands somewhere illegible: light gives a
+   25%-opacity hairline that Chrome snaps to a single device pixel on a scaled display, while
+   the dark themes paint --ThemeBorderColor ON --ThemeElements - #3d3d3d on #454545, and
+   #2A3F55 on #263850 - an edge darker than the fill it is supposed to outline.
+   --ThemeFontColor2 is the one border colour with contrast in all four themes (#545454 light,
+   #bfbfbf dark, #A0B8CC blue-dark). Deliberately NOT --ThemeBorderColor, which the .udt-members
+   precedent uses: on this modal it is LIGHTER than the Bootstrap default it would replace.
+   The !important is required, not decorative: `.theme-dark .form-check-input` sets border-color
+   !important, so a normal declaration here is silently dead in every dark theme. It overrides
+   only the border - the themed fill still comes from that rule.
+   Unchecked only: checked already reads clearly (accent fill + tick), and this selector outranks
+   `.form-check-input:checked`, so an unqualified rule would grey out that state's accent border. */
+#InstancesModal .form-check-input:not(:checked) {
+    border: 1px solid var(--ThemeFontColor2) !important;
+}
+
+#InstancesModal .form-check-input:not(:checked):hover {
+    border-color: var(--ThemeIconColor) !important;
+}
+
+.pushreplaceritem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    border-left: 3px solid transparent;
+    cursor: pointer;
+}
+
+.pushreplaceritem:hover {
+    background-color: var(--ThemeFormLineColorHover);
+}
+
+.pushreplaceritemactive {
+    background-color: var(--ThemeFormLineColorHover);
+    border-left: 3px solid var(--ThemeIconColor);
+    color: var(--ThemeFontColor);
+}
+
+.pushreplaceritemname {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pushbadgenew {
+    color: orange;
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+.pushbadgeempty {
+    color: orange;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.pushbadgedone {
+    color: green;
+    font-size: 12px;
+}
+
+.pushfillrow {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 8px;
+    background-color: var(--ThemeBackground2);
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+.pushfillbtn {
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    white-space: nowrap;
+}
+
+/* The value cell used to be tightened to 4px to keep rows compact around a 24px input. With the
+   taller 34px input that left it shorter than its neighbours, so it follows the same 9px as every
+   other replacer row. */
+#InstancesModal .table tbody td.pushvaluecell {
+    padding: 9px 4px;
+}
+
+/* padding-y 7px, matching the Instance/Master replacer rows: same 12px text, same 34px field, so a
+   value input is the same object on every replacer surface. Used only by the two Push views
+   (_AjaxMethods.cshtml); the inherited/disabled/UDT variants add no padding of their own, so this
+   is the single lever for all of them. */
+.pushvalueinput {
+    width: 100%;
+    font-size: 12px;
+    padding: 7px 5px;
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border: 1px solid var(--ThemeSettingsInputBorderColor);
+    border-radius: 3px;
+}
+
+.pushvalueinputinherited {
+    border: 1px dashed var(--ThemePlaceholderFontColor);
+    font-style: italic;
+}
+
+.pushvalueinput:disabled {
+    opacity: 0.5;
+}
+
+.pushinstancesubtitle {
+    font-size: 10px;
+    color: var(--ThemeFontColor2);
+}
+
+/* UDT binding in the Push to Instances dialog.
+   The pill names the UDT instance a symbol is bound to. The inert variant marks a binding that is
+   stored but skipped by every UDT push (the instance is gone, or its definition does not bind this
+   master) - otherwise invisible, and this dialog lists every instance of a master side by side.
+   --ThemeFontColor2 is used for the border because --ThemeBorderColor has no contrast against the
+   element background in the dark themes. */
+.pushudtpill {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 6px;
+    border: 1px solid var(--ThemeFontColor2);
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 16px;
+    color: var(--ThemeFontColor2);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.pushudtpillinert {
+    border-color: var(--ThemeAlarmColor, #c0392b);
+    color: var(--ThemeAlarmColor, #c0392b);
+}
+
+/* A symbol nested inside another one, named after the symbol that owns it. Deliberately quieter
+   than the UDT pill (no border, no capsule): it is not a state to act on, it is the answer to
+   "why do several rows here carry the same name". Filled rather than outlined so it still reads
+   next to a UDT pill on the same row. */
+.pushnestedpill {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background-color: var(--ThemeElements);
+    font-size: 10px;
+    line-height: 16px;
+    color: var(--ThemeFontColor2);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* A replacer owned by the row's UDT instance: disabled, because the value comes from that instance
+   and any edit here would be reverted by the next UDT push. Distinguished from the ordinary
+   disabled state (unselected row), which only dims. */
+.pushvalueinpututd:disabled {
+    opacity: 1;
+    border: 1px solid var(--ThemeFontColor2);
+    background-color: var(--ThemeElements);
+    color: var(--ThemeFontColor2);
+    cursor: not-allowed;
+}
+
+/* Unselected rows are dimmed by fading their CONTENTS, never the row itself.
+   `opacity` on the <tr> fades everything the row paints - borders included - so an unselected row
+   drew pale grid lines while a selected one drew full-strength ones, which read as "selecting a
+   row changes its border colour". The declared colour was always the same var(--ThemeBorderColor)
+   as the header; only the alpha differed. Dimming the cell children leaves every border and
+   background at full strength, so all grid lines match the header in both states.
+   Shared by both push renderers (the pivot's rows and the grid's), deliberately - they should dim
+   identically. */
+.pushrowunselected > td > * {
+    opacity: 0.55;
+}
+
+.pushhint {
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    margin-top: 7px;
+}
+
+.pushhintmarker {
+    border: 1px dashed var(--ThemePlaceholderFontColor);
+    border-radius: 2px;
+    padding: 0 4px;
+    font-style: italic;
+}
+
+.pushfootersummary {
+    margin-right: auto;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+}
+
+.pushemptystate {
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+    padding: 10px 8px;
+}
+
+#MapChildrenModal .table {
+    color: var(--ThemeFontColor);
+    --bs-table-color: var(--ThemeFontColor);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--ThemeBorderColor);
+    --bs-table-hover-bg: var(--ThemeFormLineColorHover);
+    --bs-table-hover-color: var(--ThemeFontColor);
+}
+
+#MapChildrenModal .table thead th {
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+#MapChildrenModal .table tbody td {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+#MapChildrenModal .map-children-hint {
+    color: var(--ThemeFontColor2);
+}
+
+#MapChildrenModal .modal-header {
+    border-bottom-color: var(--ThemeBorderColor);
+}
+
+/* Same control box as the UDT member drawer (.udt-members tr.uam-member-detail input):
+   20px line-box + 2x5px padding + 2x1px border = 32px. Keep these numbers in step with
+   UdtManager.css so the two editors read as one product. */
+#MapChildrenModal table input.configinput {
+    padding: 5px;
+    line-height: 20px;
+    font-size: 12px;
+    min-height: 32px;
+    margin-bottom: 0;
+}
+
+/* The variable picker beside the position variable field: same height as the input it sits
+   next to, styled like the UDT editor's [...] picker button. */
+#MapChildrenModal .map-varpick-btn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0 7px;
+    color: var(--ThemeFontColor);
+    background: var(--ThemeElements);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+}
+
+#MapChildrenModal .map-varpick-btn:hover {
+    border-color: var(--ThemeBorderColorHover);
+    color: var(--ThemeIconColor);
+}
+
+#MapChildrenModal .modal-header .btn-close {
+    filter: var(--ThemeCloseButtonFilter, none);
+    opacity: 0.75;
+}
+
+#MapChildrenModal .modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+#MapChildrenModal .modal-body .d-flex .btn,
+#MapChildrenModal .table .btn {
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+#MapChildrenModal .modal-body .d-flex .btn:hover,
+#MapChildrenModal .table .btn:hover {
+    background-color: var(--ThemeButtonBackgroundColorHover);
+    color: var(--ThemeButtonColorHover);
+    border-color: var(--ThemeBorderColorHover);
+}
+
+#MapChildrenModal .modal-footer {
+    border-top-color: var(--ThemeBorderColor);
+}
+
+.configinput {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    margin-bottom: 5px;
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+.configinput .dropdown-item {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+/* System Functions dropdown: reserve space for bold on hover to prevent layout shift */
+.system-functions-menu .dropdown-item {
+    position: relative;
+}
+.system-functions-menu .dropdown-item::after {
+    content: attr(data-text);
+    font-weight: bold;
+    visibility: hidden;
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+}
+.system-functions-menu .dropdown-item .system-function-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+}
+.system-functions-menu .dropdown-item:hover .system-function-label,
+.system-functions-menu .dropdown-item:focus .system-function-label {
+    font-weight: bold;
+}
+
+.configlabel {
+    background-color: transparent;
+    color: var(--ThemeFontColor);
+    height: 42.4px;
+    border: 0px solid black;
+    display: block;
+    padding-right: 25px;
+    padding-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.configreadonly {
+    background-color: var(--ThemeConfigInputReadOnlyBackgroundColor) !important;
+    color: var(--ThemeConfigInputReadOnlyColor) !important;
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+textarea.configinput:focus {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
+}
+
+textarea:focus {
+    outline: none;
+}
+
+#ServerConfirm {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    padding: 10px;
+    top: 10px;
+    transform: translateX(-50%);
+    left: 50%;
+    z-index: 9999;
+    display: none;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    animation: hideAnimation 1.2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+#SaveConfirm {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    padding: 10px;
+    top: 10px;
+    transform: translateX(-50%);
+    left: 50%;
+    z-index: 9999;
+    display: none;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    animation: hideAnimation 1.2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+#ResetViewerBtn {
+    width: 50px;
+    height: 45px;
+    position: fixed;
+    padding-left: 7.5px;
+    padding-top: 5px;
+    top: 10px;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 88%;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    fill: white;
+    border-radius: 10px;
+    text-align: center;
+    animation: showAnimation 1.2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+#PageReplacedWarning {
+    position: fixed;
+    padding: 10px;
+    padding-bottom: 0px;
+    top: 10px;
+    transform: translateX(-50%);
+    left: 50%;
+    z-index: 9999;
+    display: none;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    animation: hideAnimation 3.2s ease-in;
+    animation-fill-mode: forwards;
+    user-select: none;
+}
+
+@keyframes hideAnimation {
+    to {
+        opacity:0;
+        display:none;
+    }
+}
+
+@keyframes showAnimation {
+    to {
+        opacity: 1;
+        display: block;
+    }
+}
+
+#TrendPropertyWindow {
+    width: 400px;
+    height: 260px;
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* The window sits on the runtime page but its inputs are plain .form-control, so they are
+       already painted by the themed rule further up. A hardcoded white panel left dark inputs
+       floating in a white box on the dark themes - follow the theme here as well. */
+    background-color: var(--ThemeElements);
+    color: var(--ThemeFontColor);
+    border: 1px solid var(--ThemeBorderColor);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    border-radius: 5px;
+}
+
+#TrendPropertyWindowTitle {
+    text-align:center;
+    width:100%;
+    display:block;
+    margin-top:20px;
+}
+
+.TrendPropertyWindowIcon {
+    width: 15px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    /* An SVG path with no fill defaults to black, which read as a black glyph on the themed blue
+       button. currentColor makes it follow the .btn colour and its hover for free. */
+    fill: currentColor;
+ /*   margin-top: 10px;*/
+}
+
+.TrendPropertyWindowIconError {
+    width: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    fill:darkorange;
+    /*   margin-top: 10px;*/
+}
+
+
+.TrendPropertyWindowIconTitle {
+    width: 35px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    fill: var(--ThemeIconColor);
+    /*   margin-top: 10px;*/
+}
+
+#TrendPropertyWindowCloseButton {
+    width: 28.3%;
+    height: 45px;
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    margin-bottom: 10px;
+}
+
+#TrendPropertyWindowResetButton {
+    width: 28.3%;
+    height: 45px;
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 5%;
+    margin-bottom: 10px;
+}
+
+#TrendPropertyWindowApplyButton {
+    width: 28.3%;
+    height: 45px;
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    margin-bottom: 10px;
+}
+
+#TrendPropertyWindowDateTimeFromInput {
+    width: 90%;
+    height: 45px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+#TrendPropertyWindowDateTimeToInput {
+    width: 90%;
+    height: 45px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Neutral-grey calendar glyph stays visible on both the light and dark themed input backgrounds,
+   same treatment as the viewer date range inputs in DataGrid.css. */
+#TrendPropertyWindowDateTimeFromInput::-webkit-calendar-picker-indicator,
+#TrendPropertyWindowDateTimeToInput::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    opacity: 0.75;
+    cursor: pointer;
+}
+
+.infoicon {
+    width: 20px;
+    float: right;
+    margin-left: 5px;
+    fill: blue;
+}
+
+.SubContextTitleContainer {
+    height: 20px;
+    margin-bottom:20px;
+}
+
+.SubContextTitleContainer:hover {
+    color: var(--ThemeFontColorHover);
+    fill: var(--ThemeFontColorHover);
+    cursor:pointer;
+}
+
+.ContextExpandCollapseSymbol {
+    width: 12px;
+    float: right;
+    fill: var(--ThemeIconColor);
+    border:0px solid red;
+}
+
+
+#ContextExpandCollapseSymbolContainer {
+    border: 0px solid red;
+    position:absolute;
+    right:0px;
+    margin-right:25px;
+    margin-top:-55px;
+
+}
+
+.ContextExpandCollapseSymbol:hover {
+    fill: var(--ThemeFontColorHover);
+    cursor:pointer;
+}
+
+
+.SubContextTitle {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+
+.resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    user-select: none;
+}
+
+.draggable.ActiveSelected .resizer:hover,
+.resizing {
+    cursor: col-resize;
+    border-right: 2px solid black;
+}
+
+/* ALARM BANNER */
+.alarmbannerobject {
+    fill: #C0C0C0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #C0C0C0;
+}
+
+    .alarmbannerobject .ackicon {
+        width: 25px;
+        height: 25px;
+        border: 0px solid blue;
+        position: absolute;
+        z-index: 0;
+        margin-left: -1px;
+        margin-top: -15px;
+    }
+
+        .alarmbannerobject .ackicon:hover {
+            width: 25px;
+            height: 25px;
+            border: 0px solid blue;
+            position: fixed;
+        }
+
+.alarmbannerobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    .alarmbannerobject thead th {
+        position: sticky; /* make the table heads sticky */
+        top: 0px; /* table head will be placed from the top of the table and sticks to it */
+        z-index: 2;
+    }
+
+    .alarmbannerobject::-webkit-scrollbar {
+        width: 6px; /* width of the entire scrollbar */
+    }
+
+    .alarmbannerobject::-webkit-scrollbar-track {
+        background: #e8e8e8; /* color of the tracking area */
+    }
+
+    .alarmbannerobject::-webkit-scrollbar-thumb {
+        background-color: darkgrey; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: 0px solid orange; /* creates padding around scroll thumb */
+    }
+
+.AlarmBannerAckHeaderColumn, .AlarmBannerRemoveHeaderColumn, .AlarmBannerAckColumn, .AlarmBannerRemoveColumn {
+    border-right-width: 0px !important;
+    border-left-width: 0px !important;
+}
+
+.resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    user-select: none;
+}
+
+.draggable.ActiveSelected .resizer:hover,
+.resizing {
+    cursor: col-resize;
+    border-right: 2px solid black;
+}
+
+.alarmbannerobject AlarmBannerTable {
+    border-collapse: collapse;
+    height: 100%;
+}
+
+    .alarmbannerobject AlarmBannerTable th, td {
+        border-width: 1px;
+        border-style: solid;
+        font-size: 16px;
+    }
+
+.alarmbannerobject .AlarmBannerTable > thead > tr > th {
+    padding: 4px 8px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #eee;
+    font-size: 16px;
+}
+
+.AlarmBannerTable {
+    background-color: #dcdcdc;
+}
+
+    .AlarmBannerTable > tbody {
+        border-color: #C0C0C0;
+    }
+
+    .AlarmBannerTable > thead {
+        border-color: #C0C0C0;
+    }
+/* END ALARM BANNER */
+
+/* DATA TABLE */
+.datatableobject {
+    fill: #C0C0C0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #C0C0C0;
+}
+
+    .datatableobject svg:hover {
+        fill: black;
+        cursor: pointer;
+    }
+
+    .datatableobject .ackicon {
+        border: 0px solid blue;
+        position: absolute;
+        z-index: 0;
+        margin-left: -1px;
+        margin-top: -15px;
+    }
+
+        .datatableobject .ackicon:hover {
+            border: 0px solid blue;
+            position: fixed;
+        }
+
+.AlarmBannerRemoveColumn:hover {
+    width: 25px;
+    height: 25px;
+    fill: red;
+}
+
+.AlarmBannerAckColumn:hover {
+    width: 25px;
+    height: 25px;
+    fill: green;
+}
+
+.AlarmBannerRemoveColumn .ackicon {
+    width: 25px;
+    height: 25px;
+}
+
+.AlarmBannerAckColumn .ackicon {
+    width: 25px;
+    height: 25px;
+}
+
+/**/
+.AlarmBannerIconColumn {
+    max-width: 30px;
+}
+
+/*.AlarmBannerIconHeaderColumn {
+    width:30px;
+}*/
+
+
+.AlarmBannerAckColumn, .AlarmBannerAckHeaderColumn {
+    /*min-width: 50px;*/
+    max-width: 50px;
+    padding-right: 30px;
+    max-width: 60px;
+}
+
+.AlarmBannerRemoveColumn, .AlarmBannerRemoveHeaderColumn {
+    /*min-width: 50px;*/
+    max-width: 50px;
+    table-layout: fixed;
+    padding-right: 30px;
+}
+
+.AlarmBannerIconColumn .AlarmIcon svg {
+    width: 18px;
+    height: 18px;
+    border: 0px solid red;
+    table-layout: fixed;
+}
+
+.AlarmIcon {
+    margin-top: -8px;
+    margin-left: -8px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: deepskyblue;
+}
+
+
+.datatableobject {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    .datatableobject thead th {
+        position: sticky; /* make the table heads sticky */
+        top: 0px; /* table head will be placed from the top of the table and sticks to it */
+        z-index: 2;
+    }
+
+    .datatableobject::-webkit-scrollbar {
+        width: 6px; /* width of the entire scrollbar */
+    }
+
+    .datatableobject::-webkit-scrollbar-track {
+        background: #e8e8e8; /* color of the tracking area */
+    }
+
+    .datatableobject::-webkit-scrollbar-thumb {
+        background-color: darkgrey; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: 0px solid orange; /* creates padding around scroll thumb */
+    }
+
+    .datatableobject DataTableTable {
+        border-collapse: collapse;
+        height: 100%;
+        
+    }
+
+    .datatableobject DataTableTable th, td {
+        padding: 8px 16px;
+        border-width: 1px;
+        border-style: solid;
+            
+    }
+
+    .datatableobject .DataTableTable > thead > tr > th { 
+        padding: 4px 8px;
+        border-width: 1px;
+        border-style: solid;
+        /*padding: 0px;*/
+    }
+
+.DataTableTable {
+    background-color: #dcdcdc;
+}
+
+    .DataTableTable > tbody {
+        border-color: #C0C0C0;
+    }
+
+    .DataTableTable > thead {
+        border-color: #C0C0C0;
+        background-color: #eee;
+    }
+
+/* END DATA TABLE */
+
+.DevMenuIcon {
+    height:26px;
+    border:5px solid red;
+}
+
+#GenericEditorSingle {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding:10px;
+    width: 96%;
+}
+
+#GenericEditorSingle:focus, input:focus {
+    outline: none;
+}
+
+/* ~ ~ ~ ~ Shared glass panel (First-time Hint + Online Users) ~ ~ ~ ~
+   Both floating panels use one surface so they read as the same component.
+   Scoped to #popupHint / #ActiveUsersBox only - do not reuse elsewhere without checking. */
+#popupHint,
+#ActiveUsersBox {
+    background: linear-gradient(180deg, rgba(30,42,64,0.82) 0%, rgba(20,30,48,0.82) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+    color: #fff;
+    font-family: Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+/* header bar shared by both panels */
+#popupHint .glass-panel-header,
+#ActiveUsersBoxHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    border-radius: 10px 10px 0 0;
+}
+
+/* round ghost close/minimize button shared by both panels */
+#popupHint .close,
+.active-users-minimize-btn {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    color: rgba(255,255,255,0.65);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+    #popupHint .close:hover,
+    .active-users-minimize-btn:hover {
+        background: rgba(255,255,255,0.14);
+        color: #fff;
+    }
+
+#popupHint {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    width: min(440px, calc(100vw - 32px));
+    font-size: 13px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+
+    #popupHint.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    #popupHint .glass-panel-body {
+        padding: 12px;
+        line-height: 1.5;
+        color: rgba(255,255,255,0.88);
+    }
+
+    #popupHint .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 0 12px 12px 12px;
+    }
+
+        #popupHint .actions button {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.85);
+            font-size: 12px;
+            padding: 5px 12px;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+            #popupHint .actions button:hover {
+                background: rgba(255,255,255,0.18);
+                color: #fff;
+            }
+
+#undoRedoIndicator {
+    position: absolute;
+    top: 10px;
+    /*left: 50%;*/
+    right: 10px;
+    /*transform: translateX(-50%);*/
+    z-index: 9999;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    text-align: center;
+}
+
+#zoomWarning {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: none; /* hidden by default */
+    z-index: 99999;
+}
+
+#StyleFormatContextzIndexInfo {
+    text-align: right; /* Aligns placeholder text */
+    border: 0px solid red;
+    width: auto;
+    float: right;
+    padding-right: 0px;
+    margin-top: -36px;
+    margin-right:30px;
+    /*color: var(--ThemeFontColor);*/
+}
+
+#StyleFormatContextzIndexInfoColor {
+    text-align: right; /* Aligns placeholder text */
+    border: 1px solid lightgrey;
+    width: 20px;
+    height: 20px;
+    border-radius:5px;
+    float: right;
+    margin-right:5px;
+    margin-top: -33px;
+}
+
+
+/* SVG box itself is NOT clickable */
+.polylineobject {
+    pointer-events: none;
+    stroke-linejoin: round;
+}
+
+    /* invisible hit stroke */
+    .polylineobject .poly-hit {
+        stroke: rgba(0, 191, 255, 0); /* nothing visible */
+        /*stroke-width: 14px;*/ /* <-- now set dynamically */
+
+        pointer-events: stroke; 
+        cursor: pointer;
+    }
+
+    /* visible thin line */
+    .polylineobject .poly-visible {
+        stroke-linejoin: round;
+        pointer-events: stroke;
+        cursor: default;
+    }
+
+    .ActiveSelected .polylineobject .poly-visible {
+        pointer-events: none;
+        cursor: default;
+    }
+
+.PolylineBorder {
+    position: absolute;
+    pointer-events: none !important;
+    cursor: none !important;
+}
+
+    .PolylineBorder svg {
+        position: absolute;
+        stroke-linejoin: round;
+    }
+
+    .PolylineBorder .poly-visible {
+        /*cursor: pointer;*/
+    }
+
+
+.draggable[name="PolylineObject"] {
+    pointer-events: none !important;
+    cursor: none !important;
+    /*    border:1px solid red;*/
+}
+
+.tempus-dominus-widget,
+.tempus-dominus-widget.light,
+.tempus-dominus-widget.dark {
+    background-color: var(--dtp-global-picker-background, #ffffff) !important;
+    color: var(--dtp-global-picker-text, #212529) !important;
+}
+
+.tempus-dominus-widget .calendar-header,
+.tempus-dominus-widget .toolbar,
+.tempus-dominus-widget .date-container,
+.tempus-dominus-widget .time-container,
+.tempus-dominus-widget .time-container-clock,
+.tempus-dominus-widget .time-container-hour,
+.tempus-dominus-widget .time-container-minute,
+.tempus-dominus-widget .time-container-second {
+    background-color: var(--dtp-global-picker-background, #ffffff) !important;
+    color: var(--dtp-global-picker-text, #212529) !important;
+}
+
+.tempus-dominus-widget .timepicker-hour,
+.tempus-dominus-widget .timepicker-minute,
+.tempus-dominus-widget .timepicker-second,
+.tempus-dominus-widget .toggleMeridiem,
+.tempus-dominus-widget .separator,
+.tempus-dominus-widget .date-container-days .dow,
+.tempus-dominus-widget .date-container-days .cw,
+.tempus-dominus-widget [data-action] {
+    color: var(--dtp-global-picker-text, #212529) !important;
+}
+
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight),
+.tempus-dominus-widget .date-container-years div:not(.no-highlight),
+.tempus-dominus-widget .date-container-months div:not(.no-highlight),
+.tempus-dominus-widget .date-container-days div:not(.no-highlight),
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight),
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight),
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight),
+.tempus-dominus-widget .time-container-second div:not(.no-highlight) {
+    color: var(--dtp-global-picker-text, #212529) !important;
+}
+
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .time-container-clock div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .time-container-hour div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .time-container-minute div:not(.no-highlight):hover,
+.tempus-dominus-widget.light .time-container-second div:not(.no-highlight):hover,
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight):hover,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight):hover,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight):hover,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight):hover,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight):hover,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight):hover,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight):hover,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight):hover,
+.tempus-dominus-widget .toolbar div:hover {
+    background-color: var(--dtp-global-hover-background, #f3f3f3) !important;
+    color: var(--dtp-global-hover-text, #6c757d) !important;
+}
+
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight):hover *,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight):hover *,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight):hover *,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight):hover *,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight):hover *,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight):hover *,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight):hover *,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight):hover * {
+    color: var(--dtp-global-hover-text, #6c757d) !important;
+}
+
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-days div.range-in:not(.no-highlight),
+.tempus-dominus-widget.light .date-container-days div.range-end:not(.no-highlight),
+.tempus-dominus-widget.light .date-container-days div.range-start:not(.no-highlight),
+.tempus-dominus-widget.light .time-container-clock div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-hour div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-minute div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-second div:not(.no-highlight).active {
+    background-color: var(--dtp-global-selected-background, #0d6efd) !important;
+    color: var(--dtp-global-selected-text, #ffffff) !important;
+    text-shadow: none !important;
+}
+
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).today,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).today,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).today,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).today,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).today,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).today,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).today,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).today {
+    background-color: var(--dtp-global-today-background, #0d6efd) !important;
+    color: var(--dtp-global-today-text, #ffffff) !important;
+}
+
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).today:before,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).today:before,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).today:before,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).today:before,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).today:before,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).today:before,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).today:before,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).today:before {
+    border-bottom-color: var(--dtp-global-today-text, #ffffff) !important;
+}
+
+/* Keep selected styling authoritative even when a selected cell is also marked as today/new/old. */
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active.old,
+.tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active.new,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active.old,
+.tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active.new,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active.old,
+.tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active.new,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active.old,
+.tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active.new,
+.tempus-dominus-widget.light .time-container-clock div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-clock div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .time-container-hour div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-hour div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .time-container-minute div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-minute div:not(.no-highlight).active.today,
+.tempus-dominus-widget.light .time-container-second div:not(.no-highlight).active,
+.tempus-dominus-widget.light .time-container-second div:not(.no-highlight).active.today {
+    background-color: var(--dtp-global-selected-background, #0d6efd) !important;
+    color: var(--dtp-global-selected-text, #ffffff) !important;
+    text-shadow: none !important;
+}
+
+.tempus-dominus-widget .toolbar [data-action],
+.tempus-dominus-widget .previous,
+.tempus-dominus-widget .next {
+    color: var(--dtp-global-icon-color, #6c757d) !important;
+}
+
+.tempus-dominus-widget .toolbar [data-action]:hover,
+.tempus-dominus-widget .toolbar [data-action]:focus,
+.tempus-dominus-widget .toolbar [data-action]:active,
+.tempus-dominus-widget .previous:hover,
+.tempus-dominus-widget .next:hover {
+    color: var(--dtp-global-hover-text, #6c757d) !important;
+}
+
+.tempus-dominus-widget .toolbar [data-action] i,
+.tempus-dominus-widget .toolbar [data-action] .fa,
+.tempus-dominus-widget .toolbar [data-action] .fas,
+.tempus-dominus-widget .toolbar [data-action] .far,
+.tempus-dominus-widget .toolbar [data-action] .fal,
+.tempus-dominus-widget .toolbar [data-action] .fab,
+.tempus-dominus-widget .toolbar [data-action] [class*="fa-"],
+.tempus-dominus-widget .previous i,
+.tempus-dominus-widget .next i,
+.tempus-dominus-widget .previous [class*="fa-"],
+.tempus-dominus-widget .next [class*="fa-"] {
+    color: var(--dtp-global-icon-color, #6c757d) !important;
+}
+
+.tempus-dominus-widget .toolbar [data-action]:hover i,
+.tempus-dominus-widget .toolbar [data-action]:hover .fa,
+.tempus-dominus-widget .toolbar [data-action]:hover .fas,
+.tempus-dominus-widget .toolbar [data-action]:hover .far,
+.tempus-dominus-widget .toolbar [data-action]:hover .fal,
+.tempus-dominus-widget .toolbar [data-action]:hover .fab,
+.tempus-dominus-widget .toolbar [data-action]:hover [class*="fa-"],
+.tempus-dominus-widget .previous:hover i,
+.tempus-dominus-widget .next:hover i,
+.tempus-dominus-widget .previous:hover [class*="fa-"],
+.tempus-dominus-widget .next:hover [class*="fa-"] {
+    color: var(--dtp-global-hover-text, #6c757d) !important;
+}
+
+.tempus-dominus-widget svg,
+.tempus-dominus-widget svg path {
+    fill: var(--dtp-global-icon-color, #6c757d) !important;
+    stroke: var(--dtp-global-icon-color, #6c757d) !important;
+}
+
+.tempus-dominus-widget .toolbar [data-action]:hover svg,
+.tempus-dominus-widget .toolbar [data-action]:hover svg path,
+.tempus-dominus-widget .previous:hover svg,
+.tempus-dominus-widget .previous:hover svg path,
+.tempus-dominus-widget .next:hover svg,
+.tempus-dominus-widget .next:hover svg path {
+    fill: var(--dtp-global-hover-text, #6c757d) !important;
+    stroke: var(--dtp-global-hover-text, #6c757d) !important;
+}
+
+/* Final selected-state override for all views (day/month/year/decade/time). */
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).active,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).active,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).active,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).active,
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).active.old,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).active.old,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).active.old,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).active.old,
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).active.new,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).active.new,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).active.new,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).active.new,
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).active.today,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).active.today,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).active.today,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).active.today,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).active,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).active,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).active,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).active,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).active.old,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).active.old,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).active.old,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).active.old,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).active.new,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).active.new,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).active.new,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).active.new,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).active.today,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).active.today,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).active.today,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).active.today,
+.tempus-dominus-widget .date-container-days div.range-in:not(.no-highlight),
+.tempus-dominus-widget .date-container-days div.range-end:not(.no-highlight),
+.tempus-dominus-widget .date-container-days div.range-start:not(.no-highlight),
+.tempus-dominus-widget .date-container-days div.range-in:not(.no-highlight).old,
+.tempus-dominus-widget .date-container-days div.range-end:not(.no-highlight).old,
+.tempus-dominus-widget .date-container-days div.range-start:not(.no-highlight).old,
+.tempus-dominus-widget .date-container-days div.range-in:not(.no-highlight).new,
+.tempus-dominus-widget .date-container-days div.range-end:not(.no-highlight).new,
+.tempus-dominus-widget .date-container-days div.range-start:not(.no-highlight).new {
+    background-color: var(--dtp-global-selected-background, #0d6efd) !important;
+    color: var(--dtp-global-selected-text, #ffffff) !important;
+    text-shadow: none !important;
+}
+
+.tempus-dominus-widget .date-container-decades div:not(.no-highlight).active *,
+.tempus-dominus-widget .date-container-years div:not(.no-highlight).active *,
+.tempus-dominus-widget .date-container-months div:not(.no-highlight).active *,
+.tempus-dominus-widget .date-container-days div:not(.no-highlight).active *,
+.tempus-dominus-widget .time-container-clock div:not(.no-highlight).active *,
+.tempus-dominus-widget .time-container-hour div:not(.no-highlight).active *,
+.tempus-dominus-widget .time-container-minute div:not(.no-highlight).active *,
+.tempus-dominus-widget .time-container-second div:not(.no-highlight).active * {
+    color: var(--dtp-global-selected-text, #ffffff) !important;
+}
+
+/*.draggable[name="PolylineObject"] .polylinedot {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}*/
+
+/**/
+/***** ***** ***** ***** *****/
+
+/*input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: lightblue;
+    cursor: pointer;
+}
+
+    input[type="range"]::-webkit-slider-runnable-track {
+        background: #053a5f;
+        height: 0.5rem;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;*/ /* Override default look */
+        /*appearance: none;
+        margin-top: -12px;*/ /* Centers thumb on the track */
+        /*background-color: #5cd5eb;
+        height: 2rem;
+        width: 1rem;
+    }
+
+    input[type="range"]:focus {
+        outline: none;
+    }*/
+
+        /***** Chrome, Safari, Opera, and Edge Chromium *****/
+        /*input[type="range"]:focus::-webkit-slider-thumb {
+            border: 1px solid #053a5f;
+            outline: 3px solid #053a5f;
+            outline-offset: 0.125rem;
+        }*/
+
+
+
+/*.draggable[name="PolygonObject"] {
+    border-width: 0px;
+    pointer-events: none !important;
+    cursor: default !important;
+    background-color: red;
+}
+
+.polygonobject polygon {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    fill: green !important;
+    border:4px solid blue;
+}
+
+.draggable[name="PolygonObject"] .polygondot {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+*/
+/**/
+/*.draggable[name="PolylineObject"] {
+    border-width: 0px;
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+.polylineitself:hover {
+    pointer-events: all;
+    cursor: pointer;
+    stroke: blue;
+    background-color:black;
+}
+
+.draggable[name="PolylineObject"] .polylinedot {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}*/
+
+/*.draggable[name="PolylineObject"]:not(.ActiveSelected) {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+    .draggable[name="PolylineObject"] .polylinedot {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+    }*/
+
+/*.draggable[name="PolygonObject"]:not(.ActiveSelected) {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+.draggable[name="PolygonObject"] .polygondot {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}*/
+
+/* ~ ~ ~ ~ Active Users Box (surface + header shared with #popupHint above) ~ ~ ~ ~ */
+#ActiveUsersBox {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    min-width: 240px;
+    max-width: 400px;
+    max-height: 320px;
+    overflow: hidden auto;
+    font-size: 12px;
+    z-index: 99999;
+    cursor: move;
+    user-select: none;
+}
+
+#ActiveUsersBoxTitle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.active-users-status-dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.18);
+}
+
+#ActiveUsersBoxContent {
+    cursor: default;
+    padding: 0;
+}
+
+.active-users-empty {
+    color: rgba(255,255,255,0.5);
+    padding: 10px 12px;
+    display: block;
+}
+
+.active-users-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+}
+
+    /* The bare `td` half of the malformed `.alarmbannerobject AlarmBannerTable th, td`
+       and `.datatableobject DataTableTable th, td` rules above matches EVERY cell on the
+       page, forcing a 1px box border, 16px text and 8px/16px padding. Counter-override it
+       here rather than touching those global rules. */
+    .active-users-table th,
+    .active-users-table td {
+        border: 0;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .active-users-table th {
+        position: sticky;
+        top: 0;
+        padding: 7px 12px;
+        font-weight: 600;
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.55);
+        background: rgba(20,30,48,0.95);
+        border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .active-users-table td {
+        padding: 6px 12px;
+        font-size: 11.5px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+        .active-users-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+    .active-users-table tbody tr:hover td {
+        background: rgba(255,255,255,0.06);
+    }
+
+    .active-users-table .active-users-ip {
+        color: rgba(255,255,255,0.55);
+        font-variant-numeric: tabular-nums;
+    }
+
+/* ----------------------------
+   Checkboxes – dark theme
+---------------------------- */
+
+.form-check-input:checked {
+    background-color: deepskyblue;
+    border-color: deepskyblue;
+}
+
+    .form-check-input:checked:focus {
+        background-color: deepskyblue !important;
+        border-color: deepskyblue !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+    }
+
+.form-check-input:focus {
+    border-color: var(--ThemeBorderColorHover);
+    box-shadow: none;
+}
+
+.theme-dark .form-check-input {
+    background-color: var(--ThemeElements) !important;
+    border-color: var(--ThemeBorderColor) !important;
+}
+
+.theme-dark .form-check-input:checked {
+    background-color: var(--ThemeIconColor) !important;
+    border-color: var(--ThemeIconColor) !important;
+}
+
+    .theme-dark .form-check-input:checked:focus {
+        background-color: var(--ThemeIconColor) !important;
+        border-color: var(--ThemeIconColor) !important;
+        box-shadow: none;
+    }
+
+.theme-dark .form-switch .form-check-input {
+    background-color: var(--ThemeElements) !important;
+    border-color: var(--ThemeBorderColor) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(200%2c200%2c200%2c0.8)'/%3e%3c/svg%3e") !important;
+}
+
+.theme-dark .form-switch .form-check-input:checked {
+    background-color: var(--ThemeIconColor) !important;
+    border-color: var(--ThemeIconColor) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+}
+
+#PagesBreadcrumb,
+#MenuSymbolsDirectory,
+#ProjectBreadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 2px;
+    min-width: 0;
+}
+.bc-link {
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 1px 5px;
+    transition: background-color 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.bc-link:hover {
+    background-color: rgba(128, 128, 128, 0.15);
+    opacity: 1 !important;
+}
+.bc-sep {
+    opacity: 0.35;
+    font-size: 0.85em;
+    user-select: none;
+    flex-shrink: 0;
+}
+.bc-cur {
+    padding: 1px 5px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.recipemanagerobject {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--RMBackground);
+    color: var(--RMText);
+    border: 1px solid var(--RMObjectBorder, var(--RMBorder));
+    border-radius: 4px;
+}
+
+.recipemanagerobject .rm-container {
+    font-size: 0.85rem;
+    background-color: var(--RMBackground);
+    color: var(--RMText);
+}
+
+.recipemanagerobject .rm-icon-btn,
+.rm-modal .rm-icon-btn {
+    width: 42px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.recipemanagerobject .rm-icon-btn > i,
+.rm-modal .rm-icon-btn > i {
+    font-size: 0.875rem;
+    line-height: 1;
+}
+
+.recipemanagerobject .rm-actions-cell,
+.rm-modal .rm-actions-cell {
+    vertical-align: middle;
+}
+
+.recipemanagerobject .rm-actions-cell .rm-actions,
+.rm-modal .rm-actions-cell .rm-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.25rem;
+}
+
+.recipemanagerobject .rm-recipe-table thead th {
+    background-color: var(--RMTableBackground);
+    color: var(--RMText) !important;
+}
+
+.recipemanagerobject .rm-recipe-table thead th:first-child {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.recipemanagerobject .rm-recipe-table .rm-recipe-check-all {
+    display: block;
+    margin: 0 auto;
+}
+
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check,
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check-all {
+    width: 20px;
+    height: 20px;
+    background-color: var(--RMCheckboxBackground) !important;
+    border-color: var(--RMCheckboxBorder) !important;
+    box-shadow: none !important;
+}
+
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check:focus,
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check-all:focus {
+    background-color: var(--RMCheckboxBackground) !important;
+    border-color: var(--RMCheckboxBorder) !important;
+    box-shadow: none !important;
+}
+
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check:checked,
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check-all:checked {
+    background-color: var(--RMCheckboxCheckedBackground) !important;
+    border-color: var(--RMCheckboxBorder) !important;
+}
+
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check:checked:focus,
+.recipemanagerobject .rm-recipe-table .form-check-input.rm-recipe-check-all:checked:focus {
+    background-color: var(--RMCheckboxCheckedBackground) !important;
+    border-color: var(--RMCheckboxBorder) !important;
+    box-shadow: none !important;
+}
+
+.recipemanagerobject .rm-recipe-table tbody tr.rm-recipe-row td {
+    background-color: var(--RMTableBackground);
+    color: var(--RMText) !important;
+}
+
+.recipemanagerobject .rm-recipe-table tbody tr.rm-recipe-row {
+    cursor: pointer;
+}
+
+.recipemanagerobject .rm-recipe-table tbody tr.rm-recipe-row-selected td {
+    background-color: var(--RMSelectedBg, var(--RMBackground)) !important;
+    color: var(--RMSelectedText, var(--RMText)) !important;
+}
+
+.recipemanagerobject .rm-top-toolbar {
+    color: var(--RMText);
+}
+
+.recipemanagerobject .rm-top-toolbar .rm-type-segment {
+    color: var(--RMText);
+}
+
+.recipemanagerobject .rm-left-splitter {
+    flex: 0 0 6px;
+    margin: 0 -2px;
+    cursor: col-resize;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    align-self: stretch;
+    background: transparent;
+}
+
+.recipemanagerobject .rm-left-splitter:hover {
+    background-color: var(--RMBorder);
+    opacity: 0.4;
+}
+
+.recipemanagerobject .rm-left,
+.recipemanagerobject .rm-right {
+    background-color: var(--RMFrameBackground, var(--RMBackground));
+    border-color: var(--RMBorder) !important;
+}
+
+.recipemanagerobject .rm-left {
+    flex: 0 0 var(--RMLastLeftWidth, 280px);
+    min-width: 240px;
+    max-width: 100%;
+}
+
+.recipemanagerobject .form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject),
+.recipemanagerobject .form-select {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+.recipemanagerobject .rm-type-filter,
+.recipemanagerobject .rm-target-select {
+    background-color: var(--RMDropdownBackground) !important;
+    border-color: var(--RMTableBorder) !important;
+}
+
+.recipemanagerobject .form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject):focus,
+.recipemanagerobject .form-select:focus {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+.recipemanagerobject .rm-type-filter:focus,
+.recipemanagerobject .rm-target-select:focus {
+    border-color: var(--RMTableBorder) !important;
+}
+
+.recipemanagerobject .form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject)[readonly],
+.recipemanagerobject .form-control:not(.labelobject):not(.inputobject):not(.datetimepickerobject)[readonly]:focus {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+}
+
+.recipemanagerobject .rm-left .rm-type-filter {
+    min-width: 0;
+}
+
+.recipemanagerobject .rm-empty-state {
+    color: var(--RMText);
+    opacity: 0.8;
+}
+
+.recipemanagerobject .table {
+    --bs-table-bg: var(--RMTableBackground);
+    --bs-table-color: var(--RMText);
+    --bs-table-border-color: var(--RMTableBorder);
+    border-color: var(--RMTableBorder);
+}
+
+/* Bootstrap .table uses literal border-color; map RM table border to real borders on cells. */
+.recipemanagerobject .table > :not(caption) > * > * {
+    border-color: var(--RMTableBorder);
+}
+
+.recipemanagerobject .table > :not(:last-child) > :last-child > * {
+    border-bottom-color: var(--RMTableBorder);
+}
+
+.recipemanagerobject .rm-parameter-table thead th {
+    background-color: var(--RMTableBackground);
+    color: var(--RMText);
+}
+
+.recipemanagerobject .rm-parameter-table tbody td {
+    background-color: var(--RMTableBackground);
+    color: var(--RMText);
+}
+
+/* Parameter table: per-cell tints (Recipe Manager). */
+.recipemanagerobject .rm-parameter-table tbody td.rm-cell--rv-missing {
+    background-color: rgba(255, 150, 88, 0.34) !important;
+    box-shadow: inset 0 0 0 9999px rgba(255, 150, 88, 0.34) !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-cell--rv-readonly {
+    background-color: rgba(108, 117, 125, 0.35) !important;
+    box-shadow: inset 0 0 0 9999px rgba(108, 117, 125, 0.35) !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-cell--ref-missing {
+    background-color: rgba(108, 117, 125, 0.18) !important;
+    box-shadow: inset 0 0 0 9999px rgba(108, 117, 125, 0.18) !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-cell--ref-value {
+    background-color: rgba(73, 80, 87, 0.3) !important;
+    box-shadow: inset 0 0 0 9999px rgba(73, 80, 87, 0.3) !important;
+}
+
+/* Recipe value: match td tint on the input (Bootstrap .form-control has its own background) */
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"]:not(.rm-cell--rv-missing):not(.rm-cell--rv-readonly) .form-control.rm-recipe-value {
+    background-color: var(--RMTableBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMTableBorder) !important;
+    box-shadow: none !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-missing .form-control.rm-recipe-value {
+    background-color: rgba(255, 150, 88, 0.34) !important;
+    color: var(--RMText) !important;
+    box-shadow: none !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-readonly .form-control.rm-recipe-value {
+    background-color: rgba(108, 117, 125, 0.35) !important;
+    color: var(--RMText) !important;
+    box-shadow: none !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"]:not(.rm-cell--rv-missing):not(.rm-cell--rv-readonly) .form-control.rm-recipe-value:focus,
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"]:not(.rm-cell--rv-missing):not(.rm-cell--rv-readonly) .form-control.rm-recipe-value:focus-visible {
+    background-color: var(--RMTableBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMTableBorder) !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-missing .form-control.rm-recipe-value:focus,
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-missing .form-control.rm-recipe-value:focus-visible {
+    background-color: rgba(255, 150, 88, 0.34) !important;
+    color: var(--RMText) !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 150, 88, 0.42) !important;
+}
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-readonly .form-control.rm-recipe-value:focus,
+.recipemanagerobject .rm-parameter-table tbody td.rm-param-value-cell[data-system-col="recipeValue"].rm-cell--rv-readonly .form-control.rm-recipe-value:focus-visible {
+    background-color: rgba(108, 117, 125, 0.35) !important;
+    color: var(--RMText) !important;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.35) !important;
+}
+
+.recipemanagerobject .btn {
+    color: var(--RMButtonText);
+    border-color: var(--RMButtonBorder);
+}
+
+.recipemanagerobject .btn:hover {
+    background-color: var(--RMButtonHoverBg);
+    color: var(--RMButtonHoverText);
+}
+
+.recipemanagerobject .btn.btn-outline-secondary,
+.recipemanagerobject .btn.btn-secondary,
+.recipemanagerobject .btn.btn-primary {
+    background-color: var(--RMButtonBg);
+    color: var(--RMButtonText);
+}
+
+.recipemanagerobject .btn.btn-outline-secondary:hover,
+.recipemanagerobject .btn.btn-secondary:hover,
+.recipemanagerobject .btn.btn-primary:hover {
+    background-color: var(--RMButtonHoverBg);
+    color: var(--RMButtonHoverText);
+}
+
+.rm-modal .modal-content {
+    background-color: var(--RMFrameBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+/* Recipe Manager modals: global Envision modal rules set header/body/footer backgrounds to the global theme.
+   These overrides must match the same specificity as the global rules and win the cascade. */
+.rm-modal .modal-header {
+    background-color: var(--RMFrameBackground) !important;
+    color: var(--RMText) !important;
+    border-bottom-color: var(--RMBorder) !important;
+}
+
+.rm-modal .modal-body {
+    background-color: var(--RMFrameBackground) !important;
+    color: var(--RMText) !important;
+}
+
+.rm-modal .modal-body textarea {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+.rm-modal .modal-footer {
+    background-color: var(--RMFrameBackground) !important;
+    color: var(--RMText) !important;
+    border-top-color: var(--RMBorder) !important;
+}
+
+.rm-modal .table {
+    --bs-table-bg: var(--RMTableBackground);
+    --bs-table-color: var(--RMText);
+    --bs-table-border-color: var(--RMTableBorder);
+    border-color: var(--RMTableBorder);
+}
+
+.rm-modal .table > :not(caption) > * > * {
+    border-color: var(--RMTableBorder);
+}
+
+.rm-modal .table > :not(:last-child) > :last-child > * {
+    border-bottom-color: var(--RMTableBorder);
+}
+
+.rm-modal .modal-title,
+.rm-modal .form-label,
+.rm-modal .table th,
+.rm-modal .table td,
+.rm-modal .small {
+    color: var(--RMText) !important;
+}
+
+.rm-modal .form-control,
+.rm-modal .form-select {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+.rm-modal .form-control:focus,
+.rm-modal .form-select:focus {
+    background-color: var(--RMBackground) !important;
+    color: var(--RMText) !important;
+    border-color: var(--RMBorder) !important;
+}
+
+.rm-modal .form-control::placeholder {
+    color: var(--RMText);
+    opacity: 0.65;
+}
+
+.rm-modal .btn {
+    background-color: var(--RMButtonBg);
+    color: var(--RMButtonText);
+    border-color: var(--RMButtonBorder);
+}
+
+.rm-modal .btn:hover {
+    background-color: var(--RMButtonHoverBg);
+    color: var(--RMButtonHoverText);
+}
+
+/* Recipe Manager modals: close (X) uses RM text color (mask over currentColor) */
+.rm-modal .btn-close {
+    --bs-btn-close-bg: none;
+    background-color: var(--RMText) !important;
+    background-image: none !important;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 1em 1em;
+    mask-size: 1em 1em;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    opacity: 0.9;
+    filter: none;
+}
+
+.rm-modal .btn-close:hover {
+    opacity: 1;
+}
+
+
+/* ==================== Edit Master / Edit Instance replacer dialogs ====================
+   Restyled to match the Push to Instances dialog: same info strip, toolbar, bordered panel with a
+   sticky-looking header, and right-aligned footer. Functionality is unchanged - every id and class
+   the JS looks up is preserved, and rows stay direct children of the list so the reorder arrows
+   (previousElementSibling / nextElementSibling) keep working.
+
+   FLEX, not grid, on purpose: EditMasterSymbolModal / EditInstanceSymbolModal / AddReplacerToMaster
+   unhide a cloned row with an inline `style.display = "flex"`, and an inline display always beats
+   the stylesheet. A grid layout here would silently collapse into a flex row. */
+
+/* Master + symbol name, side by side above the toolbar. Deliberately NO panel background: the
+   fields carry their own borders, and a filled box around them read as heavy here. */
+.replfields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.replfield {
+    flex: 1;
+    min-width: 160px;
+}
+
+.replfieldlabel {
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    margin-bottom: 2px;
+}
+
+/* Overrides .EditInstanceSymbolReplacersNameBox's legacy float + fixed 300px width so the name
+   box fills its column instead. */
+.replfields .replfieldinput {
+    width: 100%;
+    float: none;
+    margin-bottom: 0;
+}
+
+/* Field + trailing icon button (Master + Find master). */
+.replfieldrow {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+}
+
+.replfieldrow .replfieldinput {
+    flex: 1;
+    min-width: 0;
+}
+
+/* align-self comes from the flex container's `stretch`, so the button matches the input's height
+   without hard-coding it - these fields keep Bootstrap's default control height, unlike the
+   compact 23px row inputs below. */
+.repl-find-master {
+    flex: 0 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--ThemeSettingsInputBorderColor);
+    border-radius: 3px;
+    color: var(--ThemeFontColor2);
+    cursor: pointer;
+}
+
+.repl-find-master:hover {
+    border-color: var(--ThemeFontColor2);
+    color: var(--ThemeFontColor);
+}
+
+.repl-find-master > svg {
+    width: 16px;
+    height: 16px;
+}
+
+.repltoolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.repltoolbarbtn {
+    white-space: nowrap;
+    color: white;
+    font-size: 12px;
+    padding: 4px 9px;
+}
+
+/* The PANEL scrolls, not the list inside it, and the header is sticky within it. The header must
+   stay a sibling of the list (EditMasterSymbolModal does list.innerHTML = "", which would wipe a
+   header nested inside), and if the list scrolled on its own the rows would lose the scrollbar
+   width while the header outside kept it - a permanent few-pixel column drift. Sharing one
+   scrolling box makes header and rows exactly the same width. */
+.replpanel {
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+    max-height: 52vh;
+    overflow-y: auto;
+}
+
+.replpanelheader {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor2);
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    font-size: 11px;
+}
+
+/* One replacer row. The header uses the same class so the columns cannot drift apart. */
+.replrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+}
+
+.replscroll .replrow {
+    border-bottom: 1px solid var(--ThemeBorderColor);
+}
+
+.replscroll .replrow:last-child {
+    border-bottom: 0;
+}
+
+.replheadrow {
+    font-weight: bold;
+    padding: 6px 8px;
+}
+
+/* Equal value columns. min-width:0 lets them shrink below their content instead of overflowing
+   the dialog on a long replacer token. */
+.replcell {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+/* Row inputs use the Push dialog's value-input metrics, so the two surfaces read as one product:
+   12px text, 2px/5px padding, 1px border, 3px radius. Bootstrap's .form-control defaults (16px
+   text, .375rem/.75rem padding) made these rows roughly half again as tall as the grid's.
+   height:auto is needed because .form-control also carries a min-height derived from its own
+   line-height, which would keep the old height even after the padding shrank. */
+.replrow input.replcell {
+    height: auto;
+    min-height: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 2px 5px;
+    margin-bottom: 0;
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border: 1px solid var(--ThemeSettingsInputBorderColor);
+    border-radius: 3px;
+}
+
+/* The read-only columns (Label, Replacer, Default) are reference, not entry: same metrics, muted
+   fill so the one editable column per row stands out. */
+.replrow input.replcell[readonly] {
+    background-color: var(--ThemeElements);
+    color: var(--ThemeFontColor2);
+}
+
+/* Leading UDT cell (instance dialog): present on the header and on every row so they align.
+   The whole column is REMOVED for an ordinary symbol - an empty 44px cell on every row for a
+   feature that is not in play is just noise - and restored when the dialog resolves a UDT
+   binding (repl-has-udt, set in _UdtReplacerOwnershipPartial). Hiding header and rows through the
+   same class keeps the columns in step; per-row the badge is toggled with `visibility` instead,
+   so a bound symbol's unmapped rows keep the cell's width. */
+.replcellbadge {
+    flex: 0 0 33px;
+}
+
+#EditInstanceSymbolReplacersModal .replcellbadge {
+    display: none;
+}
+
+#EditInstanceSymbolReplacersModal.repl-has-udt .replcellbadge {
+    display: inline-block;
+}
+
+/* Taller rows and inputs across the replacer surfaces: the Instance dialog, the Master dialog and
+   both Push views. The extra height comes from PADDING only - font-size stays 12px everywhere, so
+   all four surfaces still read as one product, just with room to breathe.
+   Target metrics: input 34px, row 53px. */
+#EditInstanceSymbolReplacersModal .replrow,
+#EditMasterSymbolReplacersModal .replrow {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+#EditInstanceSymbolReplacersModal .replrow input.replcell,
+#EditMasterSymbolReplacersModal .replrow input.replcell {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+/* The header cell is a plain label, not a badge: it must not inherit the pill border/colour the
+   row badges carry. */
+#EditInstanceSymbolReplacersModal .replheadrow .replcellbadge {
+    border: 0;
+    color: inherit;
+    text-align: left;
+    line-height: inherit;
+    padding: 0;
+    height: auto;
+}
+
+/* Trailing controls (master dialog): delete + reorder arrows, and the header spacer that
+   reserves the same width.
+
+   Everything here is scoped to .replrow on purpose. `.menuicon` is used across the whole product
+   and `.replacersfixedarrow*` carries its own sizing in DynamicReplacers.css (which loads AFTER
+   this file), so unscoped rules would either leak into unrelated screens or lose on cascade
+   order. */
+.replrow .replrowbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 4px;
+    color: var(--ThemeFontColor2);
+    cursor: pointer;
+}
+
+.replrow .replrowbtn > svg {
+    width: 15px;
+    height: 15px;
+    /* The shared .menuicon/.replacersfixedarrow rules set fill; these are stroke icons, so the
+       fill must be cleared or they render as filled blobs.
+       margin:0 undoes `.replacersfixedarrow{up,down} > svg { margin-top: -15px }` in
+       DynamicReplacers.css - a nudge for the old 8x16 arrow boxes that, inside the new centred
+       button, lifted each glyph ~7px above its own hover square. */
+    margin: 0;
+    fill: none;
+    stroke: currentColor;
+}
+
+.replrow .replrowbtn:hover {
+    background-color: var(--ThemeFormLineColorHover);
+    color: var(--ThemeFontColor);
+}
+
+.replrow .replrowbtndanger:hover {
+    background-color: var(--ThemeFormLineColorHover);
+    color: var(--ThemeAlarmColor, #c0392b);
+}
+
+.replcelldelete {
+    flex: 0 0 26px;
+    margin: 0;
+}
+
+/* .replacersfixedarrows (DynamicReplacers.css) ships a legacy margin-left:10px that widens the
+   row's fixed section and pulls the value columns out of step with the header. That file loads
+   AFTER this one, so an equally specific `.replcellarrows` rule loses on cascade order - scoping
+   it to `.replrow` raises specificity and makes the override independent of load order. */
+.replrow .replcellarrows {
+    flex: 0 0 26px;
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+/* The two arrows stack inside the 26px column. DynamicReplacers.css gives them a fixed 8x16 with
+   its own margins; reset that here so they fill the new square buttons. */
+.replrow .replcellarrows .replrowbtn {
+    height: 15px;
+    margin: 0;
+    width: 26px;
+}
+
+.replrow .replcellarrows .replrowbtn > svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Header spacer reserving exactly delete (26) + gap (8) + arrows (26). */
+.replcellactions {
+    flex: 0 0 60px;
+}
+
+.replfillinfo {
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+}
+
+/* ==================== Push to Instances - matrix view ====================
+   Rows are instances, one column per replacer, so there is no "which replacer am I editing" mode.
+   The identity column is FROZEN (position:sticky) because the trade for losing the mode is
+   horizontal scroll on masters with many replacers - a wide table is only usable while you can
+   still see which row you are on. */
+
+.matrixscroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 3px;
+}
+
+.matrixtable {
+    /* separate, not collapse: collapsed borders are painted by the table and do not travel with a
+       sticky cell, so the frozen column would lose its edges while scrolling. */
+    border-collapse: separate;
+    border-spacing: 0;
+    width: max-content;
+    min-width: 100%;
+}
+
+.matrixtable th,
+.matrixtable td {
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    /* padding-y 9px so a matrix row lands on the same 53px as the Instance/Master replacer rows. */
+    padding: 9px 8px;
+    vertical-align: middle;
+}
+
+/* Counter-override for the legacy malformed global rules in this file whose selector lists end in
+   a bare `td` (`.alarmbannerobject AlarmBannerTable th, td` and friends). They paint a grey
+   rgb(128,128,128) border on ALL FOUR sides of every td on the Envision page, and force 16px text.
+   They do not match `th`, which is why the matrix header looked correct while the body rows drew
+   darker, mismatched grid lines. Scoped counter-override, per the standing rule NOT to fix those
+   globals - other runtime tables depend on them. */
+.matrixtable td {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--ThemeBorderColor);
+    font-size: 13px;
+}
+
+/* Re-assert the frozen column's divider, which the reset above would otherwise clear. */
+.matrixtable td.matrixfrozen {
+    border-right: 1px solid var(--ThemeBorderColor);
+}
+
+.matrixtable thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--ThemeBackgroundSideMenu);
+    color: var(--ThemeFontColor2);
+    font-size: 11px;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* The frozen identity column. A sticky cell needs its own opaque background or the scrolling
+   value cells show through it. */
+.matrixfrozen {
+    position: sticky;
+    /* `left` is per column (.matrixcolinstance / page / status), not shared - a single left:0
+       here would stack all three on top of each other while scrolling. */
+    z-index: 1;
+    background-color: var(--ThemeBackground);
+}
+
+.matrixtable thead .matrixfrozen {
+    /* Above both the sticky header row and the sticky column, so the corner cell stays on top. */
+    z-index: 3;
+    background-color: var(--ThemeBackgroundSideMenu);
+}
+
+/* The three frozen identity columns. Sticky columns cannot size themselves - each one's `left`
+   must be the exact sum of the widths before it - so these widths are fixed and the offsets are
+   derived from them: instance 240, page 130 (left 240), status 110 (left 370). Change one width
+   and the two offsets below must change with it. */
+.matrixcolinstance {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    left: 0;
+}
+
+.matrixcolpage {
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    left: 240px;
+    color: var(--ThemeFontColor2);
+}
+
+.matrixcolstatus {
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+    left: 370px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Optional 4th frozen column, present only when something in the list is bound to a UDT
+   instance. It sits LAST in the frozen block, so the three offsets above never change with it. */
+.matrixcoludt {
+    width: 170px;
+    min-width: 170px;
+    max-width: 170px;
+    left: 480px;
+}
+
+/* Only the last frozen column carries the divider against the scrolling half - which is the UDT
+   column when it is shown, and status when it is not. */
+.matrixtable .matrixcolinstance,
+.matrixtable .matrixcolpage {
+    border-right: 0;
+}
+
+.matrixtable td.matrixcolstatus,
+.matrixtable th.matrixcolstatus {
+    border-right: 1px solid var(--ThemeBorderColor);
+}
+
+.matrixtable.matrix-has-udt td.matrixcolstatus,
+.matrixtable.matrix-has-udt th.matrixcolstatus {
+    border-right: 0;
+}
+
+.matrixtable td.matrixcoludt,
+.matrixtable th.matrixcoludt {
+    border-right: 1px solid var(--ThemeBorderColor);
+}
+
+.matrixudtname {
+    font-size: 12px;
+    color: var(--ThemeFontColor2);
+}
+
+/* Per-row "refresh this whole symbol from its UDT". Sits in the cell rather than a column of its
+   own: it belongs to the binding it acts on. */
+.matrixudtbtn {
+    float: right;
+    border: 0;
+    background: transparent;
+    color: var(--ThemeFontColor2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.matrixudtbtn:hover {
+    background-color: var(--ThemeFormLineColorHover);
+    color: var(--ThemeIconColor);
+}
+
+.matrixmenuhint {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+}
+
+.matrixidentitylabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.matrixinstancename {
+    font-size: 13px;
+    color: var(--ThemeFontColor);
+}
+
+.matrixvaluecol {
+    min-width: 160px;
+    /* containing block for the absolutely positioned column menu */
+    position: relative;
+}
+
+.matrixcolhead {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.matrixcolname {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ThemeFontColor);
+    font-size: 12px;
+}
+
+.matrixcoldefault {
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--ThemeFontColor2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.matrixcolmenubtn {
+    border: 0;
+    background: transparent;
+    color: var(--ThemeFontColor2);
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.matrixcolmenubtn:hover {
+    background-color: var(--ThemeFormLineColorHover);
+    color: var(--ThemeFontColor);
+}
+
+/* Per-column bulk actions, replacing the pivot's single fill row. Absolute so opening one does not
+   reflow the header and shift every column. */
+.matrixcolmenu {
+    position: absolute;
+    z-index: 5;
+    margin-top: 4px;
+    width: 220px;
+    padding: 8px;
+    background-color: var(--ThemeBackground);
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 4px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.matrixtable td .pushvalueinput {
+    width: 100%;
+}

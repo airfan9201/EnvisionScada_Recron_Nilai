@@ -1,0 +1,31 @@
+<svg
+   viewBox="0 0 10.454481 9.4331894"
+   version="1.1"
+   id="svg31580"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-72.698502,-107.39359)">
+    <g
+       id="g31631">
+      <g
+         id="g1727"
+         transform="matrix(-0.35277777,0,0,0.35277777,60.415618,-743.89961)">
+        <path
+           d="m -35.172,2413.469 h -28.926 v 26.031 h 28.926 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1729" />
+      </g>
+      <g
+         id="g1731"
+         transform="matrix(-0.35277777,0,0,0.35277777,60.415618,-743.89961)">
+        <path
+           d="m -37.773,2420.496 h -18.028 l -5.691,11.977"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1733" />
+      </g>
+    </g>
+  </g>
+</svg>

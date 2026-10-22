@@ -1,0 +1,1665 @@
+/* ----------------------------
+   Base
+---------------------------- */
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html,
+body {
+    overflow: hidden;
+    position: relative;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+}
+
+/* ----------------------------
+   Header / Branding
+---------------------------- */
+
+header {
+    color: var(--ThemeFontColor);
+    background-color: var(--ThemeBackground);
+}
+
+.Logo,
+.Logo:hover {
+    color: var(--ThemeFontColor);
+}
+
+.navbar-brand {
+    color: var(--ThemeFontColor);
+}
+
+    .navbar-brand:hover {
+        color: var(--ThemeFontColorHover);
+    }
+
+.HomeHeader {
+    color: dodgerblue;
+}
+
+.HomeNav {
+    text-decoration: none;
+    color: #4f4f4f;
+}
+
+/* ----------------------------
+   Icons
+---------------------------- */
+
+.GeneralConfigSideMenuTitleIcon {
+    width: 25px;
+    padding-top: 5px;
+    margin: 0 15px 0 10px;
+    float: left;
+    fill: var(--ThemeIconColor);
+    border: 0;
+}
+
+    .GeneralConfigSideMenuTitleIcon:hover {
+        fill: var(--ThemeIconColorHover);
+        cursor: pointer;
+    }
+
+.contexticon {
+    fill: var(--ThemeIconColor);
+}
+
+.contexticondiv {
+    width: 24px;
+    height: 24px;
+    padding-top: 5px;
+    margin-left: 15px;
+    cursor: pointer;
+    text-align: right;
+    color: var(--ThemeIconColor);
+}
+
+    .contexticondiv path {
+        fill: var(--ThemeIconColor);
+    }
+
+    .contexticondiv:hover path {
+        fill: var(--ThemeIconColorHover);
+    }
+
+.EditActions path {
+    fill: var(--ThemeIconColor);
+}
+
+.EditActions:hover path {
+    fill: black;
+}
+
+.deletecolumn:hover path,
+.removecolumn:hover path {
+    fill: red;
+}
+
+.ackcolumn:hover path {
+    fill: green;
+}
+
+.infoiconmenu svg {
+    fill: var(--ThemeIconColor);
+}
+
+.infoiconmenu:hover svg {
+    fill: var(--ThemeIconColorHover);
+    cursor: pointer;
+}
+
+/* ----------------------------
+   Text helpers
+---------------------------- */
+
+.markred {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.rowcount {
+    font-size: 14px;
+}
+
+.textright {
+    text-align: right;
+}
+
+h3 {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ----------------------------
+   Buttons / Inputs (general)
+---------------------------- */
+
+.btn {
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border: 1px solid var(--ThemeBorderColor);
+    height:37px;
+}
+
+    .btn:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+    }
+
+.btn-light {
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+}
+
+    .btn-light:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+.btn-outline-secondary {
+    color: var(--ThemeButtonColor);
+    border-color: var(--ThemeBorderColor);
+    background-color: transparent;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+        border-color: var(--ThemeBorderColorHover);
+    }
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+        border-color: #dc3545;
+    }
+
+.btn-primary {
+    background-color: var(--ThemeIconColor);
+    color: #fff;
+    border-color: var(--ThemeIconColor);
+}
+
+    .btn-primary:hover {
+        background-color: var(--ThemeIconColorHover, var(--ThemeIconColor));
+        color: #fff;
+        border-color: var(--ThemeIconColorHover, var(--ThemeIconColor));
+        filter: brightness(0.85);
+    }
+
+.btn-themed {
+    border: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background-color: var(--ThemeButtonBackgroundColor);
+    color: var(--ThemeButtonColor);
+    border-radius: 5px;
+}
+
+    .btn-themed:hover {
+        background-color: var(--ThemeButtonBackgroundColorHover);
+        color: var(--ThemeButtonColorHover);
+    }
+
+/* ----------------------------
+   Dropdowns
+---------------------------- */
+
+.dropdown-menu {
+    background-color: var(--ThemeElements);
+    border-color: var(--ThemeBorderColor);
+}
+
+.dropdown-item {
+    color: var(--ThemeFontColor);
+}
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: var(--ThemeFormLineColorHover);
+        color: var(--ThemeFontColor);
+    }
+
+.form-select {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+    .form-select:focus {
+        background-color: var(--ThemeConfigInputBackgroundColor);
+        color: var(--ThemeConfigInputColor);
+        border-color: var(--ThemeSettingsInputBorderColor);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+.form-select option {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+}
+
+.LoginChangePassBtn a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+.settingsinput {
+    width: 100%;
+}
+
+.settingsmodalbutton {
+    position: absolute;
+    margin-top: -38px;
+    margin-left: -20px;
+}
+
+/* ----------------------------
+   Theme inputs
+---------------------------- */
+
+.form-control-plaintext {
+    color: var(--ThemeConfigInputColor);
+}
+
+.form-control {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+.form-control option {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+}
+
+.form-control:focus {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+.form-control[readonly] {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+}
+
+.configinput {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+    font-size: 15px;
+}
+
+textarea.configinput:focus {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+}
+
+.configreadonly {
+    background-color: var(--ThemeConfigInputReadOnlyBackgroundColor) !important;
+    color: var(--ThemeConfigInputReadOnlyColor) !important;
+}
+
+.action-input,
+.action-type {
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+}
+
+    .action-input:focus,
+    .action-type:focus {
+        background-color: var(--ThemeSettingsInputBackgroundColor);
+        color: var(--ThemeSettingsInputFontColor);
+    }
+
+.form-control::placeholder {
+    color: var(--ThemePlaceholderFontColor);
+}
+
+/* ----------------------------
+   License
+---------------------------- */
+
+.LicenseInputTextArea:focus {
+    outline: none !important;
+    border: 1px solid red;
+    box-shadow: 0 0 10px #719ECE;
+    background-color: var(--ThemeConfigInputReadOnlyBackgroundColor) !important;
+    color: var(--ThemeConfigInputReadOnlyColor) !important;
+}
+
+.LicenseInputTextAreaBtn {
+    width: 60%;
+}
+
+.licenseinfobox {
+    text-align: center;
+    width: 100%;
+    height: 70px;
+    border: 0;
+}
+
+.licenseinfo {
+    width: 280px;
+    padding: 10px;
+    margin: 0 0 10px 35px;
+    border: 0;
+    border-radius: 5px;
+    float: left;
+    font-size: 18px;
+    text-align: left;
+    display: inline-block;
+}
+
+/* ----------------------------
+   Layout containers
+---------------------------- */
+
+.contentcontainer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#PartialContainerDefault {
+    overflow-y: auto;
+    height: calc(100vh - 170px);
+}
+
+    #PartialContainerDefault :is(.rowcolbox, .rowcolboxinput):nth-child(even) {
+        background-color: var(--ThemeFormLineColorEven);
+    }
+
+    #PartialContainerDefault :is(.rowcolbox.stripe-even, .rowcolboxinput.stripe-even) {
+        background-color: var(--ThemeFormLineColorEven);
+    }
+
+    #PartialContainerDefault :is(.rowcolbox.stripe-reset, .rowcolboxinput.stripe-reset) {
+        background-color: transparent;
+    }
+
+    #PartialContainerDefault :is(.rowcolbox, .rowcolboxinput):hover {
+        background-color: var(--ThemeFormLineColorHover);
+        cursor: pointer;
+    }
+
+
+/* ----------------------------
+   Grid / Rows
+---------------------------- */
+
+.rowcolbox {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid var(--ThemeFormLineColorHorizontal);
+}
+
+.rowcolboxinput {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid var(--ThemeFormLineColorHorizontal);
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .rowcolboxinput:hover {
+        background-color: var(--ThemeFormBackgroundColor);
+    }
+
+.rowcolboxinput2 {
+    width: 100%;
+    display: flex;
+    margin-top: 5px;
+    flex-basis: 0;
+    flex-grow: 1;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.rowcol {
+    float: left;
+    margin-left: 0;
+    flex-shrink: 0;
+    border-right: 1px solid var(--ThemeFormLineColorVertical);
+}
+
+.rowcol2 {
+    float: left;
+    margin-left: 5px;
+}
+
+.rowcolhead {
+    float: left;
+    margin-left: 5px;
+    text-align: center;
+}
+
+    .rowcolhead:hover {
+        color: deepskyblue;
+        cursor: pointer;
+    }
+
+.rowcolflex,
+.rowcolflex2 {
+    float: left;
+    margin-left: 5px;
+    flex-grow: 1;
+}
+
+.rowcolbtn,
+.rowcolbtn2 {
+    float: right;
+}
+
+.rowcol .form-control,
+.rowcolflex .form-control {
+    color: var(--ThemeFontColor2);
+    border: 0;
+    background-color: transparent;
+    font-size: 15px;
+}
+
+.rowcol:focus-within {
+    z-index: 2 !important;
+}
+
+.rowcontext2 {
+    margin-bottom: 0.5rem;
+    min-height: 40px;
+}
+
+    .rowcontext2 input,
+    .rowcontext2 input:focus {
+        max-width: 250px;
+        background-color: var(--ThemeSettingsInputBackgroundColor);
+        color: var(--ThemeSettingsInputFontColor);
+        border-color: var(--ThemeSettingsInputBorderColor);
+    }
+
+.AlarmViewerRow {
+    word-break: break-all;
+}
+
+/* ----------------------------
+   OPC UA Browse Modal Grid
+---------------------------- */
+
+.browse-grid-header,
+.browse-grid-row {
+    display: grid;
+    grid-template-columns: 40px 6fr 4fr 2fr 3fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 0 8px;
+    padding: 0 8px;
+}
+
+.browse-grid-header {
+    font-weight: bold;
+    border-bottom: 2px solid var(--ThemeFormLineColorHorizontal);
+    padding-top: 4px;
+    padding-bottom: 6px;
+    user-select: none;
+}
+
+.browse-grid-row {
+    border-bottom: 1px solid var(--ThemeFormLineColorHorizontal);
+    min-height: 36px;
+}
+
+    .browse-grid-row:nth-child(even) {
+        background-color: var(--ThemeFormLineColorEven);
+    }
+
+    .browse-grid-row:hover {
+        background-color: var(--ThemeFormLineColorHover);
+    }
+
+    .browse-grid-row .browse-cell {
+        color: var(--ThemeConfigInputColor);
+        padding: 4px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+.browse-grid-header input[type="checkbox"],
+.browse-grid-row input[type="checkbox"] {
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+/* Tree rows: an expander and an indented label share the Name column. */
+.browse-tree-name {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    color: var(--ThemeConfigInputColor);
+}
+
+.browse-tree-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.browse-tree-folder {
+    font-weight: bold;
+}
+
+.browse-twisty {
+    flex: 0 0 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+    .browse-twisty svg {
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke: var(--ThemeConfigInputColor);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 0.1s ease;
+    }
+
+    .browse-twisty.open svg {
+        transform: rotate(90deg);
+    }
+
+/* A branch being browsed on expand. */
+.browse-tree-loading {
+    flex: 0 0 12px;
+    height: 12px;
+    margin-left: 8px;
+    border: 2px solid var(--ThemeConfigInputColor);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: browse-spin 0.8s linear infinite;
+}
+
+@keyframes browse-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.browse-device-name {
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.browse-selected-count {
+    flex: 3;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.theme-dark .select-variable,
+.theme-dark .select-alarm,
+.theme-dark .select-event,
+.theme-dark .select-device,
+.theme-dark .select-dataforwarder,
+.theme-dark .select-schedule,
+.theme-dark .select-script,
+.theme-dark .select-user,
+.theme-dark .select-usergroup,
+.theme-dark .select-page,
+.theme-dark .select-converter,
+.theme-dark #SelectAll {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1.5px solid var(--ThemeBorderColor);
+    background-color: var(--ThemeElements);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.theme-dark .select-variable:hover,
+.theme-dark .select-alarm:hover,
+.theme-dark .select-event:hover,
+.theme-dark .select-device:hover,
+.theme-dark .select-dataforwarder:hover,
+.theme-dark .select-schedule:hover,
+.theme-dark .select-script:hover,
+.theme-dark .select-user:hover,
+.theme-dark .select-usergroup:hover,
+.theme-dark .select-page:hover,
+.theme-dark .select-converter:hover,
+.theme-dark #SelectAll:hover {
+    border-color: var(--ThemeIconColor);
+}
+
+.theme-dark .select-variable:checked,
+.theme-dark .select-alarm:checked,
+.theme-dark .select-event:checked,
+.theme-dark .select-device:checked,
+.theme-dark .select-dataforwarder:checked,
+.theme-dark .select-schedule:checked,
+.theme-dark .select-script:checked,
+.theme-dark .select-user:checked,
+.theme-dark .select-usergroup:checked,
+.theme-dark .select-page:checked,
+.theme-dark .select-converter:checked,
+.theme-dark #SelectAll:checked {
+    background-color: var(--ThemeIconColor);
+    border-color: var(--ThemeIconColor);
+}
+
+.theme-dark .select-variable:checked::after,
+.theme-dark .select-alarm:checked::after,
+.theme-dark .select-event:checked::after,
+.theme-dark .select-device:checked::after,
+.theme-dark .select-dataforwarder:checked::after,
+.theme-dark .select-schedule:checked::after,
+.theme-dark .select-script:checked::after,
+.theme-dark .select-user:checked::after,
+.theme-dark .select-usergroup:checked::after,
+.theme-dark .select-page:checked::after,
+.theme-dark .select-converter:checked::after,
+.theme-dark #SelectAll:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.dropdown {
+}
+
+/* System Functions dropdown – match Envision .configinput / .dropdown-menu styling (PythonEdit uses site.css only) */
+.system-functions-menu {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+    margin-bottom: 5px;
+}
+
+.system-functions-menu .form-control,
+.system-functions-menu .form-control:focus {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+}
+
+.system-functions-menu .dropdown-item {
+    background-color: var(--ThemeConfigInputBackgroundColor);
+    color: var(--ThemeConfigInputColor);
+    border-color: var(--ThemeSettingsInputBorderColor);
+    white-space: nowrap;
+    position: relative;
+}
+
+/* Reserve space for bold text on hover so width doesn't shift (see https://css-tricks.com/bold-on-hover-without-the-layout-shift/) */
+.system-functions-menu .dropdown-item::after {
+    content: attr(data-text);
+    font-weight: bold;
+    visibility: hidden;
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.system-functions-menu .dropdown-item .system-function-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+}
+
+.system-functions-menu .dropdown-item:hover,
+.system-functions-menu .dropdown-item:focus {
+    color: var(--ThemeConfigInputColor);
+   
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.system-functions-menu .dropdown-item:hover .system-function-label,
+.system-functions-menu .dropdown-item:focus .system-function-label {
+    font-weight: bold;
+}
+
+.system-function-option {
+    color: var(--ThemeConfigInputColor);
+    background-color: transparent;
+    white-space: nowrap;
+}
+
+.system-function-option:hover,
+.system-function-option:focus {
+    color: var(--ThemeConfigInputColor);
+   
+}
+
+/* ----------------------------
+   Search / Filter controls
+---------------------------- */
+
+#SearchBrowseList {
+    background-color: var(--ThemeSettingsInputBackgroundColor);
+    color: var(--ThemeSettingsInputFontColor);
+}
+
+#HeaderForm {
+    width: auto;
+    padding-left: 10px;
+}
+
+#SearchForm {
+    width: auto;
+    float: none;
+    margin-bottom: 0;
+}
+
+#SearchButton {
+    width: auto;
+}
+
+#SearchInput {
+    width: auto;
+    margin-right: 5px;
+    float: right;
+}
+
+#ExportButton,
+#RefreshButton,
+#DeleteSelectedButton {
+    width: auto;
+}
+
+#FilterForm {
+    float: left;
+    margin: 0 0 10px 10px;
+}
+
+#DateTimeFromInput,
+#DateTimeToInput {
+    width: 210px;
+    margin-right: 5px;
+}
+
+#DateTimeApplyButton {
+    margin-right: 5px;
+    height: 34px;
+    padding: 6px 16px;
+}
+
+#SelectAlarmType {
+    width: auto;
+}
+
+    #SelectAlarmType button {
+        height: 37px;
+    }
+
+#SelectDateTime {
+    width: auto;
+}
+
+.SelectAlarmTypeDropDown {
+    width: auto;
+}
+
+/* ----------------------------
+   Context menu bits
+---------------------------- */
+
+.contextvaluediv {
+    min-width: 30px;
+    max-width: 100px;
+    height: 34px;
+    padding-top: 5px;
+    margin-left: 15px;
+    cursor: pointer;
+    text-align: right;
+    color: cornflowerblue;
+    border: 0px solid red;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+    .contextvaluediv:hover {
+        color: white;
+        cursor: pointer;
+    }
+
+/* ----------------------------
+   Checkboxes
+---------------------------- */
+
+.form-check-input:checked {
+    background-color: deepskyblue;
+    border-color: deepskyblue;
+}
+
+    .form-check-input:checked:focus {
+        background-color: deepskyblue !important;
+        border-color: deepskyblue !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+    }
+
+.form-check-input:focus {
+    border-color: var(--ThemeBorderColorHover);
+    box-shadow: none;
+}
+
+.theme-dark .form-check-input {
+    background-color: var(--ThemeElements) !important;
+    border-color: var(--ThemeBorderColor) !important;
+}
+
+.theme-dark .form-check-input:checked {
+    background-color: var(--ThemeIconColor) !important;
+    border-color: var(--ThemeIconColor) !important;
+}
+
+    .theme-dark .form-check-input:checked:focus {
+        background-color: var(--ThemeIconColor) !important;
+        border-color: var(--ThemeIconColor) !important;
+        box-shadow: none;
+    }
+
+.theme-dark .form-switch .form-check-input {
+    background-color: var(--ThemeElements) !important;
+    border-color: var(--ThemeBorderColor) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(200%2c200%2c200%2c0.8)'/%3e%3c/svg%3e") !important;
+}
+
+.theme-dark .form-switch .form-check-input:checked {
+    background-color: var(--ThemeIconColor) !important;
+    border-color: var(--ThemeIconColor) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+}
+
+/* ----------------------------
+   File input
+---------------------------- */
+
+input[type="file"] {
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+}
+
+/* ----------------------------
+   Cards
+---------------------------- */
+
+.card:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+/* ----------------------------
+   Animations
+---------------------------- */
+
+.Blink1s {
+    animation: blinkeralarms 2s linear infinite;
+}
+
+@keyframes blinkeralarms {
+    50% {
+        color: darkgray;
+    }
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ----------------------------
+   Row label/icon
+---------------------------- */
+
+.rowcoltext {
+    font-weight: bold;
+    color: var(--ThemeFontColor);
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1 1 auto;
+    font-size: 15px;
+}
+
+.rowcolicon {
+    width: 8px;
+    margin-left: 8px;
+    border: 0;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-right:10px;
+}
+
+    .rowcolicon svg {
+        fill: currentColor;
+    }
+
+/*.rowcol,*/
+.rowcolflexsort,
+.rowcolformsort {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.rowcolformsort {
+    border-right: 1px solid var(--ThemeFormLineColorVertical);
+    align-self: stretch;
+}
+
+
+.rowcolboxinput2 > form.rowcolbtn {
+    display: flex;
+}
+
+/* ----------------------------
+   Loaders
+---------------------------- */
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #000;
+        border-color: var(--ThemeIconColor) transparent var(--ThemeIconColor) transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ----------------------------
+   Modals
+---------------------------- */
+
+.modal-body,
+.modal-footer,
+.modal-content {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    font-size: 15px;
+}
+
+/* Themed tabs inside modals (e.g. the variable add/edit modal). Bootstrap defaults the active
+   tab to a white background, which shows through in dark mode; drive it from theme vars so it
+   matches the modal surface in both light and dark. */
+.modal-content .nav-tabs {
+    border-bottom-color: var(--ThemeBorderColor);
+}
+
+.modal-content .nav-tabs .nav-link.active {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-color: var(--ThemeBorderColor) var(--ThemeBorderColor) var(--ThemeBackground);
+}
+
+.modal-content .nav-tabs .nav-link:hover {
+    border-color: var(--ThemeBorderColor);
+}
+
+h4 {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    font-size: 1.4rem;
+}
+
+.modal-header {
+    background-color: var(--ThemeBackground);
+    color: var(--ThemeFontColor);
+    border-bottom-color: var(--ThemeBorderColor);
+    font-size: 15px;
+}
+
+.modal-title {
+    font-size: 15px;
+}
+
+.modal .form-control,
+.modal .form-select {
+    font-size: 15px;
+}
+
+.modal .btn {
+    font-size: 15px;
+}
+
+.asppassword::placeholder {
+    color: var(--ThemeFontColor);
+    opacity: 0.5;
+}
+
+/* ----------------------------
+   Server confirm toast
+---------------------------- */
+
+#ServerConfirm {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    padding: 10px;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: none;
+    background-color: var(--ThemeElements, white);
+    border-radius: 10px;
+    text-align: center;
+    animation: hideAnimation 1.2s ease-in forwards;
+}
+
+@keyframes hideAnimation {
+    to {
+        opacity: 0;
+    }
+}
+
+/* ----------------------------
+   Login
+---------------------------- */
+
+.loginbox {
+    width: 500px;
+    height: auto;
+    padding: 60px;
+    margin: 0;
+    border: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border-radius: 10px;
+}
+
+    .loginbox input {
+        height: 45px;
+    }
+
+        .loginbox input::placeholder {
+            color: lightgrey;
+            opacity: 1;
+        }
+
+        .loginbox input:-ms-input-placeholder {
+            color: lightgrey;
+        }
+
+        .loginbox input::-ms-input-placeholder {
+            color: lightgrey;
+        }
+
+.btnlogin {
+    background-color: lightgrey;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    padding: 12px;
+    height: 50px;
+}
+
+#logincontainer {
+    position: fixed;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+    overflow: auto;
+}
+
+/* ----------------------------
+   Menu / Header controls
+---------------------------- */
+
+#BarsIcon {
+    position: absolute;
+    right: 0;
+    display: none;
+}
+
+.MenuIcon {
+    width: 25px;
+    float: right;
+    margin-right: 15px;
+    fill: lightgrey;
+}
+
+#MenuItems {
+    display: block;
+    margin-bottom: 0;
+}
+
+.MenuButton {
+    width: 150px;
+}
+
+#ReturnButton {
+    width: auto;
+    fill: var(--ThemeButtonColor);
+    height: 37px;
+    margin-left: 5px;
+    float: right;
+    padding-top:4px;
+}
+
+.MenuButton {
+    float: left;
+    margin-left: 5px;
+    border: 0;
+}
+
+    .MenuButton:hover {
+        background-color: var(--ThemeBackground);
+        color: var(--ThemeFontColor);
+    }
+
+#AlarmIcons {
+    position: fixed;
+    right: 0;
+    margin-right: 505px;
+    margin-top: 5px;
+}
+
+#AlarmIconsEmbedded {
+    position: fixed;
+    right: 0;
+    margin-right: 435px;
+    margin-top: 5px;
+}
+
+#nodevpage {
+    display: none;
+}
+
+/* ----------------------------
+   Scrollbar
+---------------------------- */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: deepskyblue;
+}
+
+/* ----------------------------
+   Alarm viewer
+---------------------------- */
+
+.AlarmIcon {
+    margin-top: 5px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* ----------------------------
+   Draggable columns
+---------------------------- */
+
+.rowcoldragline {
+    border: 0 solid;
+    cursor: col-resize;
+    width: 16px;
+    margin-left: -8px;
+}
+
+/* ----------------------------
+   Page settings
+---------------------------- */
+
+.PageSettings {
+    background-color: var(--ThemeIconColor);
+    color: var(--ThemeButtonColor);
+}
+
+    .PageSettings:hover {
+        color: var(--ThemeIconColorHover);
+    }
+
+/* ----------------------------
+   Responsive
+---------------------------- */
+
+@media (max-width: 1700px) {
+    #FilterForm {
+        float:right;
+        width:100%;
+        margin-left:15px;
+        margin-bottom:5px;
+    }
+}
+
+    @media (max-width: 1200px) {
+        #BarsIcon {
+            display: block;
+        }
+
+        #MenuItems {
+            display: none;
+            margin-bottom: 10px;
+            height: 100vh;
+            position: fixed;
+            background-color: white;
+            margin-top: 35px;
+            z-index: 5;
+            width: 100%;
+            right: 0;
+            left: 0;
+            padding: 0 10px;
+        }
+
+        #HeaderForm {
+            width: 100%;
+            padding-left: 0;
+        }
+
+        #SearchForm {
+            width: 100%;
+            float: left;
+            margin-top: 5px;
+        }
+
+        #SearchButton {
+            width: 28%;
+            height: 45px;
+        }
+
+        #SearchInput {
+            width: 70%;
+            margin-right: 0;
+            float: left;
+            height: 45px;
+        }
+
+        #ReturnButton {
+            width: 100%;
+        }
+
+        #FilterForm {
+            width: 100%;
+        }
+
+        .MenuButton {
+            width: 100%;
+            margin-left: 0;
+            margin-top: 5px;
+        }
+
+        #AlarmIcons,
+        #AlarmIconsEmbedded {
+            right: 0;
+            margin-right: 60px;
+            position: fixed;
+            margin-top: 1px;
+        }
+
+        #ExportButton,
+        #RefreshButton,
+        #DeleteSelectedButton {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+            #ReturnButton input,
+            .MenuButton input,
+            #ExportButton input,
+            #RefreshButton input,
+            #DeleteSelectedButton input {
+                height: 45px;
+            }
+
+        #FilterForm {
+            margin: 0 0 10px 0;
+            float: right;
+        }
+
+        #DateTimeFromInput,
+        #DateTimeToInput,
+        #DateTimeApplyButton {
+            width: 100%;
+            margin-right: 0;
+            margin-top: 5px;
+            height: 45px;
+        }
+
+        #SelectAlarmType {
+            width: 100%;
+            float: left;
+            margin-left: 0;
+            margin-top: 5px;
+            border: 0;
+            height: 45px;
+        }
+
+        #SelectDateTime {
+            width: 100%;
+        }
+
+        .SelectAlarmTypeDropDown {
+            width: 100%;
+            float: left;
+        }
+
+        #SelectAlarmType button {
+            height: 45px;
+        }
+
+        #ReturnButton {
+            height: 45px;
+            padding-top: 8px;
+        }
+
+        .rowcolbox {
+            width: 100%;
+            overflow: hidden;
+            display: block;
+            margin-top: 0;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 4px 0;
+        }
+
+        .rowcolboxinput2 {
+            display: block;
+        }
+
+            .rowcolboxinput2 .rowcolbtn {
+                width: 30% !important;
+                border: 1px solid lightgrey;
+                height: 45px;
+                padding: 5px 0 0 0;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+
+                .rowcolboxinput2 .rowcolbtn div {
+                    width: 100% !important;
+                    margin-left: 0;
+                }
+
+                .rowcolboxinput2 .rowcolbtn .rowcolicon {
+                    display: none;
+                }
+
+                .rowcolboxinput2 .rowcolbtn .rowcolflex {
+                    margin-top: 5px;
+                }
+
+        .rowcol,
+        .rowcolflex,
+        .rowcolbtn {
+            width: 100% !important;
+            float: left;
+            margin-left: 5px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .rowcolbtn2 {
+            float: left;
+            height: 0;
+            right: 15px;
+            margin-top: 20px;
+            position: absolute;
+            text-align: center;
+        }
+
+        .rowcolbtn3 {
+            float: left;
+            height: 0;
+            right: 15px;
+            margin-top: 110px;
+            position: absolute;
+            text-align: center;
+        }
+
+        .rowcoldragline {
+            display: none;
+        }
+
+        .AlarmViewerRow {
+            border: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .loginbox {
+            width: min(500px, calc(100vw));
+            padding: 20px;
+            margin: 0;
+            background-color: white;
+        }
+
+        .licenseinfobox {
+            height: 200px;
+        }
+
+        .LicenseInputTextArea {
+            width: 100%;
+        }
+
+        .LicenseInputTextAreaBtn {
+            width: 100%;
+        }
+
+        .rowcolbtn {
+            float: right;
+            position: relative;
+            margin: 0 0 10px 0;
+            border: 0;
+        }
+
+        .rowcolbtn2 {
+            float: right;
+            position: relative;
+            margin-top: 0;
+            border: 0;
+        }
+
+        .rowcolbtn3 {
+            float: left;
+            position: relative;
+            margin-top: 0;
+            margin-bottom: 40px;
+            border: 0;
+        }
+    }
+
+    @media (max-height: 400px) {
+      
+
+        .loginbox {
+            padding: 20px;
+        }
+    }
+
+
+/* EntityModal - shared create/edit modal for driver config pages */
+.entity-modal-section {
+    border: 0;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+/* Bootstrap's .btn-close is a near-black SVG that vanishes on the dark modal surface. Invert it in
+   the dark themes so the X reads as light. Applies to every modal close button. */
+html.theme-dark .modal-content .btn-close {
+    filter: invert(1) grayscale(100%) brightness(1.6);
+}
+
+/* Fields the UDT definition owns are rendered disabled (EntityModal.applyManagedFields). Bootstrap's
+   own :disabled shading loses to the themed .form-control background above, so on the dark themes an
+   uneditable field looked identical to an editable one - and its value read as placeholder text. Same
+   fix the Uam dialogs already use (UdtManager.css): a translucent grey that works on any surface,
+   the muted font colour, and a not-allowed cursor. The placeholder is dimmed further so an empty
+   disabled field cannot be mistaken for one holding a value. */
+.modal[id^="EntityModal_"] .form-control:disabled,
+.modal[id^="EntityModal_"] .form-select:disabled,
+.modal[id^="EntityModal_"] select:disabled {
+    background-color: rgba(127, 127, 127, 0.12);
+    color: var(--ThemeFontColor2);
+    cursor: not-allowed;
+}
+
+.modal[id^="EntityModal_"] .form-control:disabled::placeholder {
+    opacity: 0.45;
+}
+
+.modal[id^="EntityModal_"] .form-check-input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* A form-switch that shares a row with labelled inputs would sit at the top of its column, level
+   with the neighbouring fields' labels instead of their inputs. Bottom-align just the switch
+   columns (using :has, so normal field columns are untouched) so the toggle lines up with the
+   input row. */
+.modal[id^="EntityModal_"] .row > [class*="col-"]:has(> .form-check.form-switch) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 7px;
+}
+
+/* InlineModalHost (site.js): field pickers and the actions editor opened from an add/edit modal are
+   hosted inside it as stacked in-place panels instead of stacking a second modal. The relocated panel
+   is another modal's .modal-content, so strip its box styling to blend into the host, lay it out as a
+   flex column so its body scrolls, and hide whichever layer is currently behind it. */
+.inline-hidden {
+    display: none !important;
+}
+
+.modal-content > .inline-hosted-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.modal-content > .inline-hosted-panel > .modal-body {
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* The Enable toggle is authored last in the first section of every add/edit modal, but it should
+   always read first. Pull just that switch column to the front of its row (order:-1) and give it a
+   full-width row of its own so it sits directly under the section heading, above the other fields.
+   Scoped to data-field="Enable" so the other switches (Historian, Writeable, Kafka*, ...) stay put. */
+.modal[id^="EntityModal_"] .row > [class*="col-"]:has(> .form-check.form-switch > [data-field="Enable"]) {
+    order: -1;
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+}
+
+.entity-modal-legend {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ThemeFontColor);
+    border-bottom: 1px solid var(--ThemeFormLineColor);
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+    width: 100%;
+}

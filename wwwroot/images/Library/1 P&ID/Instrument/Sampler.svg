@@ -1,0 +1,33 @@
+<svg
+   viewBox="0 0 9.8364325 9.8367844"
+   version="1.1"
+   id="svg31362"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-81.094161,-104.98627)">
+    <g
+       id="g31404">
+      <g
+         id="g6901"
+         transform="matrix(0.35277777,0,0,0.35277777,-32.530479,-129.25521)">
+        <path
+           d="m 336.027,691.762 c 7.637,0 13.828,-6.192 13.828,-13.828 0,-7.637 -6.191,-13.829 -13.828,-13.829 0,0 0,0 0,0 -7.636,0 -13.828,6.192 -13.828,13.829 0,7.636 6.192,13.828 13.828,13.828 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2268;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path6903" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-variant:normal;font-weight:normal;font-size:3.00038px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text6907"
+         x="84.984482"
+         y="111.44947"><tspan
+           x="84.984482"
+           y="111.44947"
+           id="tspan6905"
+           style="stroke-width:0.352778">S</tspan></text>
+    </g>
+  </g>
+</svg>

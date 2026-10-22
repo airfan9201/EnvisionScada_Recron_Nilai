@@ -1,0 +1,236 @@
+﻿
+#MenuPages {
+    user-select: none;
+    border: 0px solid red;
+}
+
+    #MenuPages::-webkit-scrollbar {
+        width: 6px; /* width of the entire scrollbar */
+    }
+
+    #MenuPages::-webkit-scrollbar-track {
+        background: var(--ThemeBackground);
+    }
+
+    #MenuPages::-webkit-scrollbar-thumb {
+        background-color: deepskyblue; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: 0px solid orange; /* creates padding around scroll thumb */
+    }
+
+    #MenuPages ul {
+        /* margin: 0;
+    padding: 0;*/
+        list-style-type: none;
+    }
+
+    #MenuPages li {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 4px 15px;
+        border-bottom: 1px solid var(--ThemeBorderColor);
+        line-height: normal;
+        position: relative;
+        margin-left: 0;
+    }
+
+        #MenuPages li:hover {
+            background: var(--ThemeBorderColor);
+        }
+
+        #MenuPages li ul {
+            flex-basis: 100%;
+            flex-shrink: 0;
+            padding-left: 15px;
+        }
+
+    #MenuPages > ul {
+        border-bottom: 0px solid lightgray;
+        overflow: hidden;
+        padding-left: 0;
+    }
+
+    #MenuPages li:after {
+        display: none;
+    }
+
+.MenuItemWrapper {
+
+}
+
+
+.MenuItemName {
+    flex: 1 1 auto;
+    border: 0px solid red;
+    color: var(--ThemeFontColor);
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.MenuItemSearchPath {
+    font-size: 11px;
+    opacity: 0.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    margin-left: 6px;
+    color: var(--ThemeFontColor);
+}
+
+#MenuItemName svg:hover {
+    fill: var(--ThemeFontColorHover);
+    cursor: pointer;
+}
+
+.MenuItemCheckbox {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.MenuItemHide {
+    width: 30px;
+    border: 0px solid red;
+    margin-top: -42px;
+    float: right;
+    padding-left: 5px;
+    padding-right: 5px;
+    fill: var(--ThemeFontColor);
+}
+
+    .MenuItemHide svg:hover {
+        /*fill: var(--ThemeFontColorHover);*/
+        cursor: pointer;
+    }
+
+.MenuItemHide {
+    margin-right: 0px;
+    fill: lightgrey;
+}
+
+.MenuItemCollapse ul {
+    display: none;
+}
+
+.MenuItemCollapse > .MenuItemCaretUp {
+    display: none;
+}
+
+.MenuItemCaretDown {
+    display: block;
+}
+
+.MenuItemCaretUp {
+    display: none;
+}
+
+.MenuItemCollapse > .MenuItemCaretDown {
+    display: none;
+}
+
+.MenuItemCollapse > .MenuItemCaretUp {
+    display: block;
+}
+
+
+.MenuItemCaret {
+    flex: 0 0 16px;
+    width: 16px;
+    fill: var(--ThemeFontColor);
+    cursor: pointer;
+}
+
+    .MenuItemCaret svg:hover {
+        /*fill: var(--ThemeFontColorHover);*/
+        cursor: pointer;
+    }
+
+.MenuItemObjectHidden {
+    fill: red;
+}
+
+
+.MenuItemName:hover {
+    cursor: pointer;
+    color: var(--ThemeFontColorHover);
+}
+
+#MenuItemIcon {
+    width: 25px;
+    float: right;
+    fill: var(--ThemeFontColor);
+    margin-top: 5px
+}
+
+    #MenuItemIcon:hover {
+        fill: var(--ThemeFontColorHover);
+        cursor: pointer;
+    }
+
+
+.MenuItemGroup {
+    color: var(--ThemeIconColor);
+
+}
+
+.PageRenameBtn {
+    flex: 0 0 auto;
+    fill: var(--ThemeFontColor);
+    opacity: 1;
+    cursor: pointer;
+    line-height: 0;
+    transition: opacity 0.15s;
+}
+
+.PageRenameBtn:hover {
+    opacity: 0.45;
+}
+
+.PageRenameBtn svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.PageMoveBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 6px;
+    border: 1px solid var(--ThemeBorderColor);
+    border-radius: 4px;
+}
+
+.PageMoveBtnText {
+    font-size: 11px;
+    color: var(--ThemeFontColor);
+    line-height: 1;
+}
+
+.btn-new-page {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--ThemeIconColor);
+    background: transparent;
+    color: var(--ThemeFontColor);
+    fill: var(--ThemeFontColor);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, fill 0.15s;
+}
+
+.btn-new-page:hover {
+    background: var(--ThemeIconColor);
+    color: var(--ThemeBackground);
+    fill: var(--ThemeBackground);
+}

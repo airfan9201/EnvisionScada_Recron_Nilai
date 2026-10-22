@@ -1,0 +1,46 @@
+﻿#DevMenu {
+    position: absolute;
+    z-index: 998;
+    background-color: var(--ThemeBackground);
+    /*border: 1px solid #d3d3d3;*/
+    text-align: center;
+    width: 80px;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 5px;
+}
+
+#DevMenuDrag {
+    padding: 10px;
+    cursor: move;
+    z-index: 998;
+    color: #fff;
+}
+
+.DevMenuIcon {
+    margin-bottom: 13px;
+    fill: darkgray;
+    stroke: darkgray;
+    margin-left: auto;
+    margin-right: auto;
+    border:0px solid pink;
+}
+    .DevMenuIcon:hover {
+        fill: lightgrey;
+        stroke: lightgrey;
+        cursor: pointer;
+    }
+
+    .DevMenuIcon.addobject {
+        margin-bottom: 13px;
+        fill: var(--ThemeIconColor);
+        stroke: var(--ThemeIconColor);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .DevMenuIcon.addobject:hover {
+            fill: var(--ThemeIconColorHover);
+            stroke: lightgrey;
+            cursor: pointer;
+        }

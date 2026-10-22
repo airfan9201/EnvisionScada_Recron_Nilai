@@ -1,0 +1,55 @@
+<svg
+   viewBox="0 0 9.1206284 9.1192169"
+   version="1.1"
+   id="svg21060"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+  <g
+     id="layer1"
+     transform="translate(-84.025087,-95.420549)">
+    <g
+       id="g21168">
+      <g
+         id="g7133"
+         transform="matrix(0.35277777,0,0,0.35277777,-131.20979,-43.167713)">
+        <path
+           d="m 610.469,393.203 h 25.145 v 25.141 h -25.145 z"
+           style="fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7135" />
+      </g>
+      <g
+         id="g7137"
+         transform="matrix(0.35277777,0,0,0.35277777,-131.20979,-43.167713)">
+        <path
+           d="m 623.293,393.707 v 17.098 h -7.543"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7139" />
+      </g>
+      <g
+         id="g7141"
+         transform="matrix(0.35277777,0,0,0.35277777,-131.20979,-43.167713)">
+        <path
+           d="m 615.75,408.289 h 7.543"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7143" />
+      </g>
+      <g
+         id="g7145"
+         transform="matrix(0.35277777,0,0,0.35277777,-131.20979,-43.167713)">
+        <path
+           d="m 615.75,405.773 h 7.543"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7147" />
+      </g>
+      <g
+         id="g7149"
+         transform="matrix(0.35277777,0,0,0.35277777,-131.20979,-43.167713)">
+        <path
+           d="m 615.75,403.262 h 7.543"
+           style="stroke:#000000;stroke-width:0.70875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path7151" />
+      </g>
+    </g>
+  </g>
+</svg>
