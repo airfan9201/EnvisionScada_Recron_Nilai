@@ -1,0 +1,662 @@
+[
+  {
+    "Name": "LoginPageTitle",
+    "Value": "RECRON NILAI"
+  },
+  {
+    "Name": "GuestHomePage",
+    "Value": "kiosk"
+  },
+  {
+    "Name": "ProjectName",
+    "Value": "RECRON_NILAI"
+  },
+  {
+    "Name": "SMTPServer",
+    "Value": "smtp.office365.com"
+  },
+  {
+    "Name": "SMTPUsername",
+    "Value": ""
+  },
+  {
+    "Name": "SMTPPassword",
+    "Value": ""
+  },
+  {
+    "Name": "SMTPSender",
+    "Value": ""
+  },
+  {
+    "Name": "SMTPTLSPort",
+    "Value": "587"
+  },
+  {
+    "Name": "LanguageDefault",
+    "Value": "English"
+  },
+  {
+    "Name": "AlarmActive",
+    "Value": "#d40000"
+  },
+  {
+    "Name": "AlarmReturned",
+    "Value": "#0078d4"
+  },
+  {
+    "Name": "AlarmActiveAcknowledged",
+    "Value": "#4ed400"
+  },
+  {
+    "Name": "AlarmReturnedAcknowledged",
+    "Value": "#000000"
+  },
+  {
+    "Name": "EnableAPI",
+    "Value": "false"
+  },
+  {
+    "Name": "RotateHistorian",
+    "Value": "False"
+  },
+  {
+    "Name": "RotationDays",
+    "Value": "365"
+  },
+  {
+    "Name": "ColorProfile",
+    "Value": ""
+  },
+  {
+    "Name": "HistorianPath",
+    "Value": ""
+  },
+  {
+    "Name": "EnableActiveDirectory",
+    "Value": "False"
+  },
+  {
+    "Name": "LDAPHost",
+    "Value": ""
+  },
+  {
+    "Name": "LDAPPort",
+    "Value": "389"
+  },
+  {
+    "Name": "LDAPSearchBase",
+    "Value": "DC=mydomain,DC=com"
+  },
+  {
+    "Name": "LDAPSecureSocketLayer",
+    "Value": "False"
+  },
+  {
+    "Name": "LDAPVerifyServerCertificate",
+    "Value": "False"
+  },
+  {
+    "Name": "NumpadHeight",
+    "Value": "300px"
+  },
+  {
+    "Name": "NumpadWidth",
+    "Value": "260px"
+  },
+  {
+    "Name": "NumpadColor",
+    "Value": "#ffffff"
+  },
+  {
+    "Name": "NumpadBackgroundColor",
+    "Value": "#c9c9c9"
+  },
+  {
+    "Name": "TrainingSimulator",
+    "Value": "False"
+  },
+  {
+    "Name": "LanguagesFile",
+    "Value": ""
+  },
+  {
+    "Name": "CSVDelimiter",
+    "Value": ","
+  },
+  {
+    "Name": "Participant1IPAddress",
+    "Value": ""
+  },
+  {
+    "Name": "Participant2IPAddress",
+    "Value": ""
+  },
+  {
+    "Name": "Participant1Port",
+    "Value": "443"
+  },
+  {
+    "Name": "Participant2Port",
+    "Value": "443"
+  },
+  {
+    "Name": "Participant1Priority",
+    "Value": "1"
+  },
+  {
+    "Name": "Participant2Priority",
+    "Value": "2"
+  },
+  {
+    "Name": "EnableFileLogging",
+    "Value": "False"
+  },
+  {
+    "Name": "FileLoggingPath",
+    "Value": "C:/Users/Public"
+  },
+  {
+    "Name": "GlobalScript",
+    "Value": "function OnGlobalLoad() {\n    //console.log(\u0027Global Loaded\u0027);\n}\n\nfunction OnGlobalPeriodic() {\n    //console.log(\u0027Global Code Executing\u0027);\n}\n\nfunction OnGlobalExit() {\n    //console.log(\u0027Global Exited\u0027);\n}"
+  },
+  {
+    "Name": "EnableModbusTcpServer",
+    "Value": "True"
+  },
+  {
+    "Name": "ModbusTcpServerPort",
+    "Value": "502"
+  },
+  {
+    "Name": "ModbusTcpServerVerbose",
+    "Value": "0"
+  },
+  {
+    "Name": "EnableModbusRtuServer",
+    "Value": "False"
+  },
+  {
+    "Name": "ModbusRtuPortName",
+    "Value": "COM3"
+  },
+  {
+    "Name": "ModbusRtuServerUnitId",
+    "Value": "5"
+  },
+  {
+    "Name": "ModbusRtuServerVerbose",
+    "Value": "0"
+  },
+  {
+    "Name": "Languages",
+    "Value": "[\u0022nl\u0022,\u0022fr\u0022,\u0022de\u0022,\u0022es\u0022,\u0022pt\u0022]"
+  },
+  {
+    "Name": "GuestDefaultLanguage",
+    "Value": "English"
+  },
+  {
+    "Name": "LoginTitleFontColor",
+    "Value": "#355B8D"
+  },
+  {
+    "Name": "LoginBoxBackgroundColor",
+    "Value": "#fffffff2"
+  },
+  {
+    "Name": "LoginInputBoxBackgroundColor",
+    "Value": "#fff"
+  },
+  {
+    "Name": "LoginInputBoxFontColor",
+    "Value": "#212529"
+  },
+  {
+    "Name": "LoginInputBoxBorderColor",
+    "Value": "#CFD4D9"
+  },
+  {
+    "Name": "LoginButtonBackgroundColor",
+    "Value": "lightgrey"
+  },
+  {
+    "Name": "LoginButtonFontColor",
+    "Value": "#ffffff"
+  },
+  {
+    "Name": "LoginShowPasswordIconColor",
+    "Value": "grey"
+  },
+  {
+    "Name": "LoginChangePasswordFontColor",
+    "Value": "#458EF6"
+  },
+  {
+    "Name": "EnableRedundancy",
+    "Value": "False"
+  },
+  {
+    "Name": "LayerSettings",
+    "Value": ""
+  },
+  {
+    "Name": "ModbusRtuBaudRate",
+    "Value": "9600"
+  },
+  {
+    "Name": "ModbusRtuParity",
+    "Value": "Even"
+  },
+  {
+    "Name": "ModbusRtuStopBits",
+    "Value": "One"
+  },
+  {
+    "Name": "ModbusRtuHandshake",
+    "Value": "None"
+  },
+  {
+    "Name": "EnableOpcUaServer",
+    "Value": "False"
+  },
+  {
+    "Name": "OpcUaServerPort",
+    "Value": "4840"
+  },
+  {
+    "Name": "OpcUaServerVerbose",
+    "Value": "0"
+  },
+  {
+    "Name": "Language1",
+    "Value": "Language1"
+  },
+  {
+    "Name": "Language2",
+    "Value": "Language2"
+  },
+  {
+    "Name": "Language3",
+    "Value": "Language3"
+  },
+  {
+    "Name": "Language4",
+    "Value": "Language4"
+  },
+  {
+    "Name": "Language5",
+    "Value": "Language5"
+  },
+  {
+    "Name": "BackfillMaxRecords",
+    "Value": "800"
+  },
+  {
+    "Name": "ForefillMaxRecords",
+    "Value": "800"
+  },
+  {
+    "Name": "BaseRequestTimeout",
+    "Value": "60"
+  },
+  {
+    "Name": "RequestTimeout",
+    "Value": "3"
+  },
+  {
+    "Name": "MaxAttempts",
+    "Value": "2"
+  },
+  {
+    "Name": "AttemptDelay",
+    "Value": "200"
+  },
+  {
+    "Name": "ViewerLineColor",
+    "Value": "lightgrey"
+  },
+  {
+    "Name": "ViewerFontColor",
+    "Value": "#545454"
+  },
+  {
+    "Name": "ViewerBackgroundColor",
+    "Value": "#F0F1F3"
+  },
+  {
+    "Name": "ViewerInputBackgroundColor",
+    "Value": "white"
+  },
+  {
+    "Name": "ViewerInputFontColor",
+    "Value": "black"
+  },
+  {
+    "Name": "ViewerButtonBackgroundColor",
+    "Value": "lightgrey"
+  },
+  {
+    "Name": "ViewerButtonFontColor",
+    "Value": "white"
+  },
+  {
+    "Name": "ViewerBorderColor",
+    "Value": "#dbdbdb"
+  },
+  {
+    "Name": "ViewerButtonBackgroundColorHover",
+    "Value": "darkgray"
+  },
+  {
+    "Name": "ViewerButtonFontColorHover",
+    "Value": "black"
+  },
+  {
+    "Name": "ViewerBorderColorHover",
+    "Value": "lightgrey"
+  },
+  {
+    "Name": "ViewerRowHoverColor",
+    "Value": "#e6e6e6"
+  },
+  {
+    "Name": "ViewerRowAlternateColor",
+    "Value": "#ededed"
+  },
+  {
+    "Name": "ViewerRowBorderColor",
+    "Value": "#e8e6e6"
+  },
+  {
+    "Name": "ViewerHeaderBackgroundColor",
+    "Value": "#F0F1F3"
+  },
+  {
+    "Name": "ViewerIconColor",
+    "Value": "#7198C8"
+  },
+  {
+    "Name": "ViewerIconColorHover",
+    "Value": "lightgrey"
+  },
+  {
+    "Name": "ViewerColumnHeaderFontColor",
+    "Value": "#545454"
+  },
+  {
+    "Name": "ViewerHeaderFormBackgroundColor",
+    "Value": "#F0F1F3"
+  },
+  {
+    "Name": "NumpadScale",
+    "Value": "1.0"
+  },
+  {
+    "Name": "KeyboardColor",
+    "Value": "#ffffff"
+  },
+  {
+    "Name": "KeyboardBackgroundColor",
+    "Value": "#c9c9c9"
+  },
+  {
+    "Name": "KeyboardScale",
+    "Value": "1.0"
+  },
+  {
+    "Name": "EnableKeyboard",
+    "Value": "False"
+  },
+  {
+    "Name": "AiChatEnabled",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatProvider",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatModel",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatEndpoint",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatApiKeyEncrypted",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatAnthropicVersion",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatSystemPrompt",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatMaxToolRounds",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatMaxHistoryMessages",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatMaxTokens",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatTemperature",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatRuntimeModel",
+    "Value": ""
+  },
+  {
+    "Name": "AiChatDeveloperModel",
+    "Value": ""
+  },
+  {
+    "Name": "PageHistoryMaxBackups",
+    "Value": "100"
+  },
+  {
+    "Name": "DatabaseQueryAllowAll",
+    "Value": "False"
+  },
+  {
+    "Name": "DatabaseQueryAllowedSqliteDatabases",
+    "Value": "[]"
+  },
+  {
+    "Name": "DatabaseQueryAllowedSqlServers",
+    "Value": "[]"
+  },
+  {
+    "Name": "MaxForwardingQueueSize",
+    "Value": "50000"
+  },
+  {
+    "Name": "PythonScriptTimeout",
+    "Value": "600"
+  },
+  {
+    "Name": "DocumentViewerAccess",
+    "Value": ""
+  },
+  {
+    "Name": "ChangeBusDrainWindow",
+    "Value": "100"
+  },
+  {
+    "Name": "ChangeBusSafetyNetInterval",
+    "Value": "5000"
+  },
+  {
+    "Name": "AuditRetentionDays",
+    "Value": "365"
+  },
+  {
+    "Name": "Participant1IPAddress2",
+    "Value": ""
+  },
+  {
+    "Name": "Participant2IPAddress2",
+    "Value": ""
+  },
+  {
+    "Name": "EnableMcpOAuth",
+    "Value": "False"
+  },
+  {
+    "Name": "McpOAuthSigningKey",
+    "Value": ""
+  },
+  {
+    "Name": "McpOAuthAccessTokenMinutes",
+    "Value": "60"
+  },
+  {
+    "Name": "LoginThrottleFreeAttempts",
+    "Value": "5"
+  },
+  {
+    "Name": "LoginThrottleStepSeconds",
+    "Value": "2"
+  },
+  {
+    "Name": "LoginThrottleMaxDelaySeconds",
+    "Value": "30"
+  },
+  {
+    "Name": "LoginThrottleWindowMinutes",
+    "Value": "15"
+  },
+  {
+    "Name": "AdminSessionTimeoutMinutes",
+    "Value": "240"
+  },
+  {
+    "Name": "PasswordMinLength",
+    "Value": "8"
+  },
+  {
+    "Name": "PasswordRequireComplexity",
+    "Value": "True"
+  },
+  {
+    "Name": "PasswordExpiryDays",
+    "Value": "0"
+  },
+  {
+    "Name": "EnableAiToolActivityLogging",
+    "Value": "True"
+  },
+  {
+    "Name": "AllowKnowledgeBaseAnonymousAccess",
+    "Value": "False"
+  },
+  {
+    "Name": "PythonScriptHistoryMaxBackups",
+    "Value": "100"
+  },
+  {
+    "Name": "EnableModbusRtuServer2",
+    "Value": "False"
+  },
+  {
+    "Name": "ModbusRtuPortName2",
+    "Value": "COM4"
+  },
+  {
+    "Name": "ModbusRtuBaudRate2",
+    "Value": "9600"
+  },
+  {
+    "Name": "ModbusRtuParity2",
+    "Value": "Even"
+  },
+  {
+    "Name": "ModbusRtuStopBits2",
+    "Value": "One"
+  },
+  {
+    "Name": "ModbusRtuHandshake2",
+    "Value": "None"
+  },
+  {
+    "Name": "ModbusRtuServerUnitId2",
+    "Value": "5"
+  },
+  {
+    "Name": "ModbusRtuServerVerbose2",
+    "Value": "0"
+  },
+  {
+    "Name": "EnableMqttBroker",
+    "Value": "False"
+  },
+  {
+    "Name": "MqttBrokerPort",
+    "Value": "1883"
+  },
+  {
+    "Name": "MqttBrokerTlsEnabled",
+    "Value": "False"
+  },
+  {
+    "Name": "MqttBrokerTlsPort",
+    "Value": "8883"
+  },
+  {
+    "Name": "MqttBrokerCertificateName",
+    "Value": ""
+  },
+  {
+    "Name": "MqttBrokerAllowAnonymous",
+    "Value": "False"
+  },
+  {
+    "Name": "MqttBrokerEnforceTopicAcl",
+    "Value": "True"
+  },
+  {
+    "Name": "MqttBrokerLogEntries",
+    "Value": "2000"
+  },
+  {
+    "Name": "EnablePart11Compliance",
+    "Value": "False"
+  },
+  {
+    "Name": "SignatureRequiredActions",
+    "Value": "[]"
+  },
+  {
+    "Name": "SignatureMeanings",
+    "Value": "[\u0022Approval\u0022,\u0022Review\u0022,\u0022Responsibility\u0022]"
+  },
+  {
+    "Name": "SignatureAlwaysRequireBothComponents",
+    "Value": "True"
+  },
+  {
+    "Name": "EnforceSingleSession",
+    "Value": "False"
+  },
+  {
+    "Name": "GitRemoteUrl",
+    "Value": "https://github.com/airfan9201/WTP.git"
+  },
+  {
+    "Name": "GitUsername",
+    "Value": "airfan9201"
+  },
+  {
+    "Name": "GitToken",
+    "Value": "ZmHDVw4mlMe\u002BorLEHhQQm060vgjvwvwWmg6QV2GR/OZc39u05Y\u002BzMLS6M7maKKGDlyAjFRNDJEqOdxD1A/mpH1uivOFeTMe/60qDc3IIziZvsIAhskqaGV/J23euCR9IiQZMLvyEzXwuqX3Mqvcw3T8nm8xFi68Nz/e7k2v8UZXNWgCUJLne7jUCO5e53qfh7Dp2kp6buhORuSFDqCZWDw=="
+  }
+]

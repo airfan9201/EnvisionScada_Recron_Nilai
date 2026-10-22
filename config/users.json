@@ -1,0 +1,24 @@
+[
+  {
+    "UserName": "Admin",
+    "Password": "210000.LpGhozSjfSMt2Lmas4L7gg==.uwFP2WgSuVhhfMAMC0QrVNh1XQ/AKxlXE7zs6CLiPzo=",
+    "UserGroups": "Administrators",
+    "HomePage": "MAIN",
+    "DefaultLanguage": "English",
+    "FullName": "",
+    "Email": "",
+    "MustChangePassword": false,
+    "PasswordLastChanged": "2026-10-22T09:55:28.7920499"
+  },
+  {
+    "UserName": "operator",
+    "Password": "10000.6p32Xfb2zTqOhf0vEUcszg==.q\u002B2XdwXc4m4I8hwrWf8qkAz3HMAT9xHYBD\u002Bi\u002BeDayXE=",
+    "UserGroups": "Operators",
+    "HomePage": "MAIN",
+    "DefaultLanguage": "English",
+    "FullName": "",
+    "Email": "",
+    "MustChangePassword": false,
+    "PasswordLastChanged": "2026-10-22T09:55:28.7920499+08:00"
+  }
+]

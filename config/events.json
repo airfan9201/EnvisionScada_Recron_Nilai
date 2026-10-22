@@ -1,0 +1,18 @@
+[
+  {
+    "Enable": false,
+    "Asset": "",
+    "Condition": "INVERTER1.current_ia \u003E",
+    "Message": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": false,
+    "Asset": "",
+    "Condition": "PVMSB1_INV27.STATUS = 1",
+    "Message": "Inverter Online",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  }
+]

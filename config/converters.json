@@ -1,0 +1,8 @@
+[
+  {
+    "Name": "Format4Decimal",
+    "ReadConversion": "Round(value, 4)",
+    "WriteConversion": "",
+    "Description": ""
+  }
+]

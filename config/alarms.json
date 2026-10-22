@@ -1,0 +1,2552 @@
+[
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV1.STATUS == 2 || MV1_INV1.TotalP_AC ==0 || MV1_INV1.STATUS ==0",
+    "Message": "MV1 Inverter 1 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV1.STATUS2 ==17",
+    "Message": "MV1 Inverter 1 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV1.STATUS2 ==3",
+    "Message": "MV1 Inverter 1 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV1.STATUS2 ==5",
+    "Message": "MV1 Inverter 1 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV2.STATUS == 2 || MV1_INV2.TotalP_AC ==0 || MV1_INV2.STATUS ==0",
+    "Message": "MV1 Inverter 2 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV2.STATUS2 ==17",
+    "Message": "MV1 Inverter 2 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV2.STATUS2 ==3",
+    "Message": "MV1 Inverter 2 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV2.STATUS2 ==5",
+    "Message": "MV1 Inverter 2 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV3.STATUS == 2 || MV1_INV3.TotalP_AC ==0 || MV1_INV3.STATUS ==0",
+    "Message": "MV1 Inverter 3 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV3.STATUS2 ==17",
+    "Message": "MV1 Inverter 3 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV3.STATUS2 ==3",
+    "Message": "MV1 Inverter 3 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV3.STATUS2 ==5",
+    "Message": "MV1 Inverter 3 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV4.STATUS == 2 || MV1_INV4.TotalP_AC ==0 || MV1_INV4.STATUS ==0",
+    "Message": "MV1 Inverter 4 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV4.STATUS2 ==17",
+    "Message": "MV1 Inverter 4 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV4.STATUS2 ==3",
+    "Message": "MV1 Inverter 4 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV4.STATUS2 ==5",
+    "Message": "MV1 Inverter 4 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV5.STATUS == 2 || MV1_INV5.TotalP_AC ==0 || MV1_INV5.STATUS ==0",
+    "Message": "MV1 Inverter 5 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV5.STATUS2 ==17",
+    "Message": "MV1 Inverter 5 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV5.STATUS2 ==3",
+    "Message": "MV1 Inverter 5 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV5.STATUS2 ==5",
+    "Message": "MV1 Inverter 5 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV6.STATUS == 2 || MV1_INV6.TotalP_AC ==0 || MV1_INV6.STATUS ==0",
+    "Message": "MV1 Inverter 6 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV6.STATUS2 ==17",
+    "Message": "MV1 Inverter 6 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV6.STATUS2 ==3",
+    "Message": "MV1 Inverter 6 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV6.STATUS2 ==5",
+    "Message": "MV1 Inverter 6 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV7.STATUS == 2 || MV1_INV7.TotalP_AC ==0 || MV1_INV7.STATUS ==0",
+    "Message": "MV1 Inverter 7 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV7.STATUS2 ==17",
+    "Message": "MV1 Inverter 7 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV7.STATUS2 ==3",
+    "Message": "MV1 Inverter 7 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV7.STATUS2 ==5",
+    "Message": "MV1 Inverter 7 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV8.STATUS == 2 || MV1_INV8.TotalP_AC ==0 || MV1_INV8.STATUS ==0",
+    "Message": "MV1 Inverter 8 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV8.STATUS2 ==17",
+    "Message": "MV1 Inverter 8 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV8.STATUS2 ==3",
+    "Message": "MV1 Inverter 8 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV8.STATUS2 ==5",
+    "Message": "MV1 Inverter 8 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV9.STATUS == 2 || MV1_INV9.TotalP_AC ==0 || MV1_INV9.STATUS ==0",
+    "Message": "MV1 Inverter 9 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV9.STATUS2 ==17",
+    "Message": "MV1 Inverter 9 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV9.STATUS2 ==3",
+    "Message": "MV1 Inverter 9 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV9.STATUS2 ==5",
+    "Message": "MV1 Inverter 9 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV10.STATUS == 2 || MV1_INV10.TotalP_AC ==0 || MV1_INV10.STATUS ==0",
+    "Message": "MV1 Inverter 10 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV10.STATUS2 ==17",
+    "Message": "MV1 Inverter 10 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV10.STATUS2 ==3",
+    "Message": "MV1 Inverter 10 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV10.STATUS2 ==5",
+    "Message": "MV1 Inverter 10 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV11.STATUS == 2 || MV1_INV11.TotalP_AC ==0 || MV1_INV11.STATUS ==0",
+    "Message": "MV1 Inverter 11 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV11.STATUS2 ==17",
+    "Message": "MV1 Inverter 11 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV11.STATUS2 ==3",
+    "Message": "MV1 Inverter 11 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV11.STATUS2 ==5",
+    "Message": "MV1 Inverter 11 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV12.STATUS == 2 || MV1_INV12.TotalP_AC ==0 || MV1_INV12.STATUS ==0",
+    "Message": "MV1 Inverter 12 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV12.STATUS2 ==17",
+    "Message": "MV1 Inverter 12 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV12.STATUS2 ==3",
+    "Message": "MV1 Inverter 12 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV12.STATUS2 ==5",
+    "Message": "MV1 Inverter 12 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV13.STATUS == 2 || MV1_INV13.TotalP_AC ==0 || MV1_INV13.STATUS ==0",
+    "Message": "MV1 Inverter 13 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV13.STATUS2 ==17",
+    "Message": "MV1 Inverter 13 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV13.STATUS2 ==3",
+    "Message": "MV1 Inverter 13 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV13.STATUS2 ==5",
+    "Message": "MV1 Inverter 13 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV14.STATUS == 2 || MV1_INV14.TotalP_AC ==0 || MV1_INV14.STATUS ==0",
+    "Message": "MV1 Inverter 14 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV14.STATUS2 ==17",
+    "Message": "MV1 Inverter 14 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV14.STATUS2 ==3",
+    "Message": "MV1 Inverter 14 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV14.STATUS2 ==5",
+    "Message": "MV1 Inverter 14 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV15.STATUS == 2 || MV1_INV15.TotalP_AC ==0 || MV1_INV15.STATUS ==0",
+    "Message": "MV1 Inverter 15 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV15.STATUS2 ==17",
+    "Message": "MV1 Inverter 15 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV15.STATUS2 ==3",
+    "Message": "MV1 Inverter 15 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV15.STATUS2 ==5",
+    "Message": "MV1 Inverter 15 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV16.STATUS == 2 || MV1_INV16.TotalP_AC ==0 || MV1_INV16.STATUS ==0",
+    "Message": "MV1 Inverter 16 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV16.STATUS2 ==17",
+    "Message": "MV1 Inverter 16 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV16.STATUS2 ==3",
+    "Message": "MV1 Inverter 16 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV16.STATUS2 ==5",
+    "Message": "MV1 Inverter 16 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV17.STATUS == 2 || MV1_INV17.TotalP_AC ==0 || MV1_INV17.STATUS ==0",
+    "Message": "MV1 Inverter 17 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV17.STATUS2 ==17",
+    "Message": "MV1 Inverter 17 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV17.STATUS2 ==3",
+    "Message": "MV1 Inverter 17 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV17.STATUS2 ==5",
+    "Message": "MV1 Inverter 17 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV18.STATUS == 2 || MV1_INV18.TotalP_AC ==0 || MV1_INV18.STATUS ==0",
+    "Message": "MV1 Inverter 18 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV18.STATUS2 ==17",
+    "Message": "MV1 Inverter 18 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV18.STATUS2 ==3",
+    "Message": "MV1 Inverter 18 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV18.STATUS2 ==5",
+    "Message": "MV1 Inverter 18 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV19.STATUS == 2 || MV1_INV19.TotalP_AC ==0 || MV1_INV19.STATUS ==0",
+    "Message": "MV1 Inverter 19 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV19.STATUS2 ==17",
+    "Message": "MV1 Inverter 19 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV19.STATUS2 ==3",
+    "Message": "MV1 Inverter 19 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV19.STATUS2 ==5",
+    "Message": "MV1 Inverter 19 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV20.STATUS == 2 || MV1_INV20.TotalP_AC ==0 || MV1_INV20.STATUS ==0",
+    "Message": "MV1 Inverter 20 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV20.STATUS2 ==17",
+    "Message": "MV1 Inverter 20 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV20.STATUS2 ==3",
+    "Message": "MV1 Inverter 20 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV20.STATUS2 ==5",
+    "Message": "MV1 Inverter 20 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV21.STATUS == 2 || MV1_INV21.TotalP_AC ==0 || MV1_INV21.STATUS ==0",
+    "Message": "MV1 Inverter 21 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV21.STATUS2 ==17",
+    "Message": "MV1 Inverter 21 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV21.STATUS2 ==3",
+    "Message": "MV1 Inverter 21 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV21.STATUS2 ==5",
+    "Message": "MV1 Inverter 21 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV22.STATUS == 2 || MV1_INV22.TotalP_AC ==0 || MV1_INV22.STATUS ==0",
+    "Message": "MV1 Inverter 22 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV22.STATUS2 ==17",
+    "Message": "MV1 Inverter 22 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV22.STATUS2 ==3",
+    "Message": "MV1 Inverter 22 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV22.STATUS2 ==5",
+    "Message": "MV1 Inverter 22 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV23.STATUS == 2 || MV1_INV23.TotalP_AC ==0 || MV1_INV23.STATUS ==0",
+    "Message": "MV1 Inverter 23 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV23.STATUS2 ==17",
+    "Message": "MV1 Inverter 23 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV23.STATUS2 ==3",
+    "Message": "MV1 Inverter 23 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV23.STATUS2 ==5",
+    "Message": "MV1 Inverter 23 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV24.STATUS == 2 || MV1_INV24.TotalP_AC ==0 || MV1_INV24.STATUS ==0",
+    "Message": "MV1 Inverter 24 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV24.STATUS2 ==17",
+    "Message": "MV1 Inverter 24 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV24.STATUS2 ==3",
+    "Message": "MV1 Inverter 24 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV24.STATUS2 ==5",
+    "Message": "MV1 Inverter 24 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV25.STATUS == 2 || MV1_INV25.TotalP_AC ==0 || MV1_INV25.STATUS ==0",
+    "Message": "MV1 Inverter 25 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV25.STATUS2 ==17",
+    "Message": "MV1 Inverter 25 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV25.STATUS2 ==3",
+    "Message": "MV1 Inverter 25 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV25.STATUS2 ==5",
+    "Message": "MV1 Inverter 25 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV26.STATUS == 2 || MV1_INV26.TotalP_AC ==0 || MV1_INV26.STATUS ==0",
+    "Message": "MV1 Inverter 26 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV26.STATUS2 ==17",
+    "Message": "MV1 Inverter 26 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV26.STATUS2 ==3",
+    "Message": "MV1 Inverter 26 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV26.STATUS2 ==5",
+    "Message": "MV1 Inverter 26 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV27.STATUS == 2 || MV1_INV27.TotalP_AC ==0 || MV1_INV27.STATUS ==0",
+    "Message": "MV1 Inverter 27 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV27.STATUS2 ==17",
+    "Message": "MV1 Inverter 27 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV27.STATUS2 ==3",
+    "Message": "MV1 Inverter 27 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV1_INV27.STATUS2 ==5",
+    "Message": "MV1 Inverter 27 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV28.STATUS == 2 || MV2_INV28.TotalP_AC ==0 || MV2_INV28.STATUS ==0",
+    "Message": "MV2 Inverter 28 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV28.STATUS2 ==17",
+    "Message": "MV2 Inverter 28 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV28.STATUS2 ==3",
+    "Message": "MV2 Inverter 28 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV28.STATUS2 ==5",
+    "Message": "MV2 Inverter 28 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV29.STATUS == 2 || MV2_INV29.TotalP_AC ==0 || MV2_INV29.STATUS ==0",
+    "Message": "MV2 Inverter 29 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV29.STATUS2 ==17",
+    "Message": "MV2 Inverter 29 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV29.STATUS2 ==3",
+    "Message": "MV2 Inverter 29 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV29.STATUS2 ==5",
+    "Message": "MV2 Inverter 29 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV30.STATUS == 2 || MV2_INV30.TotalP_AC ==0 || MV2_INV30.STATUS ==0",
+    "Message": "MV2 Inverter 30 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV30.STATUS2 ==17",
+    "Message": "MV2 Inverter 30 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV30.STATUS2 ==3",
+    "Message": "MV2 Inverter 30 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV30.STATUS2 ==5",
+    "Message": "MV2 Inverter 30 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV31.STATUS == 2 || MV2_INV31.TotalP_AC ==0 || MV2_INV31.STATUS ==0",
+    "Message": "MV2 Inverter 31 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV31.STATUS2 ==17",
+    "Message": "MV2 Inverter 31 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV31.STATUS2 ==3",
+    "Message": "MV2 Inverter 31 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV31.STATUS2 ==5",
+    "Message": "MV2 Inverter 31 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV32.STATUS == 2 || MV2_INV32.TotalP_AC ==0 || MV2_INV32.STATUS ==0",
+    "Message": "MV2 Inverter 32 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV32.STATUS2 ==17",
+    "Message": "MV2 Inverter 32 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV32.STATUS2 ==3",
+    "Message": "MV2 Inverter 32 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV32.STATUS2 ==5",
+    "Message": "MV2 Inverter 32 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV33.STATUS == 2 || MV2_INV33.TotalP_AC ==0 || MV2_INV33.STATUS ==0",
+    "Message": "MV2 Inverter 33 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV33.STATUS2 ==17",
+    "Message": "MV2 Inverter 33 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV33.STATUS2 ==3",
+    "Message": "MV2 Inverter 33 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV33.STATUS2 ==5",
+    "Message": "MV2 Inverter 33 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV34.STATUS == 2 || MV2_INV34.TotalP_AC ==0 || MV2_INV34.STATUS ==0",
+    "Message": "MV2 Inverter 34 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV34.STATUS2 ==17",
+    "Message": "MV2 Inverter 34 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV34.STATUS2 ==3",
+    "Message": "MV2 Inverter 34 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV34.STATUS2 ==5",
+    "Message": "MV2 Inverter 34 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV35.STATUS == 2 || MV2_INV35.TotalP_AC ==0 || MV2_INV35.STATUS ==0",
+    "Message": "MV2 Inverter 35 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV35.STATUS2 ==17",
+    "Message": "MV2 Inverter 35 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV35.STATUS2 ==3",
+    "Message": "MV2 Inverter 35 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV35.STATUS2 ==5",
+    "Message": "MV2 Inverter 35 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV36.STATUS == 2 || MV2_INV36.TotalP_AC ==0 || MV2_INV36.STATUS ==0",
+    "Message": "MV2 Inverter 36 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV36.STATUS2 ==17",
+    "Message": "MV2 Inverter 36 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV36.STATUS2 ==3",
+    "Message": "MV2 Inverter 36 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV36.STATUS2 ==5",
+    "Message": "MV2 Inverter 36 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV37.STATUS == 2 || MV2_INV37.TotalP_AC ==0 || MV2_INV37.STATUS ==0",
+    "Message": "MV2 Inverter 37 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV37.STATUS2 ==17",
+    "Message": "MV2 Inverter 37 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV37.STATUS2 ==3",
+    "Message": "MV2 Inverter 37 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV37.STATUS2 ==5",
+    "Message": "MV2 Inverter 37 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV38.STATUS == 2 || MV2_INV38.TotalP_AC ==0 || MV2_INV38.STATUS ==0",
+    "Message": "MV2 Inverter 38 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV38.STATUS2 ==17",
+    "Message": "MV2 Inverter 38 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV38.STATUS2 ==3",
+    "Message": "MV2 Inverter 38 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV2_INV38.STATUS2 ==5",
+    "Message": "MV2 Inverter 38 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV39.STATUS == 2 || MV3_INV39.TotalP_AC ==0 || MV3_INV39.STATUS ==0",
+    "Message": "MV3 Inverter 39 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV39.STATUS2 ==17",
+    "Message": "MV3 Inverter 39 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV39.STATUS2 ==3",
+    "Message": "MV3 Inverter 39 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV39.STATUS2 ==5",
+    "Message": "MV3 Inverter 39 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV40.STATUS == 2 || MV3_INV40.TotalP_AC ==0 || MV3_INV40.STATUS ==0",
+    "Message": "MV3 Inverter 40 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV40.STATUS2 ==17",
+    "Message": "MV3 Inverter 40 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV40.STATUS2 ==3",
+    "Message": "MV3 Inverter 40 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV40.STATUS2 ==5",
+    "Message": "MV3 Inverter 40 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV41.STATUS == 2 || MV3_INV41.TotalP_AC ==0 || MV3_INV41.STATUS ==0",
+    "Message": "MV3 Inverter 41 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV41.STATUS2 ==17",
+    "Message": "MV3 Inverter 41 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV41.STATUS2 ==3",
+    "Message": "MV3 Inverter 41 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV41.STATUS2 ==5",
+    "Message": "MV3 Inverter 41 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV42.STATUS == 2 || MV3_INV42.TotalP_AC ==0 || MV3_INV42.STATUS ==0",
+    "Message": "MV3 Inverter 42 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV42.STATUS2 ==17",
+    "Message": "MV3 Inverter 42 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV42.STATUS2 ==3",
+    "Message": "MV3 Inverter 42 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV42.STATUS2 ==5",
+    "Message": "MV3 Inverter 42 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV43.STATUS == 2 || MV3_INV43.TotalP_AC ==0 || MV3_INV43.STATUS ==0",
+    "Message": "MV3 Inverter 43 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV43.STATUS2 ==17",
+    "Message": "MV3 Inverter 43 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV43.STATUS2 ==3",
+    "Message": "MV3 Inverter 43 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV43.STATUS2 ==5",
+    "Message": "MV3 Inverter 43 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV44.STATUS == 2 || MV3_INV44.TotalP_AC ==0 || MV3_INV44.STATUS ==0",
+    "Message": "MV3 Inverter 44 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV44.STATUS2 ==17",
+    "Message": "MV3 Inverter 44 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV44.STATUS2 ==3",
+    "Message": "MV3 Inverter 44 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV44.STATUS2 ==5",
+    "Message": "MV3 Inverter 44 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV45.STATUS == 2 || MV3_INV45.TotalP_AC ==0 || MV3_INV45.STATUS ==0",
+    "Message": "MV3 Inverter 45 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV45.STATUS2 ==17",
+    "Message": "MV3 Inverter 45 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV45.STATUS2 ==3",
+    "Message": "MV3 Inverter 45 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV45.STATUS2 ==5",
+    "Message": "MV3 Inverter 45 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV46.STATUS == 2 || MV3_INV46.TotalP_AC ==0 || MV3_INV46.STATUS ==0",
+    "Message": "MV3 Inverter 46 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV46.STATUS2 ==17",
+    "Message": "MV3 Inverter 46 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV46.STATUS2 ==3",
+    "Message": "MV3 Inverter 46 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV46.STATUS2 ==5",
+    "Message": "MV3 Inverter 46 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV47.STATUS == 2 || MV3_INV47.TotalP_AC ==0 || MV3_INV47.STATUS ==0",
+    "Message": "MV3 Inverter 47 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV47.STATUS2 ==17",
+    "Message": "MV3 Inverter 47 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV47.STATUS2 ==3",
+    "Message": "MV3 Inverter 47 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV47.STATUS2 ==5",
+    "Message": "MV3 Inverter 47 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV48.STATUS == 2 || MV3_INV48.TotalP_AC ==0 || MV3_INV48.STATUS ==0",
+    "Message": "MV3 Inverter 48 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV48.STATUS2 ==17",
+    "Message": "MV3 Inverter 48 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV48.STATUS2 ==3",
+    "Message": "MV3 Inverter 48 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV48.STATUS2 ==5",
+    "Message": "MV3 Inverter 48 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV49.STATUS == 2 || MV3_INV49.TotalP_AC ==0 || MV3_INV49.STATUS ==0",
+    "Message": "MV3 Inverter 49 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV49.STATUS2 ==17",
+    "Message": "MV3 Inverter 49 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV49.STATUS2 ==3",
+    "Message": "MV3 Inverter 49 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "MV3_INV49.STATUS2 ==5",
+    "Message": "MV3 Inverter 49 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV50.STATUS == 2 || LV4_INV50.TotalP_AC ==0 || LV4_INV50.STATUS ==0",
+    "Message": "LV4 Inverter 50 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV50.STATUS2 ==17",
+    "Message": "LV4 Inverter 50 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV50.STATUS2 ==3",
+    "Message": "LV4 Inverter 50 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV50.STATUS2 ==5",
+    "Message": "LV4 Inverter 50 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV51.STATUS == 2 || LV4_INV51.TotalP_AC ==0 || LV4_INV51.STATUS ==0",
+    "Message": "LV4 Inverter 51 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV51.STATUS2 ==17",
+    "Message": "LV4 Inverter 51 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV51.STATUS2 ==3",
+    "Message": "LV4 Inverter 51 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV51.STATUS2 ==5",
+    "Message": "LV4 Inverter 51 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV52.STATUS == 2 || LV4_INV52.TotalP_AC ==0 || LV4_INV52.STATUS ==0",
+    "Message": "LV4 Inverter 52 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV52.STATUS2 ==17",
+    "Message": "LV4 Inverter 52 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV52.STATUS2 ==3",
+    "Message": "LV4 Inverter 52 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV4_INV52.STATUS2 ==5",
+    "Message": "LV4 Inverter 52 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV5_INV53.STATUS == 2 || LV5_INV53.TotalP_AC ==0 || LV5_INV53.STATUS ==0",
+    "Message": "LV5 Inverter 53 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV5_INV53.STATUS2 ==17",
+    "Message": "LV5 Inverter 53 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV5_INV53.STATUS2 ==3",
+    "Message": "LV5 Inverter 53 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV5_INV53.STATUS2 ==5",
+    "Message": "LV5 Inverter 53 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV54.STATUS == 2 || LV6_INV54.TotalP_AC ==0 || LV6_INV54.STATUS ==0",
+    "Message": "LV6 Inverter 54 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV54.STATUS2 ==17",
+    "Message": "LV6 Inverter 54 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV54.STATUS2 ==3",
+    "Message": "LV6 Inverter 54 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV54.STATUS2 ==5",
+    "Message": "LV6 Inverter 54 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV55.STATUS == 2 || LV6_INV55.TotalP_AC ==0 || LV6_INV55.STATUS ==0",
+    "Message": "LV6 Inverter 55 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV55.STATUS2 ==17",
+    "Message": "LV6 Inverter 55 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV55.STATUS2 ==3",
+    "Message": "LV6 Inverter 55 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV55.STATUS2 ==5",
+    "Message": "LV6 Inverter 55 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV56.STATUS == 2 || LV6_INV56.TotalP_AC ==0 || LV6_INV56.STATUS ==0",
+    "Message": "LV6 Inverter 56 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV56.STATUS2 ==17",
+    "Message": "LV6 Inverter 56 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV56.STATUS2 ==3",
+    "Message": "LV6 Inverter 56 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV56.STATUS2 ==5",
+    "Message": "LV6 Inverter 56 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV57.STATUS == 2 || LV6_INV57.TotalP_AC ==0 || LV6_INV57.STATUS ==0",
+    "Message": "LV6 Inverter 57 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV57.STATUS2 ==17",
+    "Message": "LV6 Inverter 57 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV57.STATUS2 ==3",
+    "Message": "LV6 Inverter 57 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV6_INV57.STATUS2 ==5",
+    "Message": "LV6 Inverter 57 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV58.STATUS == 2 || LV7_INV58.TotalP_AC ==0 || LV7_INV58.STATUS ==0",
+    "Message": "LV7 Inverter 58 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV58.STATUS2 ==17",
+    "Message": "LV7 Inverter 58 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV58.STATUS2 ==3",
+    "Message": "LV7 Inverter 58 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV58.STATUS2 ==5",
+    "Message": "LV7 Inverter 58 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV59.STATUS == 2 || LV7_INV59.TotalP_AC ==0 || LV7_INV59.STATUS ==0",
+    "Message": "LV7 Inverter 59 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV59.STATUS2 ==17",
+    "Message": "LV7 Inverter 59 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV59.STATUS2 ==3",
+    "Message": "LV7 Inverter 59 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV59.STATUS2 ==5",
+    "Message": "LV7 Inverter 59 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV60.STATUS == 2 || LV7_INV60.TotalP_AC ==0 || LV7_INV60.STATUS ==0",
+    "Message": "LV7 Inverter 60 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV60.STATUS2 ==17",
+    "Message": "LV7 Inverter 60 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV60.STATUS2 ==3",
+    "Message": "LV7 Inverter 60 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV60.STATUS2 ==5",
+    "Message": "LV7 Inverter 60 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV61.STATUS == 2 || LV7_INV61.TotalP_AC ==0 || LV7_INV61.STATUS ==0",
+    "Message": "LV7 Inverter 61 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV61.STATUS2 ==17",
+    "Message": "LV7 Inverter 61 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV61.STATUS2 ==3",
+    "Message": "LV7 Inverter 61 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV61.STATUS2 ==5",
+    "Message": "LV7 Inverter 61 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV62.STATUS == 2 || LV7_INV62.TotalP_AC ==0 || LV7_INV62.STATUS ==0",
+    "Message": "LV7 Inverter 62 Offline",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV62.STATUS2 ==17",
+    "Message": "LV7 Inverter 62 Vac Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV62.STATUS2 ==3",
+    "Message": "LV7 Inverter 62 DC Switch Fail",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LV7_INV62.STATUS2 ==5",
+    "Message": "LV7 Inverter 62 DC Bus Low",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "[]",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LOGGER_MV1 == 0",
+    "Message": "LOGGER MV1  - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LOGGER_MV2 == 0",
+    "Message": "LOGGER MV2  - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": "",
+    "Condition": "LOGGER_MV3 == 0",
+    "Message": "LOGGER MV3  - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": "",
+    "Actions": "",
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": null,
+    "Condition": "LOGGER_LV4 == 0",
+    "Message": "LOGGER POY2 LV4 - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": null,
+    "Actions": null,
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": null,
+    "Condition": "LOGGER_LV5 == 0",
+    "Message": "LOGGER WH13 LV5 - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": null,
+    "Actions": null,
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": null,
+    "Condition": "LOGGER_LV6 == 0",
+    "Message": "LOGGER PSF LV6 - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": null,
+    "Actions": null,
+    "ReleasedFields": ""
+  },
+  {
+    "Enable": true,
+    "Asset": null,
+    "Condition": "LOGGER_LV7 == 0",
+    "Message": "LOGGER WHF15 LV7 - COMMUNICATION LOST !",
+    "Severity": 1,
+    "AlarmGroups": null,
+    "Actions": null,
+    "ReleasedFields": ""
+  }
+]

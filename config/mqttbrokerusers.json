@@ -1,0 +1,10 @@
+[
+  {
+    "Enable": false,
+    "Name": "Anonymous",
+    "Username": "",
+    "Password": "",
+    "Description": "Reserved identity. Its rules apply to clients that connect without credentials while MqttBrokerAllowAnonymous is enabled.",
+    "Acls": []
+  }
+]
